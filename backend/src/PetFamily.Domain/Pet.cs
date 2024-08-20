@@ -15,11 +15,11 @@
         public int Weight { get; set; } = default!;
         public int Height { get; set; } = default!;
         public int PhoneNumber { get; set; } = default!;
-        public bool Castrated { get; set; } = default!;
-        public DateOnly DateOnly { get; set; } = default!;
-        public bool Vaccination { get => vaccination; set => vaccination = value; }
+        public bool IsCastrated { get; set; } = default!;
+        public DateOnly BirthDate { get; set; } = default!;
+        public bool IsVaccination { get; set; }
         public string AssistanceStatus { get; set; } = default!;
-        public Requisites Requisites { get; set; } = default!;
+        public List<Requisites> Requisites { get; set; } = default!;
         public DateTime DateOfCreation { get; set; } = default!;
     }
 }
