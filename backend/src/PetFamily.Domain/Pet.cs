@@ -19,7 +19,7 @@
         public DateOnly BirthDate { get; set; } = default!;
         public bool IsVaccination { get; set; }
         public string AssistanceStatus { get; set; } = default!;
-        public List<Requisite> Requisites { get; set; } = default!;
+        public List<RequisitePet> Requisite { get; set; } = default!;
         public DateTime DateOfCreation { get; set; } = default!;
     }
 }
