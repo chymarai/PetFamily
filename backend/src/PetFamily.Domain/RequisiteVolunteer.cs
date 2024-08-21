@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain
 {
-    public class RequisiteVolunteer : IRequisite
+    public class RequisiteVolunteer
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
