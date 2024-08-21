@@ -18,7 +18,7 @@ namespace PetFamily.Domain
         public int CountOfIllAnimals { get; private set; } = 0;
         public string PhoneNumber { get; private set; } = string.Empty;
         public List<SocialNetwork> SocialNetworks { get; private set; } = new();
-        public List<RequisitePet> Requisite { get; private set; } = new();
+        public List<RequisiteVolunteer> Requisite { get; private set; } = new();
         public List<Pet> Pets { get; private set; } = new();
 
 
