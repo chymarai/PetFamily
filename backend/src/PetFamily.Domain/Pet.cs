@@ -21,5 +21,6 @@
         public string AssistanceStatus { get; set; } = default!;
         public List<RequisitePet> Requisite { get; set; } = default!;
         public DateTime DateOfCreation { get; set; } = default!;
+        public List<PetPhoto> PetPhoto { get;  } = default!;
     }
 }
