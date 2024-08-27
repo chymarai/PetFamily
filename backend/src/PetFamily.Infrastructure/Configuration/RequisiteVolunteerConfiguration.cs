@@ -1,22 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using PetFamily.Domain.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PetFamily.Domain.Modules;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Constants;
 
 namespace PetFamily.Infrastructure.Configuration
 {
-    internal class RequisitePetConfiguration : IEntityTypeConfiguration<RequisitePet>
+   class RequisiteVolunteerConfiguration : IEntityTypeConfiguration<RequisiteVolunteer>
     {
-        public void Configure(EntityTypeBuilder<RequisitePet> builder)
+        public void Configure(EntityTypeBuilder<RequisiteVolunteer> builder)
         {
-            builder.ToTable("petphoto"); 
+            builder.ToTable("requisite volunteer"); //название таблицы
 
-            builder.HasNoKey();
+            builder.HasKey(m => m.Id); //указываем ключ
 
             builder.Property(m => m.Name)
                 .IsRequired()
@@ -29,5 +29,4 @@ namespace PetFamily.Infrastructure.Configuration
 
     }
 
-    
 }

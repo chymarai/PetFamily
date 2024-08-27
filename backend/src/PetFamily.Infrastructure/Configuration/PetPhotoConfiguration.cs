@@ -14,9 +14,9 @@ namespace PetFamily.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<PetPhoto> builder)
         {
-            builder.ToTable("petphoto"); //название таблицы
+            builder.ToTable("petphoto"); 
 
-            builder.HasKey(m => m.Id); //указываем ключ
+            builder.HasNoKey();
 
             builder.Property(m => m.Storage)
                 .IsRequired()
