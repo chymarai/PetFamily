@@ -10,17 +10,21 @@ using PetFamily.Domain.Modules;
 
 namespace PetFamily.Infrastructure
 {
-    internal class ApplicationDbContext(IConfiguration configuration) : DbContext
+    public class ApplicationDbContext(IConfiguration configuration) : DbContext
     {
         private const string DATABASE = "Database";
-        public DbSet<Volunteer> Modules => Set<Volunteer>();
+        public DbSet<Volunteer> Volunteers => Set<Volunteer>(); //подключение к бд
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
-            optionsBuilder.UseUpperSnakeCaseNamingConvention();
-            optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
+            optionsBuilder.UseUpperSnakeCaseNamingConvention(); //подключаем расширение для создание таблиц в определенном стиле
+            optionsBuilder.UseLoggerFactory(CreateLoggerFactory()); //создание логов
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        }
         private ILoggerFactory CreateLoggerFactory() =>
             LoggerFactory.Create(builder => { builder.AddConsole(); });
     }
