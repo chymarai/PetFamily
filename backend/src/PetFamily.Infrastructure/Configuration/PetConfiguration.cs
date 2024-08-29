@@ -14,9 +14,9 @@ namespace PetFamily.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Pet> builder)
         {
-            builder.ToTable("pet"); //название таблицы
+            builder.ToTable("pet"); 
 
-            builder.HasKey(m => m.Id); //указываем ключ
+            builder.HasKey(m => m.Id);
 
             builder.Property(m => m.Id);
 
