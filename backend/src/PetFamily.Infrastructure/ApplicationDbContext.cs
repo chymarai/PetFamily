@@ -18,7 +18,7 @@ namespace PetFamily.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
-            optionsBuilder.UseUpperSnakeCaseNamingConvention(); //подключаем расширение для создание таблиц в определенном стиле
+            optionsBuilder.UseSnakeCaseNamingConvention(); //подключаем расширение для создание таблиц в определенном стиле
             optionsBuilder.UseLoggerFactory(CreateLoggerFactory()); //создание логов
         }
 
