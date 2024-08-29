@@ -75,8 +75,9 @@ namespace PetFamily.Infrastructure.Configuration
                .IsRequired();
 
             builder.HasMany(m => m.Requisite)
-                .WithOne();
-                
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasMany(m => m.PetPhoto)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);

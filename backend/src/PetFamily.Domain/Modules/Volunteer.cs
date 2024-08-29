@@ -8,20 +8,31 @@ namespace PetFamily.Domain.Modules
 {
     public class Volunteer
     {
-        public Guid Id { get; set; }
-        public string FullName { get; set; } = default!;
-        public string Email { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public int YearsOfExperience { get; set; } = 0;
+        private readonly List<Requisite> _requisite = [];
+
+        private readonly List<SocialNetwork> _socialNetwork = [];
+
+        public Guid Id { get; private set; }
+        public string FullName { get; private set; } = default!;
+        public string Email { get; private set; } = default!;
+        public string Description { get; private set; } = default!;
+        public int YearsOfExperience { get; private set; } = 0;
         public int CountOfShelterAnimals { get; private set; } = 0;
         public int CountOfHomelessAnimals { get; private set; } = 0;
         public int CountOfIllAnimals { get; private set; } = 0;
         public string PhoneNumber { get; private set; } = string.Empty;
-        public List<SocialNetwork> SocialNetworks { get; private set; } = new();
-        public List<Requisite> Requisite { get; private set; } = new();
+        public List<SocialNetwork> SocialNetworks => _socialNetwork;
+        public IReadOnlyList<Requisite> Requisite => _requisite;
         public List<Pet> Pets { get; private set; } = new();
 
-
-
+        public void AddRequisite(Requisite requisite)
+        {
+            _requisite.Add(requisite);
+        }
+        public void AddSocialNetwork(SocialNetwork socialNetwork)
+        {
+            _socialNetwork.Add(socialNetwork);
+        }
     }
 }
+

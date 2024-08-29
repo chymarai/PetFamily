@@ -8,23 +8,36 @@ namespace PetFamily.Domain.Modules
 {
     public class Pet
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = default!;
-        public string Type { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public string Breed { get; set; } = default!;
-        public string Color { get; set; } = default!;
-        public string HealthInformation { get; set; } = default!;
-        public string Address { get; set; } = default!;
-        public int Weight { get; set; } = default!;
-        public int Height { get; set; } = default!;
-        public int PhoneNumber { get; set; } = default!;
-        public bool IsCastrated { get; set; } = default!;
-        public bool IsVaccination { get; set; }
-        public string AssistanceStatus { get; set; } = default!;
-        public DateOnly BirthDate { get; set; } = default!;
-        public DateTime DateOfCreation { get; set; } = default!;
-        public List<Requisite> Requisite { get; set; } = new();
-        public List<PetPhoto> PetPhoto { get;  } = default!;
+        private readonly List<Requisite> _requisite = [];
+
+        private readonly List<PetPhoto> _petPhoto = [];
+
+        public Guid Id { get; private set; }
+        public string Name { get; private set; } = default!;
+        public string Type { get; private set; } = default!;
+        public string Description { get; private set; } = default!;
+        public string Breed { get; private set; } = default!;
+        public string Color { get; private set; } = default!;
+        public string HealthInformation { get; private set; } = default!;
+        public string Address { get; private set; } = default!;
+        public int Weight { get; private set; } = default!;
+        public int Height { get; private set; } = default!;
+        public int PhoneNumber { get; private set; } = default!;
+        public bool IsCastrated { get; private set; } = default!;
+        public bool IsVaccination { get; private set; }
+        public string AssistanceStatus { get; private set; } = default!;
+        public DateOnly BirthDate { get; private set; } = default!;
+        public DateTime DateOfCreation { get; private set; } = default!;
+        public IReadOnlyList<Requisite> Requisite => _requisite;
+        public IReadOnlyList<PetPhoto> PetPhoto => _petPhoto;
+        
+        public void AddRequisite(Requisite requisite)
+        {
+            _requisite.Add(requisite);
+        }
+        public void AddPetPhoto(PetPhoto petPhoto)
+        {
+            _petPhoto.Add(petPhoto);
+        }
     }
 }

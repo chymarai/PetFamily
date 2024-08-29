@@ -292,11 +292,13 @@ namespace PetFamily.Infrastructure.Migrations
                     b.HasOne("PetFamily.Domain.Modules.Pet", null)
                         .WithMany("Requisite")
                         .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_REQUISITE_PET_PET_ID");
 
                     b.HasOne("PetFamily.Domain.Modules.Volunteer", null)
                         .WithMany("Requisite")
                         .HasForeignKey("VolunteerId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_REQUISITE_VOLUNTEERS_VOLUNTEER_ID");
                 });
 

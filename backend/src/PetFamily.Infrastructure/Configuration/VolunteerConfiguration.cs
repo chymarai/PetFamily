@@ -53,7 +53,8 @@ namespace PetFamily.Infrastructure.Configuration
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(m => m.Requisite)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(m => m.Pets)
                 .WithOne()

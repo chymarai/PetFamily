@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetFamily.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initials : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -120,12 +120,14 @@ namespace PetFamily.Infrastructure.Migrations
                         name: "FK_REQUISITE_PET_PET_ID",
                         column: x => x.PET_ID,
                         principalTable: "pet",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_REQUISITE_VOLUNTEERS_VOLUNTEER_ID",
                         column: x => x.VOLUNTEER_ID,
                         principalTable: "volunteer",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

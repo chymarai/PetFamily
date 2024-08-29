@@ -12,8 +12,8 @@ using PetFamily.Infrastructure;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240829015355_Initials")]
-    partial class Initials
+    [Migration("20240829110033_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -295,11 +295,13 @@ namespace PetFamily.Infrastructure.Migrations
                     b.HasOne("PetFamily.Domain.Modules.Pet", null)
                         .WithMany("Requisite")
                         .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_REQUISITE_PET_PET_ID");
 
                     b.HasOne("PetFamily.Domain.Modules.Volunteer", null)
                         .WithMany("Requisite")
                         .HasForeignKey("VolunteerId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_REQUISITE_VOLUNTEERS_VOLUNTEER_ID");
                 });
 
