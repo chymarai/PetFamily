@@ -36,7 +36,6 @@ namespace PetFamily.Infrastructure.Configuration
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
 
-
             builder.Property(m => m.Color)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
@@ -52,7 +51,7 @@ namespace PetFamily.Infrastructure.Configuration
             builder.Property(m => m.Weight)
                 .IsRequired();
 
-            builder.Property(m => m.Weight)
+            builder.Property(m => m.Height)
                 .IsRequired();
 
             builder.Property(m => m.PhoneNumber)
@@ -75,12 +74,10 @@ namespace PetFamily.Infrastructure.Configuration
             builder.Property(m => m.DateOfCreation)
                .IsRequired();
 
-            builder.HasMany(x => x.Requisite)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(m => m.Requisite)
+                .WithOne();
                 
-
-            builder.HasMany(x => x.PetPhoto)
+            builder.HasMany(m => m.PetPhoto)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
         }

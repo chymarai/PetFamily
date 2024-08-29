@@ -48,21 +48,16 @@ namespace PetFamily.Infrastructure.Configuration
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             
-            builder.HasMany(x => x.SocialNetworks)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
-            
-            builder.HasMany(x => x.Requisite)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
-            
-            builder.HasMany(x => x.Pets)
+            builder.HasMany(m => m.SocialNetworks)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasMany(m => m.Requisite)
+                .WithOne();
 
-
-
+            builder.HasMany(m => m.Pets)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

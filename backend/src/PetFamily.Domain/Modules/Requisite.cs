@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules
 {
-    public class RequisitePet
+    public record Requisite
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
     }

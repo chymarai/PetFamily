@@ -24,7 +24,7 @@ namespace PetFamily.Domain.Modules
         public string AssistanceStatus { get; set; } = default!;
         public DateOnly BirthDate { get; set; } = default!;
         public DateTime DateOfCreation { get; set; } = default!;
-        public List<RequisitePet> Requisite { get; set; } = default!;
+        public List<Requisite> Requisite { get; set; } = new();
         public List<PetPhoto> PetPhoto { get;  } = default!;
     }
 }

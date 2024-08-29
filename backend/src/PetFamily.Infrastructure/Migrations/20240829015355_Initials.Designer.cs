@@ -12,8 +12,8 @@ using PetFamily.Infrastructure;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240828235432_Initial")]
-    partial class Initial
+    [Migration("20240829015355_Initials")]
+    partial class Initials
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,7 +152,7 @@ namespace PetFamily.Infrastructure.Migrations
                     b.ToTable("petphoto", (string)null);
                 });
 
-            modelBuilder.Entity("PetFamily.Domain.Modules.RequisitePet", b =>
+            modelBuilder.Entity("PetFamily.Domain.Modules.Requisite", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -173,43 +173,20 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("PET_ID");
 
-                    b.HasKey("Id")
-                        .HasName("PK_REQUISITE_PET");
-
-                    b.HasIndex("PetId")
-                        .HasDatabaseName("IX_REQUISITE_PET_PET_ID");
-
-                    b.ToTable("REQUISITE_PET", (string)null);
-                });
-
-            modelBuilder.Entity("PetFamily.Domain.Modules.RequisiteVolunteer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("ID");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("DESCRIPTION");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("NAME");
-
                     b.Property<Guid?>("VolunteerId")
                         .HasColumnType("uuid")
                         .HasColumnName("VOLUNTEER_ID");
 
                     b.HasKey("Id")
-                        .HasName("PK_REQUISITE_VOLUNTEER");
+                        .HasName("PK_REQUISITE");
+
+                    b.HasIndex("PetId")
+                        .HasDatabaseName("IX_REQUISITE_PET_ID");
 
                     b.HasIndex("VolunteerId")
-                        .HasDatabaseName("IX_REQUISITE_VOLUNTEER_VOLUNTEER_ID");
+                        .HasDatabaseName("IX_REQUISITE_VOLUNTEER_ID");
 
-                    b.ToTable("REQUISITE_VOLUNTEER", (string)null);
+                    b.ToTable("REQUISITE", (string)null);
                 });
 
             modelBuilder.Entity("PetFamily.Domain.Modules.SocialNetwork", b =>
@@ -313,22 +290,17 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasConstraintName("FK_PETPHOTO_PET_PET_ID");
                 });
 
-            modelBuilder.Entity("PetFamily.Domain.Modules.RequisitePet", b =>
+            modelBuilder.Entity("PetFamily.Domain.Modules.Requisite", b =>
                 {
                     b.HasOne("PetFamily.Domain.Modules.Pet", null)
                         .WithMany("Requisite")
                         .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .HasConstraintName("FK_REQUISITE_PET_PET_PET_ID");
-                });
+                        .HasConstraintName("FK_REQUISITE_PET_PET_ID");
 
-            modelBuilder.Entity("PetFamily.Domain.Modules.RequisiteVolunteer", b =>
-                {
                     b.HasOne("PetFamily.Domain.Modules.Volunteer", null)
                         .WithMany("Requisite")
                         .HasForeignKey("VolunteerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .HasConstraintName("FK_REQUISITE_VOLUNTEER_VOLUNTEERS_VOLUNTEER_ID");
+                        .HasConstraintName("FK_REQUISITE_VOLUNTEERS_VOLUNTEER_ID");
                 });
 
             modelBuilder.Entity("PetFamily.Domain.Modules.SocialNetwork", b =>

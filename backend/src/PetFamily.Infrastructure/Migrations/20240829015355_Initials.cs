@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetFamily.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Initials : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,26 +64,6 @@ namespace PetFamily.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "REQUISITE_VOLUNTEER",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uuid", nullable: false),
-                    NAME = table.Column<string>(type: "text", nullable: false),
-                    DESCRIPTION = table.Column<string>(type: "text", nullable: false),
-                    VOLUNTEER_ID = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_REQUISITE_VOLUNTEER", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_REQUISITE_VOLUNTEER_VOLUNTEERS_VOLUNTEER_ID",
-                        column: x => x.VOLUNTEER_ID,
-                        principalTable: "volunteer",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SOCIAL_NETWORK",
                 columns: table => new
                 {
@@ -124,23 +104,28 @@ namespace PetFamily.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "REQUISITE_PET",
+                name: "REQUISITE",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uuid", nullable: false),
                     NAME = table.Column<string>(type: "text", nullable: false),
                     DESCRIPTION = table.Column<string>(type: "text", nullable: false),
-                    PET_ID = table.Column<Guid>(type: "uuid", nullable: true)
+                    PET_ID = table.Column<Guid>(type: "uuid", nullable: true),
+                    VOLUNTEER_ID = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_REQUISITE_PET", x => x.ID);
+                    table.PrimaryKey("PK_REQUISITE", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_REQUISITE_PET_PET_PET_ID",
+                        name: "FK_REQUISITE_PET_PET_ID",
                         column: x => x.PET_ID,
                         principalTable: "pet",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_REQUISITE_VOLUNTEERS_VOLUNTEER_ID",
+                        column: x => x.VOLUNTEER_ID,
+                        principalTable: "volunteer",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateIndex(
@@ -154,13 +139,13 @@ namespace PetFamily.Infrastructure.Migrations
                 column: "PET_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_REQUISITE_PET_PET_ID",
-                table: "REQUISITE_PET",
+                name: "IX_REQUISITE_PET_ID",
+                table: "REQUISITE",
                 column: "PET_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_REQUISITE_VOLUNTEER_VOLUNTEER_ID",
-                table: "REQUISITE_VOLUNTEER",
+                name: "IX_REQUISITE_VOLUNTEER_ID",
+                table: "REQUISITE",
                 column: "VOLUNTEER_ID");
 
             migrationBuilder.CreateIndex(
@@ -176,10 +161,7 @@ namespace PetFamily.Infrastructure.Migrations
                 name: "petphoto");
 
             migrationBuilder.DropTable(
-                name: "REQUISITE_PET");
-
-            migrationBuilder.DropTable(
-                name: "REQUISITE_VOLUNTEER");
+                name: "REQUISITE");
 
             migrationBuilder.DropTable(
                 name: "SOCIAL_NETWORK");
