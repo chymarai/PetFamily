@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Domain
+namespace PetFamily.Domain.Modules
 {
     public class PetPhoto
     {
