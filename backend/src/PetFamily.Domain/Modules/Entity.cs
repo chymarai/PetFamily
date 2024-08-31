@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules
 {
-    public class SocialNetwork
+    public abstract class Entity
     {
-        public string Name { get; private set; } = string.Empty!;
-        public string Url { get; private set; } = string.Empty!;
+        protected Entity(Guid id)
+        {
+            Id = id;
+        }
+
+        public Guid Id { get; private set; }
     }
 }

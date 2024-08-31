@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules
 {
-    public class Pet
+    public class Pet : Entity
     {
+        public Pet(Guid id) : base(id)
+        {
+            Id = id;
+        }
+
         private readonly List<Requisite> _requisite = [];
 
         private readonly List<PetPhoto> _petPhoto = [];

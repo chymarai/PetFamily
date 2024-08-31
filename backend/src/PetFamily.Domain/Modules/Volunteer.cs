@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules
 {
-    public class Volunteer
+    public class Volunteer : Entity
     {
+        public Volunteer(Guid id) : base(id)
+        {
+            
+        }
         private readonly List<Requisite> _requisite = [];
 
         private readonly List<SocialNetwork> _socialNetwork = [];

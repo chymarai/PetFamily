@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules
 {
-    public class PetPhoto
+    public class PetPhoto : Entity
     {
-        public Guid Id { get; set; }
+        public PetPhoto(Guid id) : base(id)
+        {
+                
+        }
+        public Guid Id { get; set; } 
         public string Storage { get; private set; } = default!;
         public bool IsMain { get; private set; }
     }
