@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Modules;
-using PetFamily.Domain.Constants;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Infrastructure.Configuration
 {
@@ -18,7 +18,11 @@ namespace PetFamily.Infrastructure.Configuration
 
             builder.HasKey(m => m.Id);
 
-            builder.Property(m => m.Id);
+            builder.Property(m => m.Id)
+                .HasConversion(
+                    id => id.Value,
+                    value => PetId.Create(value))
+                .IsRequired();
 
             builder.Property(m => m.Name)
                 .IsRequired()
@@ -43,11 +47,30 @@ namespace PetFamily.Infrastructure.Configuration
             builder.Property(m => m.HealthInformation)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
-           
-            builder.Property(m => m.Address)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
 
+            builder.ComplexProperty(m => m.Address, tb =>
+            {
+                tb.Property(m => m.Country)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                    .HasColumnName("country");
+
+                tb.Property(m => m.Region)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                    .HasColumnName("region");
+
+                tb.Property(m => m.City)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                    .HasColumnName("city");
+
+                tb.Property(m => m.Street)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                    .HasColumnName("street");
+            });
+            
             builder.Property(m => m.Weight)
                 .IsRequired();
 
@@ -74,13 +97,37 @@ namespace PetFamily.Infrastructure.Configuration
             builder.Property(m => m.DateOfCreation)
                .IsRequired();
 
-            builder.HasMany(m => m.Requisite)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsOne(m => m.RequisiteDetails, mb =>
+            {
+                mb.ToJson("requisite");
 
-            builder.HasMany(m => m.PetPhoto)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+                mb.OwnsMany(mb => mb.Value, mbBuilder =>
+                {
+                    mbBuilder.Property(p => p.Name)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+
+                    mbBuilder.Property(p => p.Description)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                });
+            });
+
+            builder.OwnsOne(m => m.Gallery, mb =>
+            {
+                mb.ToJson("Gallery");
+
+                mb.OwnsMany(mb => mb.Value, mbBuilder =>
+                {
+                    mbBuilder.Property(p => p.Storage)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+
+                    mbBuilder.Property(p => p.IsMain)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                });
+            });
         }
     }
 }

@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Modules
 {
-    public class PetPhoto : Entity
+    public record PetPhoto
     {
-        public PetPhoto(Guid id) : base(id)
+        private PetPhoto(string storage, bool isMain)
         {
-                
+            Storage = storage;
+            IsMain = isMain;
         }
-        public Guid Id { get; set; } 
-        public string Storage { get; private set; } = default!;
-        public bool IsMain { get; private set; }
+        public string Storage { get; }
+        public bool IsMain { get; }
+
+        public static Result<PetPhoto> Create(string storage, bool isMain)
+        {
+            if (string.IsNullOrWhiteSpace(storage))
+                return "FilePath can not be empty or null";
+
+            return new PetPhoto(storage, isMain);
+        }
     }
 }

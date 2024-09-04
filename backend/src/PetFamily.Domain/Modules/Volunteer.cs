@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PetFamily.Domain.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,19 +7,21 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules
 {
-    public class Volunteer : Entity
+    public class Volunteer : Shared.Entity<VolunteerId>
     {
-        public Volunteer(Guid id) : base(id)
+        private Volunteer(VolunteerId id) : base(id)
         {
             
         }
-        private readonly List<Requisite> _requisite = [];
 
-        private readonly List<SocialNetwork> _socialNetwork = [];
-
+        public Volunteer(VolunteerId volunteerId, string fullname, string description) : base(volunteerId)
+        {
+            FullName = fullname;
+            Description = description;
+        }
+        
         private readonly List<Pet> _pet = [];
 
-        public Guid Id { get; private set; }
         public string FullName { get; private set; } = default!;
         public string Email { get; private set; } = default!;
         public string Description { get; private set; } = default!;
@@ -27,21 +30,26 @@ namespace PetFamily.Domain.Modules
         public int CountOfHomelessAnimals { get; private set; } = 0;
         public int CountOfIllAnimals { get; private set; } = 0;
         public string PhoneNumber { get; private set; } = string.Empty;
-        public IReadOnlyList<SocialNetwork> SocialNetworks => _socialNetwork;
-        public IReadOnlyList<Requisite> Requisite => _requisite;
+        public SocialNetworkDetails? SocialNetworkDetails { get; private set; }
+        public RequisiteDetails? RequisiteDetails { get; private set; }
         public IReadOnlyList<Pet> Pet => _pet;
-
-        public void AddRequisite(Requisite requisite)
-        {
-            _requisite.Add(requisite);
-        }
-        public void AddSocialNetwork(SocialNetwork socialNetwork)
-        {
-            _socialNetwork.Add(socialNetwork);
-        }
+        
+        
         public void AddPet(Pet pet)
         {
             _pet.Add(pet);
+        }
+
+        public static Result<Volunteer> Create(VolunteerId volunteerId, string fullName, string description)
+        {
+            if (string.IsNullOrWhiteSpace(fullName))
+                return "Name can not be empty";
+
+
+            if (string.IsNullOrWhiteSpace(description))
+                return "Description can not be empty";
+            
+            return new Volunteer(volunteerId, fullName, description);
         }
     }
 }

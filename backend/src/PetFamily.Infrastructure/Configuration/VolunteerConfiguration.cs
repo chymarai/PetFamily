@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PetFamily.Domain.Modules;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetFamily.Domain.Constants;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Infrastructure.Configuration
 {
@@ -15,10 +15,14 @@ namespace PetFamily.Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<Volunteer> builder)
         {
             builder.ToTable("volunteer");
-            
+
             builder.HasKey(m => m.Id);
 
-            builder.Property(m => m.Id);
+            builder.Property(m => m.Id)
+                .HasConversion(
+                    id => id.Value,
+                    value => VolunteerId.Create(value))
+                .IsRequired();
 
             builder.Property(m => m.FullName)
                 .IsRequired()
@@ -47,14 +51,38 @@ namespace PetFamily.Infrastructure.Configuration
             builder.Property(m => m.PhoneNumber)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-            
-            builder.HasMany(m => m.SocialNetworks)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(m => m.Requisite)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsOne(m => m.SocialNetworkDetails, mb =>
+            {
+                mb.ToJson("social_network");
+
+                mb.OwnsMany(mb => mb.Value, mbBuilder =>
+                {
+                    mbBuilder.Property(p => p.Name)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+
+                    mbBuilder.Property(p => p.Url)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                });
+            });
+
+            builder.OwnsOne(m => m.RequisiteDetails, mb =>
+            {
+                mb.ToJson("requisite");
+
+                mb.OwnsMany(mb => mb.Value, mbBuilder =>
+                {
+                    mbBuilder.Property(p => p.Name)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+
+                    mbBuilder.Property(p => p.Description)
+                        .IsRequired()
+                        .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                });
+            });
 
             builder.HasMany(m => m.Pet)
                 .WithOne()
