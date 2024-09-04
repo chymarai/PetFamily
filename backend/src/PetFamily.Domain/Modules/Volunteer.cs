@@ -30,8 +30,8 @@ namespace PetFamily.Domain.Modules
         public int CountOfHomelessAnimals { get; private set; } = 0;
         public int CountOfIllAnimals { get; private set; } = 0;
         public string PhoneNumber { get; private set; } = string.Empty;
-        public SocialNetworkDetails? SocialNetworkDetails { get; private set; }
-        public RequisiteDetails? RequisiteDetails { get; private set; }
+        public SocialNetworkDetails SocialNetworkDetails { get; private set; }
+        public RequisiteDetails RequisiteDetails { get; private set; }
         public IReadOnlyList<Pet> Pet => _pet;
         
         

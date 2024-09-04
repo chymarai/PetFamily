@@ -20,12 +20,10 @@ namespace PetFamily.Domain.Modules
         }
 
         public IReadOnlyList<PetPhoto> Value { get; }
-        public int ImagesCount => Value.Count;
-
+        
         public static Result<Gallery> Create(IEnumerable<PetPhoto> petPhoto)
         {
             return new Gallery(petPhoto);
         }
-
     }
 }
