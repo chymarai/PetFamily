@@ -1,11 +1,12 @@
-﻿using PetFamily.Domain.Shared;
+﻿using PetFamily.Domain.Modules.Pets;
+using PetFamily.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Domain.Modules
+namespace PetFamily.Domain.Modules.Pets
 {
     public record Gallery
     {

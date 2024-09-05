@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Domain.Modules
+namespace PetFamily.Domain.Modules.Pets
 {
     public record Address
     {
@@ -20,7 +20,7 @@ namespace PetFamily.Domain.Modules
         public string Region { get; } = default!;
         public string City { get; } = default!;
         public string Street { get; } = default!;
-        
+
         public static Result<Address> Create(string country, string region, string city, string street)
         {
             if (string.IsNullOrWhiteSpace(country))
@@ -33,7 +33,7 @@ namespace PetFamily.Domain.Modules
                 return "City can not be empty";
 
             if (string.IsNullOrWhiteSpace(street))
-                return "String can not be empty";
+                return "Street can not be empty";
 
             return new Address(country, region, city, street);
         }

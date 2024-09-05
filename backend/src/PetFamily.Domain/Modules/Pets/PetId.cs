@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Domain.Modules
+namespace PetFamily.Domain.Modules.Pets
 {
     public record PetId
     {

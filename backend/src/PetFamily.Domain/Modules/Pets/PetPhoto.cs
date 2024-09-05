@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PetFamily.Domain.Shared;
 
-namespace PetFamily.Domain.Modules
+namespace PetFamily.Domain.Modules.Pets
 {
     public record PetPhoto
     {

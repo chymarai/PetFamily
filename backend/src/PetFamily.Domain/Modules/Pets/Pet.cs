@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32.SafeHandles;
+using PetFamily.Domain.Modules.Pets;
+using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.Shared;
 using System;
 using System.Collections.Generic;
@@ -6,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Domain.Modules
+namespace PetFamily.Domain.Modules.Pets
 {
-    public class Pet : Shared.Entity<PetId>
+    public class Pet : Entity<PetId>
     {
         private Pet(PetId id) : base(id)
         {
@@ -22,7 +24,7 @@ namespace PetFamily.Domain.Modules
         }
 
         public string Name { get; private set; } = default!;
-        public string Type { get; private set; } = default!;
+        public string Species { get; private set; } = default!;
         public string Description { get; private set; } = default!;
         public string Breed { get; private set; } = default!;
         public string Color { get; private set; } = default!;
@@ -38,9 +40,9 @@ namespace PetFamily.Domain.Modules
         public DateTime DateOfCreation { get; private set; } = default!;
         public RequisiteDetails RequisiteDetails { get; private set; }
         public Gallery Gallery { get; private set; }
-        
-        
-        
+
+
+
 
         public static Result<Pet> Create(PetId petId, string name, string description)
         {

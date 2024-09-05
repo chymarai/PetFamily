@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PetFamily.Domain.Modules.Pets;
+using PetFamily.Domain.Modules.Volunteers;
 
-namespace PetFamily.Domain.Modules
+namespace PetFamily.Domain.Modules.Volunteers
 {
-    public class Volunteer : Shared.Entity<VolunteerId>
+    public class Volunteer : Entity<VolunteerId>
     {
         private Volunteer(VolunteerId id) : base(id)
         {
-            
+
         }
 
         public Volunteer(VolunteerId volunteerId, string fullname, string description) : base(volunteerId)
@@ -19,7 +21,7 @@ namespace PetFamily.Domain.Modules
             FullName = fullname;
             Description = description;
         }
-        
+
         private readonly List<Pet> _pet = [];
 
         public string FullName { get; private set; } = default!;
@@ -33,8 +35,8 @@ namespace PetFamily.Domain.Modules
         public SocialNetworkDetails SocialNetworkDetails { get; private set; }
         public RequisiteDetails RequisiteDetails { get; private set; }
         public IReadOnlyList<Pet> Pet => _pet;
-        
-        
+
+
         public void AddPet(Pet pet)
         {
             _pet.Add(pet);
@@ -48,7 +50,7 @@ namespace PetFamily.Domain.Modules
 
             if (string.IsNullOrWhiteSpace(description))
                 return "Description can not be empty";
-            
+
             return new Volunteer(volunteerId, fullName, description);
         }
     }

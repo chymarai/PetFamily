@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Modules;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Modules.Pet;
 
 namespace PetFamily.Infrastructure.Configuration
 {
@@ -28,7 +29,7 @@ namespace PetFamily.Infrastructure.Configuration
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
-            builder.Property(m => m.Type)
+            builder.Property(m => m.Species)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
