@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Modules;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.Modules.Pet;
+using PetFamily.Domain.Modules.Pets;
 
 namespace PetFamily.Infrastructure.Configuration
 {
@@ -29,17 +29,23 @@ namespace PetFamily.Infrastructure.Configuration
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
-            builder.Property(m => m.Species)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-
             builder.Property(m => m.Description)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
 
-            builder.Property(m => m.Breed)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+            builder.ComplexProperty(m => m.speciesBreedObject, tb =>
+            {
+                tb.Property(sbo => sbo.SpeciesId)
+                    .HasConversion(
+                        speciesId => speciesId.Value,
+                        value => SpeciesId.Create(value))
+                    .IsRequired();
+                tb.Property(sbo => sbo.BreedId)
+                    .HasConversion(
+                        breedId => breedId.Value,
+                        value => BreedId.Create(value))
+                    .IsRequired();
+            });
 
             builder.Property(m => m.Color)
                 .IsRequired()

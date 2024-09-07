@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.Modules.Volunteer;
 using PetFamily.Domain.Modules.Volunteers;
 
 namespace PetFamily.Infrastructure.Configuration

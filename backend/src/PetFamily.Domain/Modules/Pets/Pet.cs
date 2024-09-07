@@ -24,9 +24,8 @@ namespace PetFamily.Domain.Modules.Pets
         }
 
         public string Name { get; private set; } = default!;
-        public string Species { get; private set; } = default!;
         public string Description { get; private set; } = default!;
-        public string Breed { get; private set; } = default!;
+        public SpeciesBreedObject speciesBreedObject { get; private set; } = default!;
         public string Color { get; private set; } = default!;
         public string HealthInformation { get; private set; } = default!;
         public Address Address { get; private set; } = default!;
