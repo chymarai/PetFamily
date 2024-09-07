@@ -15,10 +15,26 @@ namespace PetFamily.Domain.Modules.Pets
             
         }
 
+        private Species(SpeciesId speciesId, string title, string description) : base(speciesId)
+        {
+            Title = title;
+            Description = description;
+        }
+
         public string Title { get; private set; } = default!;
         public string Description { get; private set; } = default!;
         public IReadOnlyList<Breed> Breeds => _breed;
 
+        public static Result<Species> Create(SpeciesId speciesId, string title, string description)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                return "Name can not be empty";
 
+
+            if (string.IsNullOrWhiteSpace(description))
+                return "Description can not be empty";
+
+            return new Species(speciesId, title, description);
+        }
     }
 }

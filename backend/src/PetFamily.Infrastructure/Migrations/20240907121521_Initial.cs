@@ -52,7 +52,7 @@ namespace PetFamily.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    species_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    species_id = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,8 +61,7 @@ namespace PetFamily.Infrastructure.Migrations
                         name: "fk_breed_species_species_id",
                         column: x => x.species_id,
                         principalTable: "species",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(

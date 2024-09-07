@@ -31,11 +31,6 @@ namespace PetFamily.Infrastructure.Configuration
             builder.Property(x => x.Title)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-
-            builder.HasOne(x => x.Species)
-                .WithMany(x => x.Breeds);
-
-
         }
     }
 }

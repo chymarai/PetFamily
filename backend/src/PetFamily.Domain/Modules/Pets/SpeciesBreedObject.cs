@@ -10,17 +10,17 @@ namespace PetFamily.Domain.Modules.Pets
 {
     public class SpeciesBreedObject
     {
-        private SpeciesBreedObject(BreedId breedId, SpeciesId speciesId)
+        private SpeciesBreedObject(Guid breedId, SpeciesId speciesId)
         {
             BreedId = breedId;
 
             SpeciesId = speciesId;
         }
 
-        public BreedId BreedId { get; set; } = default!;
+        public Guid BreedId { get; set; } = default!;
         public SpeciesId SpeciesId { get; set; } = default!;
 
-        public static Result<SpeciesBreedObject> Create(BreedId breedId, SpeciesId speciesId)
+        public static Result<SpeciesBreedObject> Create(Guid breedId, SpeciesId speciesId)
         {
             return new SpeciesBreedObject(breedId, speciesId);
         }
