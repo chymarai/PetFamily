@@ -16,7 +16,6 @@ namespace PetFamily.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    full_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     years_of_experience = table.Column<int>(type: "integer", nullable: false),
@@ -24,8 +23,11 @@ namespace PetFamily.Infrastructure.Migrations
                     count_of_homeless_animals = table.Column<int>(type: "integer", nullable: false),
                     count_of_ill_animals = table.Column<int>(type: "integer", nullable: false),
                     phone_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    requisite = table.Column<string>(type: "jsonb", nullable: true),
-                    social_network = table.Column<string>(type: "jsonb", nullable: true)
+                    firstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    lastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    middleName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    requisite = table.Column<string>(type: "jsonb", nullable: false),
+                    social_network = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,7 +40,7 @@ namespace PetFamily.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    species = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     breed = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     color = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
@@ -56,8 +58,8 @@ namespace PetFamily.Infrastructure.Migrations
                     country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     region = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     street = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    gallery = table.Column<string>(type: "jsonb", nullable: true),
-                    requisite = table.Column<string>(type: "jsonb", nullable: true)
+                    gallery = table.Column<string>(type: "jsonb", nullable: false),
+                    requisite = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {
