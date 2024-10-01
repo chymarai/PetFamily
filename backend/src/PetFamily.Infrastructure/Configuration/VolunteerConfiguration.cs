@@ -42,13 +42,29 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .HasColumnName("middleName");
         });
 
-        builder.Property(m => m.Email)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-        
-        builder.Property(m => m.Description)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+        builder.ComplexProperty(m => m.Email, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("email");
+        });
+
+        builder.ComplexProperty(m => m.PhoneNumber, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("phoneNumber");
+        });
+
+        builder.ComplexProperty(m => m.Description, tb =>
+        {
+             tb.Property (b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH)
+                .HasColumnName("description");
+        });
 
         builder.Property(m => m.YearsOfExperience)
             .IsRequired();
@@ -61,10 +77,6 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
         builder.Property(m => m.CountOfIllAnimals)
             .IsRequired();
-
-        builder.Property(m => m.PhoneNumber)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
         builder.OwnsOne(m => m.SocialNetworkDetails, mb =>
         {

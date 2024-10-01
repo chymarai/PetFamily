@@ -16,16 +16,16 @@ namespace PetFamily.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     years_of_experience = table.Column<int>(type: "integer", nullable: false),
                     count_of_shelter_animals = table.Column<int>(type: "integer", nullable: false),
                     count_of_homeless_animals = table.Column<int>(type: "integer", nullable: false),
                     count_of_ill_animals = table.Column<int>(type: "integer", nullable: false),
-                    phone_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     firstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     lastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     middleName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    phoneNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     requisite = table.Column<string>(type: "jsonb", nullable: false),
                     social_network = table.Column<string>(type: "jsonb", nullable: false)
                 },

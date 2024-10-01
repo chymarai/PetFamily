@@ -29,15 +29,22 @@ public class CreateVolunteerHandler
         if (phoneNumberResult.IsFailure)
             return phoneNumberResult.Error;
 
+        var descriptionResult = Description.Create(request.Description);
+        if (descriptionResult.IsFailure)
+            return descriptionResult.Error;
+
         var fullNameDto = request.FullName;
 
         var fullName = FullName.Create(fullNameDto.LastName, fullNameDto.FirstName, fullNameDto.Surname);
 
-        var volunteer = await _volunteersRepository.GetByEmail(request.Email);
+        var volunteer = await _volunteersRepository.GetByEmail(emailResult.Value);
+
+        if (volunteer.IsSuccess)
+            return Errors.Volunteer.AlreadyExist();
 
         var volunteerId = VolunteerId.NewVolunteerId();
 
-        var volunteerToCreate = Volunteer.Create(volunteerId, fullName.Value, emailResult.Value, phoneNumberResult.Value, request.Description);
+        var volunteerToCreate = Volunteer.Create(volunteerId, fullName.Value, emailResult.Value, phoneNumberResult.Value, descriptionResult.Value);
 
         await _volunteersRepository.Add(volunteerToCreate.Value, cancellationToken);
 

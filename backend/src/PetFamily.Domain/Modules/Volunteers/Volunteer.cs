@@ -17,7 +17,7 @@ public class Volunteer : Shared.Entity<VolunteerId>
 
     }
 
-    public Volunteer(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, string description) : base(volunteerId)
+    public Volunteer(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, Description description) : base(volunteerId)
     {
         FullName = fullName;
         Email = email;
@@ -29,14 +29,14 @@ public class Volunteer : Shared.Entity<VolunteerId>
 
     public FullName FullName { get; private set; } = default!;
     public Email Email { get; private set; } = default!;
-    public string Description { get; private set; } = default!;
+    public PhoneNumber PhoneNumber { get; private set; } = default!;
+    public Description Description { get; private set; } = default!;
     public int YearsOfExperience { get; private set; } = 0;
     public int CountOfShelterAnimals { get; private set; } = 0;
     public int CountOfHomelessAnimals { get; private set; } = 0;
     public int CountOfIllAnimals { get; private set; } = 0;
-    public PhoneNumber PhoneNumber { get; private set; } = default!;
-    public SocialNetworkDetails SocialNetworkDetails { get; private set; }
-    public RequisiteDetails RequisiteDetails { get; private set; }
+    public SocialNetworkDetails SocialNetworkDetails { get; private set; } = default!;
+    public RequisiteDetails RequisiteDetails { get; private set; } = default!;
     public IReadOnlyList<Pet> Pet => _pet;
 
     public void AddPet(Pet pet)
@@ -44,13 +44,9 @@ public class Volunteer : Shared.Entity<VolunteerId>
         _pet.Add(pet);
     }
 
-    public static Result<Volunteer, Error> Create(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, string description)
+    public static Result<Volunteer, Error> Create(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, Description description)
     {
-        if (string.IsNullOrWhiteSpace(description) || description.Length > Constants.MAX_LOW_TEXT_LENGTH)
-            return Errors.General.ValueIsInvalid("Description");
-
         return new Volunteer(volunteerId, fullName, email, phoneNumber, description);
     }
-   
 }
 

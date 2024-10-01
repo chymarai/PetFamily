@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetFamily.API.Response;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.API.Extensions;
 
 public static class ResponseExtensions
 {
-    public static ActionResult ToResponse(this Error Error)
+    public static ActionResult ToResponse(this Error error)
     {
-        var statusCode = Error.Type switch
+        var statusCode = error.Type switch
         {
             ErrorType.Validation => StatusCodes.Status400BadRequest,
             ErrorType.NotFound => StatusCodes.Status404NotFound,
@@ -16,7 +17,9 @@ public static class ResponseExtensions
             _ => StatusCodes.Status500InternalServerError
         };
 
-        return new ObjectResult(Error)
+        var envelope = Envelope.Error(error);
+
+        return new ObjectResult(envelope)
         {
             StatusCode = statusCode
         };

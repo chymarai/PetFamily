@@ -3,23 +3,26 @@ using PetFamily.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules.Volunteers;
-public record PhoneNumber
+
+public record Description
 {
-    private PhoneNumber(string value)
+    private Description(string value)
     {
         Value = value;
     }
+
     public string Value { get; } = default!;
 
-    public static Result<PhoneNumber, Error> Create(string value)
+    public static Result<Description, Error> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value) || value.Length > Constants.MAX_LOW_TEXT_LENGTH)
-            return Errors.General.ValueIsInvalid("Phonenumber");
+            return Errors.General.ValueIsInvalid("Description");
 
-        return new PhoneNumber(value);
+        return new Description(value);
     }
 }

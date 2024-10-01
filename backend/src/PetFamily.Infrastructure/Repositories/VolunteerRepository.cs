@@ -40,7 +40,7 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer;
     }
 
-    public async Task<Result<Volunteer, Error>> GetByEmail(string email)
+    public async Task<Result<Volunteer, Error>> GetByEmail(Email email)
     {
         var volunteer = await _dbContext.Volunteers
            .Include(m => m.Pet)
