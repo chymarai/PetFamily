@@ -29,10 +29,9 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<string>("AssistanceStatus")
-                        .IsRequired()
+                    b.Property<int>("AssistanceStatus")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("integer")
                         .HasColumnName("assistance_status");
 
                     b.Property<DateOnly>("BirthDate")
@@ -148,18 +147,6 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("CountOfHomelessAnimals")
-                        .HasColumnType("integer")
-                        .HasColumnName("count_of_homeless_animals");
-
-                    b.Property<int>("CountOfIllAnimals")
-                        .HasColumnType("integer")
-                        .HasColumnName("count_of_ill_animals");
-
-                    b.Property<int>("CountOfShelterAnimals")
-                        .HasColumnType("integer")
-                        .HasColumnName("count_of_shelter_animals");
-
                     b.Property<int>("YearsOfExperience")
                         .HasColumnType("integer")
                         .HasColumnName("years_of_experience");
@@ -229,7 +216,7 @@ namespace PetFamily.Infrastructure.Migrations
             modelBuilder.Entity("PetFamily.Domain.Modules.Pets.Pet", b =>
                 {
                     b.HasOne("PetFamily.Domain.Modules.Volunteers.Volunteer", null)
-                        .WithMany("Pet")
+                        .WithMany("Pets")
                         .HasForeignKey("VolunteerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("fk_pet_volunteer_volunteer_id");
@@ -444,7 +431,7 @@ namespace PetFamily.Infrastructure.Migrations
 
             modelBuilder.Entity("PetFamily.Domain.Modules.Volunteers.Volunteer", b =>
                 {
-                    b.Navigation("Pet");
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

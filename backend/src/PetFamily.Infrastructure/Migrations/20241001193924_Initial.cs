@@ -17,9 +17,6 @@ namespace PetFamily.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     years_of_experience = table.Column<int>(type: "integer", nullable: false),
-                    count_of_shelter_animals = table.Column<int>(type: "integer", nullable: false),
-                    count_of_homeless_animals = table.Column<int>(type: "integer", nullable: false),
-                    count_of_ill_animals = table.Column<int>(type: "integer", nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     firstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
@@ -50,7 +47,7 @@ namespace PetFamily.Infrastructure.Migrations
                     phone_number = table.Column<int>(type: "integer", maxLength: 100, nullable: false),
                     is_castrated = table.Column<bool>(type: "boolean", nullable: false),
                     is_vaccination = table.Column<bool>(type: "boolean", nullable: false),
-                    assistance_status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    assistance_status = table.Column<int>(type: "integer", maxLength: 100, nullable: false),
                     birth_date = table.Column<DateOnly>(type: "date", nullable: false),
                     date_of_creation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: true),

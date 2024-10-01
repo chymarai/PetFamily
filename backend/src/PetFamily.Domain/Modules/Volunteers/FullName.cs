@@ -10,7 +10,7 @@ namespace PetFamily.Domain.Modules.Volunteers;
 
 public record FullName
 {
-    private FullName(string lastName, string firstName, string surName )
+    private FullName(string lastName, string firstName, string surName)
     {
         LastName = lastName;
         FirstName = firstName;
@@ -19,7 +19,7 @@ public record FullName
     public string LastName { get; } = default!;
     public string FirstName { get; } = default!;
     public string SurName { get; } = default!;
-   
+
     public static Result<FullName, Error> Create(string lastName, string firstName, string surName)
     {
         if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > Constants.MAX_LOW_TEXT_LENGTH)
@@ -31,6 +31,6 @@ public record FullName
         if (string.IsNullOrWhiteSpace(surName) || surName.Length > Constants.MAX_LOW_TEXT_LENGTH)
             return Errors.General.ValueIsInvalid("SurName");
 
-        return new FullName(lastName,firstName,surName);
+        return new FullName(lastName, firstName, surName);
     }
 }

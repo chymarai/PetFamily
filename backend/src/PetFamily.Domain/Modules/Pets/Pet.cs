@@ -36,7 +36,7 @@ public class Pet : Shared.Entity<PetId>
     public int PhoneNumber { get; private set; } = default!;
     public bool IsCastrated { get; private set; } = default!;
     public bool IsVaccination { get; private set; }
-    public string AssistanceStatus { get; private set; } = default!;
+    public AssistanceStatus AssistanceStatus { get; private set; } = default!;
     public DateOnly BirthDate { get; private set; } = default!;
     public DateTime DateOfCreation { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; }

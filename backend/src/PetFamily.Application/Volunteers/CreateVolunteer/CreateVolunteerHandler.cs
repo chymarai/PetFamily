@@ -25,6 +25,8 @@ public class CreateVolunteerHandler
         if (emailResult.IsFailure)
             return emailResult.Error;
 
+        var volunteer = await _volunteersRepository.GetByEmail(emailResult.Value);
+
         var phoneNumberResult = PhoneNumber.Create(request.PhoneNumber);
         if (phoneNumberResult.IsFailure)
             return phoneNumberResult.Error;
@@ -37,7 +39,6 @@ public class CreateVolunteerHandler
 
         var fullName = FullName.Create(fullNameDto.LastName, fullNameDto.FirstName, fullNameDto.Surname);
 
-        var volunteer = await _volunteersRepository.GetByEmail(emailResult.Value);
 
         if (volunteer.IsSuccess)
             return Errors.Volunteer.AlreadyExist();

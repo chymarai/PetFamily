@@ -25,23 +25,23 @@ public class Volunteer : Shared.Entity<VolunteerId>
         Description = description;
     }
 
-    private readonly List<Pet> _pet = [];
+    private readonly List<Pet> _pets = [];
 
     public FullName FullName { get; private set; } = default!;
     public Email Email { get; private set; } = default!;
     public PhoneNumber PhoneNumber { get; private set; } = default!;
     public Description Description { get; private set; } = default!;
     public int YearsOfExperience { get; private set; } = 0;
-    public int CountOfShelterAnimals { get; private set; } = 0;
-    public int CountOfHomelessAnimals { get; private set; } = 0;
-    public int CountOfIllAnimals { get; private set; } = 0;
     public SocialNetworkDetails SocialNetworkDetails { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; } = default!;
-    public IReadOnlyList<Pet> Pet => _pet;
+    public IReadOnlyList<Pet> Pets => _pets;
+    public int CountPetsOnTreatment => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.OnTreatment);
+    public int CountPetsAtTheShelter => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtTheShelter);
+    public int CountPetsAtHome => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtHome);
 
     public void AddPet(Pet pet)
     {
-        _pet.Add(pet);
+        _pets.Add(pet);
     }
 
     public static Result<Volunteer, Error> Create(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, Description description)
@@ -49,4 +49,5 @@ public class Volunteer : Shared.Entity<VolunteerId>
         return new Volunteer(volunteerId, fullName, email, phoneNumber, description);
     }
 }
+
 

@@ -31,7 +31,7 @@ public class VolunteersRepository : IVolunteersRepository
     public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId)
     {
         var volunteer = await _dbContext.Volunteers
-            .Include(m => m.Pet)
+            .Include(m => m.Pets)
             .FirstOrDefaultAsync(m => m.Id == volunteerId);
 
         if (volunteer is null)
@@ -43,7 +43,7 @@ public class VolunteersRepository : IVolunteersRepository
     public async Task<Result<Volunteer, Error>> GetByEmail(Email email)
     {
         var volunteer = await _dbContext.Volunteers
-           .Include(m => m.Pet)
+           .Include(m => m.Pets)
            .FirstOrDefaultAsync(m => m.Email == email);
 
         if (volunteer is null)

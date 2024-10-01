@@ -1,17 +1,35 @@
-﻿using PetFamily.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules.Pets;
 
-public class Breed :Entity<BreedId>
+public class Breed : Shared.Entity<BreedId>
 {
-    public Breed(BreedId id) : base(id)
+    private Breed(BreedId id) : base(id)
     {
-        
+
+    }
+    private Breed(BreedId breedid, string breedName) : base(breedid)
+    {
+        BreedName = breedName;
     }
 
+    public string BreedName { get; }
+
+    public static Result<Breed, Error> Create(BreedId breedid, string breedName)
+    {
+        if (string.IsNullOrWhiteSpace(breedName) || breedName.Length > Constants.MAX_LOW_TEXT_LENGTH)
+            return Errors.General.ValueIsInvalid("Name");
+
+        return new Breed(breedid, breedName);
+    }
+
+    
 }

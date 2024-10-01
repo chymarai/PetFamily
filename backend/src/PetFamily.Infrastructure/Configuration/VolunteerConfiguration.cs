@@ -68,16 +68,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
         builder.Property(m => m.YearsOfExperience)
             .IsRequired();
-
-        builder.Property(m => m.CountOfShelterAnimals)
-            .IsRequired();
-
-        builder.Property(m => m.CountOfHomelessAnimals)
-            .IsRequired();
-
-        builder.Property(m => m.CountOfIllAnimals)
-            .IsRequired();
-
+        
         builder.OwnsOne(m => m.SocialNetworkDetails, mb =>
         {
             mb.ToJson("social_network");
@@ -110,7 +101,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             });
         });
 
-        builder.HasMany(m => m.Pet)
+        builder.HasMany(m => m.Pets)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
     }

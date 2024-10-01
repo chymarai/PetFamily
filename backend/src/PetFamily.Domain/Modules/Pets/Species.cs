@@ -14,5 +14,9 @@ public class Species : Entity<SpeciesId>
         
     }
 
-    public IReadOnlyList<Breed> Breeds { get; set; } = [];
+    public Species(SpeciesId id, IReadOnlyList<Breed> breeds) : base(id)
+    {
+        Breeds = breeds;
+    }
+    private IReadOnlyList<Breed> Breeds { get; } = [];
 }
