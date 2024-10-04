@@ -4,23 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Domain.Modules.Volunteers
+namespace PetFamily.Domain.Modules.Volunteers;
+
+public record VolunteerId
 {
-    public record VolunteerId
+    public VolunteerId()
     {
-        public VolunteerId()
-        {
 
-        }
-        private VolunteerId(Guid value)
-        {
-            Value = value;
-        }
+    }
+    private VolunteerId(Guid value)
+    {
+        Value = value;
+    }
 
-        public Guid Value { get; }
+    public Guid Value { get; }
 
-        public static VolunteerId NewVolunteerId() => new(Guid.NewGuid());
-        public static VolunteerId Empty() => new(Guid.Empty);
-        public static VolunteerId Create(Guid id) => new(id);
+    public static VolunteerId NewVolunteerId() => new(Guid.NewGuid());
+    public static VolunteerId Empty() => new(Guid.Empty);
+    public static VolunteerId Create(Guid id) => new(id);
+
+    public static implicit operator Guid(VolunteerId volunteerId)
+    {
+        ArgumentNullException.ThrowIfNull(volunteerId);
+        return volunteerId.Value;
     }
 }

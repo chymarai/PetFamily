@@ -4,31 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 
-namespace PetFamily.Domain.Modules.Volunteers
+namespace PetFamily.Domain.Modules.Volunteers;
+
+public record Requisite
 {
-    public record Requisite
+    private Requisite(string name, string description)
     {
-        private Requisite(string name, string description)
-        {
-            Name = name;
-            Description = description;
-        }
-        public string Name { get; } = default!;
-        public string Description { get; } = default!;
+        Name = name;
+        Description = description;
+    }
+    public string Name { get; } = default!;
+    public string Description { get; } = default!;
 
-        public static Result<Requisite> Create(string name, string description)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                return "Name can not be empty";
+    public static Result<Requisite, Error> Create(string name, string description)
+    {
+        if (string.IsNullOrWhiteSpace(name) || name.Length > Constants.MAX_LOW_TEXT_LENGTH)
+            return Errors.General.ValueIsInvalid("Name");
+
+        if (string.IsNullOrWhiteSpace(description) || description.Length > Constants.MAX_LOW_TEXT_LENGTH)
+            return Errors.General.ValueIsInvalid("Description");
 
 
-            if (string.IsNullOrWhiteSpace(description))
-                return "Description can not be empty";
-
-            var requisite = new Requisite(name, description);
-
-            return requisite;
-        }
+        return new Requisite(name, description);
     }
 }

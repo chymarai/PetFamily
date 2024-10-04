@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Domain.Shared
-{
-    public abstract class Entity<TId> where TId : notnull
-    {
-        protected Entity(TId id)
-        {
-            Id = id;
-        }
+namespace PetFamily.Domain.Shared;
 
-        public TId Id { get; private set; }
+public abstract class Entity<TId> where TId : notnull
+{
+    protected Entity(TId id)
+    {
+        Id = id;
     }
+
+    public TId Id { get; private set; }
 }

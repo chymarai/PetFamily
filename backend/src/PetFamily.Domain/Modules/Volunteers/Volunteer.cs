@@ -6,53 +6,48 @@ using System.Text;
 using System.Threading.Tasks;
 using PetFamily.Domain.Modules.Pets;
 using PetFamily.Domain.Modules.Volunteers;
+using CSharpFunctionalExtensions;
 
-namespace PetFamily.Domain.Modules.Volunteers
+namespace PetFamily.Domain.Modules.Volunteers;
+
+public class Volunteer : Shared.Entity<VolunteerId>
 {
-    public class Volunteer : Entity<VolunteerId>
+    private Volunteer(VolunteerId id) : base(id)
     {
-        private Volunteer(VolunteerId id) : base(id)
-        {
 
-        }
+    }
 
-        public Volunteer(VolunteerId volunteerId, string fullname, string description) : base(volunteerId)
-        {
-            FullName = fullname;
-            Description = description;
-        }
+    public Volunteer(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, Description description) : base(volunteerId)
+    {
+        FullName = fullName;
+        Email = email;
+        PhoneNumber = phoneNumber;
+        Description = description;
+    }
 
-        private readonly List<Pet> _pet = [];
+    private readonly List<Pet> _pets = [];
 
-        public string FullName { get; private set; } = default!;
-        public string Email { get; private set; } = default!;
-        public string Description { get; private set; } = default!;
-        public int YearsOfExperience { get; private set; } = 0;
-        public int CountOfShelterAnimals { get; private set; } = 0;
-        public int CountOfHomelessAnimals { get; private set; } = 0;
-        public int CountOfIllAnimals { get; private set; } = 0;
-        public string PhoneNumber { get; private set; } = string.Empty;
-        public SocialNetworkDetails SocialNetworkDetails { get; private set; }
-        public RequisiteDetails RequisiteDetails { get; private set; }
-        public IReadOnlyList<Pet> Pet => _pet;
+    public FullName FullName { get; private set; } = default!;
+    public Email Email { get; private set; } = default!;
+    public PhoneNumber PhoneNumber { get; private set; } = default!;
+    public Description Description { get; private set; } = default!;
+    public int YearsOfExperience { get; private set; } = 0;
+    public SocialNetworkDetails SocialNetworkDetails { get; private set; } = default!;
+    public RequisiteDetails RequisiteDetails { get; private set; } = default!;
+    public IReadOnlyList<Pet> Pets => _pets;
+    public int CountPetsOnTreatment => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.OnTreatment);
+    public int CountPetsAtTheShelter => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtTheShelter);
+    public int CountPetsAtHome => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtHome);
 
+    public void AddPet(Pet pet)
+    {
+        _pets.Add(pet);
+    }
 
-        public void AddPet(Pet pet)
-        {
-            _pet.Add(pet);
-        }
-
-        public static Result<Volunteer> Create(VolunteerId volunteerId, string fullName, string description)
-        {
-            if (string.IsNullOrWhiteSpace(fullName))
-                return "Name can not be empty";
-
-
-            if (string.IsNullOrWhiteSpace(description))
-                return "Description can not be empty";
-
-            return new Volunteer(volunteerId, fullName, description);
-        }
+    public static Result<Volunteer, Error> Create(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, Description description)
+    {
+        return new Volunteer(volunteerId, fullName, email, phoneNumber, description);
     }
 }
+
 
