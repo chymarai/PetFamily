@@ -43,7 +43,7 @@ public class VolunteersRepository : IVolunteersRepository
     public async Task<Result<Volunteer, Error>> GetByEmail(Email email)
     {
         var volunteer = await _dbContext.Volunteers
-           .Include(m => m.Pets)
+           .Include(m => m.Pets)    //для таблиц, для VO не надо
            .FirstOrDefaultAsync(m => m.Email == email);
 
         if (volunteer is null)
