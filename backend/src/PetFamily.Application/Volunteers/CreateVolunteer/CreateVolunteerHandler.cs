@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using PetFamily.Infrastructure.Repositories;
+using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace PetFamily.Application.Volunteers.CreateVolunteer;
 
@@ -14,38 +16,27 @@ public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
 
-    public CreateVolunteerHandler(IVolunteersRepository volunteersRepository)
+    public CreateVolunteerHandler(
+        IVolunteersRepository volunteersRepository,
+        IValidator<CreateVolunteerRequest> validator)
     {
         _volunteersRepository = volunteersRepository;
     }
+
     public async Task<Result<Guid, Error>> Handle(
         CreateVolunteerRequest request, CancellationToken cancellationToken = default)
     {
-        var emailResult = Email.Create(request.Email);
-        if (emailResult.IsFailure)
-            return emailResult.Error;
-
-        var volunteer = await _volunteersRepository.GetByEmail(emailResult.Value);
-
-        var phoneNumberResult = PhoneNumber.Create(request.PhoneNumber);
-        if (phoneNumberResult.IsFailure)
-            return phoneNumberResult.Error;
-
-        var descriptionResult = Description.Create(request.Description);
-        if (descriptionResult.IsFailure)
-            return descriptionResult.Error;
-
+        var email = Email.Create(request.Email).Value;
+        var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
+        var description = Description.Create(request.Description).Value;
         var fullNameDto = request.FullName;
+        var fullName = FullName.Create(fullNameDto.LastName, fullNameDto.FirstName, fullNameDto.Surname).Value;
 
-        var fullName = FullName.Create(fullNameDto.LastName, fullNameDto.FirstName, fullNameDto.Surname);
-
-
-        if (volunteer.IsSuccess)
-            return Errors.Volunteer.AlreadyExist();
+        var volunteer = await _volunteersRepository.GetByEmail(email);
 
         var volunteerId = VolunteerId.NewVolunteerId();
 
-        var volunteerToCreate = Volunteer.Create(volunteerId, fullName.Value, emailResult.Value, phoneNumberResult.Value, descriptionResult.Value);
+        var volunteerToCreate = Volunteer.Create(volunteerId, fullName, email, phoneNumber, description);
 
         await _volunteersRepository.Add(volunteerToCreate.Value, cancellationToken);
 

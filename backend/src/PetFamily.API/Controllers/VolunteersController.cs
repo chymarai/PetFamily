@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Extensions;
 using PetFamily.API.Response;
 using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Domain.Shared;
+using System.ComponentModel.DataAnnotations;
 
 namespace PetFamily.API.Controllers;
 
@@ -12,7 +14,7 @@ namespace PetFamily.API.Controllers;
 public class VolunteersController : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<Guid>> Create(
+    public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,
         [FromBody] CreateVolunteerRequest request,
         CancellationToken cancellationToken = default)
@@ -24,6 +26,6 @@ public class VolunteersController : ControllerBase
         if (result.IsFailure)
             return result.Error.ToResponse();
 
-        return Ok(Envelope.Ok(result.Value));
+        return CreatedAtAction("", result.Value);
     }
 }
