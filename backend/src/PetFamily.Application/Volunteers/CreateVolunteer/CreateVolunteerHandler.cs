@@ -9,18 +9,22 @@ using CSharpFunctionalExtensions;
 using PetFamily.Infrastructure.Repositories;
 using FluentValidation;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
 
 namespace PetFamily.Application.Volunteers.CreateVolunteer;
 
 public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
+    private readonly ILogger<CreateVolunteerHandler> _looger;
 
     public CreateVolunteerHandler(
         IVolunteersRepository volunteersRepository,
-        IValidator<CreateVolunteerRequest> validator)
+        IValidator<CreateVolunteerRequest> validator,
+        ILogger<CreateVolunteerHandler> looger)
     {
         _volunteersRepository = volunteersRepository;
+        _looger = looger;
     }
 
     public async Task<Result<Guid, Error>> Handle(
@@ -39,6 +43,8 @@ public class CreateVolunteerHandler
         var volunteerToCreate = Volunteer.Create(volunteerId, fullName, email, phoneNumber, description);
 
         await _volunteersRepository.Add(volunteerToCreate.Value, cancellationToken);
+
+        _looger.LogInformation("Create volunteer {fullName} with id {volunteerId}", fullName, volunteerId);
 
         return volunteerId.Value;
     }
