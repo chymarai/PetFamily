@@ -3,6 +3,7 @@ using PetFamily.Application;
 using FluentValidation.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetFamily.API.Validation;
+using PetFamily.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.ApplyMigration(); //авто вызов миграций
 }
 
 app.UseHttpsRedirection();
