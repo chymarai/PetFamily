@@ -3,7 +3,8 @@ using PetFamily.Application;
 using FluentValidation.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using PetFamily.API.Validation;
-using PetFamily.API;
+using PetFamily.API.Extensions;
+using PetFamily.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddFluentValidationAutoValidation(configuration =>
 });
 
 var app = builder.Build();
+
+app.UseExceptionMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
