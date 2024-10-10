@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PetFamily.Domain.Modules.Pets;
 using PetFamily.Domain.Modules.Volunteers;
 
 namespace PetFamily.Infrastructure;
@@ -14,7 +15,8 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
 {
     private const string DATABASE = "Database";
     public DbSet<Volunteer> Volunteers => Set<Volunteer>();
-    
+    public DbSet<Species> Species => Set<Species>();
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));

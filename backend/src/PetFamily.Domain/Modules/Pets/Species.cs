@@ -9,14 +9,19 @@ namespace PetFamily.Domain.Modules.Pets;
 
 public class Species : Entity<SpeciesId>
 {
-    public Species(SpeciesId id) : base(id)
+    private Species(SpeciesId id) : base(id)
     {
         
     }
 
-    public Species(SpeciesId id, IReadOnlyList<Breed> breeds) : base(id)
+    private Species(SpeciesId id, IReadOnlyList<Breed> breeds) : base(id)
     {
         Breeds = breeds;
     }
-    private IReadOnlyList<Breed> Breeds { get; } = [];
+    public IReadOnlyList<Breed> Breeds { get; } = [];
+
+    public static Species Create(SpeciesId id, IReadOnlyList<Breed> breeds)
+    {
+        return new Species(id, breeds);
+    }
 }

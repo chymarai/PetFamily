@@ -22,7 +22,7 @@ public record SocialNetworkDetails
 
     public IReadOnlyList<SocialNetwork> Value { get; }
 
-    public static Result<SocialNetworkDetails> Create(IEnumerable<SocialNetwork> value)
+    public static SocialNetworkDetails Create(IEnumerable<SocialNetwork> value)
     {
         return new SocialNetworkDetails(value);
     }

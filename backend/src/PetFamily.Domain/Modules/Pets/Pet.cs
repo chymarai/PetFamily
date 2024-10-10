@@ -25,9 +25,8 @@ public class Pet : Shared.Entity<PetId>
     }
 
     public string Name { get; private set; } = default!;
-    public string Species { get; private set; } = default!; //вид
+    public SpeciesBreed SpeciesBreed { get; private set; } = default!; 
     public string Description { get; private set; } = default!;
-    public string Breed { get; private set; } = default!; //порода
     public string Color { get; private set; } = default!;
     public string HealthInformation { get; private set; } = default!;
     public Address Address { get; private set; } = default!;

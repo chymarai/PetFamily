@@ -11,6 +11,6 @@ public static class AppExtensions //авто создание миграций �
 
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        dbContext.Database.MigrateAsync();
+        dbContext.Database.Migrate();
     }
 }
