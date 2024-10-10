@@ -17,12 +17,23 @@ public class Volunteer : Shared.Entity<VolunteerId>
 
     }
 
-    public Volunteer(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, Description description) : base(volunteerId)
+    public Volunteer(
+        VolunteerId volunteerId,
+        FullName fullName,
+        Email email,
+        PhoneNumber phoneNumber,
+        Description description,
+        Experience experience,
+        SocialNetworkDetails socialNetworkDetails,
+        RequisiteDetails requisiteDetails) : base(volunteerId)
     {
         FullName = fullName;
         Email = email;
         PhoneNumber = phoneNumber;
         Description = description;
+        Experience = experience;
+        SocialNetworkDetails = socialNetworkDetails;
+        RequisiteDetails = requisiteDetails;
     }
 
     private readonly List<Pet> _pets = [];
@@ -31,7 +42,7 @@ public class Volunteer : Shared.Entity<VolunteerId>
     public Email Email { get; private set; } = default!;
     public PhoneNumber PhoneNumber { get; private set; } = default!;
     public Description Description { get; private set; } = default!;
-    public int YearsOfExperience { get; private set; } = 0;
+    public Experience Experience { get; private set; } = default!;
     public SocialNetworkDetails SocialNetworkDetails { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; } = default!;
     public IReadOnlyList<Pet> Pets => _pets;
@@ -44,9 +55,25 @@ public class Volunteer : Shared.Entity<VolunteerId>
         _pets.Add(pet);
     }
 
-    public static Result<Volunteer, Error> Create(VolunteerId volunteerId, FullName fullName, Email email, PhoneNumber phoneNumber, Description description)
+    public static Result<Volunteer, Error> Create(
+        VolunteerId volunteerId,
+        FullName fullName,
+        Email email,
+        PhoneNumber phoneNumber,
+        Description description,
+        Experience experience,
+        SocialNetworkDetails socialNetworkDetails,
+        RequisiteDetails requisiteDetails)
     {
-        return new Volunteer(volunteerId, fullName, email, phoneNumber, description);
+        return new Volunteer(
+            volunteerId,
+            fullName,
+            email,
+            phoneNumber,
+            description,
+            experience,
+            socialNetworkDetails,
+            requisiteDetails);
     }
 }
 

@@ -30,6 +30,4 @@ public class Breed : Shared.Entity<BreedId>
 
         return new Breed(breedid, breedName);
     }
-
-    
 }

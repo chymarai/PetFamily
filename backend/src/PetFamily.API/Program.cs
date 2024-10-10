@@ -51,7 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    app.ApplyMigration(); //авто вызов миграций
+   /* app.ApplyMigration();*/ //авто вызов миграций
 }
 
 app.UseSerilogRequestLogging();

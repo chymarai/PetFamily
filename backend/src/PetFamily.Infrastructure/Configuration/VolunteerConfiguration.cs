@@ -60,15 +60,20 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
         builder.ComplexProperty(m => m.Description, tb =>
         {
-             tb.Property (b => b.Value)
+             tb.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH)
                 .HasColumnName("description");
         });
 
-        builder.Property(m => m.YearsOfExperience)
-            .IsRequired();
-        
+        builder.ComplexProperty(m => m.Experience, tb =>
+        {
+            tb.Property(b => b.Value)
+               .IsRequired()
+               .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH)
+               .HasColumnName("experience");
+        });
+
         builder.OwnsOne(m => m.SocialNetworkDetails, mb =>
         {
             mb.ToJson("social_network");

@@ -22,7 +22,7 @@ public record RequisiteDetails
 
     public IReadOnlyList<Requisite> Value { get; }
 
-    public static Result<RequisiteDetails> Create(IEnumerable<Requisite> value)
+    public static RequisiteDetails Create(IEnumerable<Requisite> value)
     {
         return new RequisiteDetails(value);
     }
