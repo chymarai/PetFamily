@@ -22,7 +22,7 @@ public record Email
 
     public static Result<Email, Shared.Error> Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value) || value.Length > Constants.MAX_LOW_TEXT_LENGTH || Regex.IsMatch(value, EmailRegex) == false)
+        if (string.IsNullOrWhiteSpace(value) || value.Length > Constants.MAX_LOW_TEXT_LENGTH/* || Regex.IsMatch(value, EmailRegex) == false*/)
             return Errors.General.ValueIsInvalid("Email");
 
         return new Email(value);

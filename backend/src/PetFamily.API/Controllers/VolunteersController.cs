@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Extensions;
 using PetFamily.API.Response;
 using PetFamily.Application.Volunteers.CreateVolunteer;
-using PetFamily.Application.Volunteers.UpdateMainInfo;
+using PetFamily.Application.Volunteers.SaveMainInfo;
 using PetFamily.Domain.Shared;
 using System.ComponentModel.DataAnnotations;
 

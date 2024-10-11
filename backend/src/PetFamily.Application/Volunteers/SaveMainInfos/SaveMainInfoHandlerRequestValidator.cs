@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 using PetFamily.Application.Validation;
+using PetFamily.Application.Volunteers.SaveMainInfo;
 using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.Shared;
 
-namespace PetFamily.Application.Volunteers.UpdateMainInfo;
+namespace PetFamily.Application.Volunteers.SaveMainInfo;
 
 public class SaveMainInfoHandlerRequestValidator : AbstractValidator<SaveMainInfoRequest>
 {

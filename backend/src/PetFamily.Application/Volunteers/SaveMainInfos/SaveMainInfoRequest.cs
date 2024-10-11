@@ -1,6 +1,7 @@
 ﻿using PetFamily.Application.DTOs;
 using PetFamily.Domain.Modules.Volunteers;
-namespace PetFamily.Application.Volunteers.UpdateMainInfo;
+
+namespace PetFamily.Application.Volunteers.SaveMainInfo;
 
 public record SaveMainInfoRequest(
     Guid VolunteerId,

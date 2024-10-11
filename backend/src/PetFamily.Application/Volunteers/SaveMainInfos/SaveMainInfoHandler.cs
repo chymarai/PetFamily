@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Application.Volunteers.UpdateMainInfo;
+namespace PetFamily.Application.Volunteers.SaveMainInfo;
 public class SaveMainInfoHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
