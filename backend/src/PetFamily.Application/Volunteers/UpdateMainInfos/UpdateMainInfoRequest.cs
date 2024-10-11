@@ -1,13 +1,13 @@
 ﻿using PetFamily.Application.DTOs;
 using PetFamily.Domain.Modules.Volunteers;
 
-namespace PetFamily.Application.Volunteers.SaveMainInfo;
+namespace PetFamily.Application.Volunteers.UpdateMainInfo;
 
-public record SaveMainInfoRequest(
+public record UpdateMainInfoRequest(
     Guid VolunteerId,
-    SaveMainInfoDto Dto);
+    UpdateMainInfoDto Dto);
 
-public record SaveMainInfoDto(
+public record UpdateMainInfoDto(
     FullNameDto FullName,
     string Email,
     string PhoneNumber,

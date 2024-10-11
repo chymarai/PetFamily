@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Extensions;
 using PetFamily.API.Response;
 using PetFamily.Application.Volunteers.CreateVolunteer;
-using PetFamily.Application.Volunteers.SaveMainInfo;
+using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Domain.Shared;
 using System.ComponentModel.DataAnnotations;
 
@@ -33,12 +33,12 @@ public class VolunteersController : ControllerBase
     [HttpPut("{id:guid}/main-info")]
     public async Task<ActionResult> Create(
         [FromRoute] Guid id,
-        [FromServices] SaveMainInfoHandler handler,
-        [FromBody] SaveMainInfoDto dto,
-        [FromServices] IValidator<SaveMainInfoRequest> validator,
+        [FromServices] UpdateMainInfoHandler handler,
+        [FromBody] UpdateMainInfoDto dto,
+        [FromServices] IValidator<UpdateMainInfoRequest> validator,
         CancellationToken cancellationToken = default)
     {
-        var request = new SaveMainInfoRequest(id, dto);
+        var request = new UpdateMainInfoRequest(id, dto);
 
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (validationResult.IsValid == false)

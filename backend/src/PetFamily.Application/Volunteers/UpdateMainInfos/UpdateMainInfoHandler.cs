@@ -10,22 +10,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Application.Volunteers.SaveMainInfo;
-public class SaveMainInfoHandler
+namespace PetFamily.Application.Volunteers.UpdateMainInfo;
+public class UpdateMainInfoHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
-    private readonly ILogger<SaveMainInfoHandler> _logger;
+    private readonly ILogger<UpdateMainInfoHandler> _logger;
 
-    public SaveMainInfoHandler(
+    public UpdateMainInfoHandler(
         IVolunteersRepository volunteersRepository,
-        ILogger<SaveMainInfoHandler> logger)
+        ILogger<UpdateMainInfoHandler> logger)
     {
         _volunteersRepository = volunteersRepository;
         _logger = logger;
     }
 
     public async Task<Result<Guid, Error>> Handle(
-        SaveMainInfoRequest request,
+        UpdateMainInfoRequest request,
         CancellationToken cancellationToken = default)
     {
         var volunteerResult = await _volunteersRepository.GetById(VolunteerId.Create(request.VolunteerId), cancellationToken);
