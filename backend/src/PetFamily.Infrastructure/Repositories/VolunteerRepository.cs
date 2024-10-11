@@ -27,8 +27,16 @@ public class VolunteersRepository : IVolunteersRepository
 
         return volunteer.Id;
     }
+    public async Task<Guid> Update(Volunteer volunteer, CancellationToken cancellationToken = default)
+    {
+        _dbContext.Attach(volunteer);
 
-    public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId)
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return volunteer.Id;
+    }
+
+    public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
             .Include(m => m.Pets)
@@ -40,7 +48,7 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer;
     }
 
-    public async Task<Result<Volunteer, Error>> GetByEmail(Email email)
+    public async Task<Result<Volunteer, Error>> GetByEmail(Email email, CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
            .Include(m => m.Pets)    //для таблиц, для VO не надо

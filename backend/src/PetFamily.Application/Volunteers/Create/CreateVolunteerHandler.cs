@@ -16,7 +16,7 @@ namespace PetFamily.Application.Volunteers.CreateVolunteer;
 public class CreateVolunteerHandler
 {
     private readonly IVolunteersRepository _volunteersRepository;
-    private readonly ILogger<CreateVolunteerHandler> _looger;
+    private readonly ILogger<CreateVolunteerHandler> _logger;
 
     public CreateVolunteerHandler(
         IVolunteersRepository volunteersRepository,
@@ -24,7 +24,7 @@ public class CreateVolunteerHandler
         ILogger<CreateVolunteerHandler> looger)
     {
         _volunteersRepository = volunteersRepository;
-        _looger = looger;
+        _logger = looger;
     }
 
     public async Task<Result<Guid, Error>> Handle(
@@ -63,7 +63,7 @@ public class CreateVolunteerHandler
 
         await _volunteersRepository.Add(volunteerToCreate.Value, cancellationToken);
 
-        _looger.LogInformation("Create volunteer {fullName} with id {volunteerId}", fullName, volunteerId);
+        _logger.LogInformation("Create volunteer {fullName} with id {volunteerId}", fullName, volunteerId);
 
         return volunteerId.Value;
     }

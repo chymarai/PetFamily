@@ -20,11 +20,11 @@ public record PhoneNumber
 
     public static Result<PhoneNumber, Error> Create(string input)
     {
-        var number = input.Trim();
+        //var number = input.Trim();
 
-        if (Regex.IsMatch(number, PhoneRegex) == false)
-            return Errors.General.ValueIsInvalid("Phone number");
+        //if (Regex.IsMatch(number, PhoneRegex) == false)
+        //    return Errors.General.ValueIsInvalid("Phone number");
 
-        return new PhoneNumber(number);
+        return new PhoneNumber(input);
     }
 }
