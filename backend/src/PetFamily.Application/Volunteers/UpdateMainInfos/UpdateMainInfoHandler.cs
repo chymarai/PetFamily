@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PetFamily.Domain.Shared.Errors;
 
 namespace PetFamily.Application.Volunteers.UpdateMainInfo;
 public class UpdateMainInfoHandler
@@ -40,9 +41,15 @@ public class UpdateMainInfoHandler
         var description = Description.Create(request.Dto.Description).Value;
         var experience = Experience.Create(request.Dto.Experience).Value;
 
-        volunteerResult.Value.SaveMainInfo(fullName, email, phoneNumber, description, experience);
+        var requisiteDetailsDto = request.Dto.RequisiteDetails;
+        var requisiteDetails = RequisiteDetails.Create(requisiteDetailsDto.Requisite
+            .Select(r => Requisite.Create(r.Name, r.Description).Value));
 
-        var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
+        volunteerResult.Value.UpdateMainInfo(fullName, email, phoneNumber, description, experience, requisiteDetails);
+
+        var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
+
+        _logger.LogInformation("Update volunteer {fullName}", fullName);
 
         return result;
     }

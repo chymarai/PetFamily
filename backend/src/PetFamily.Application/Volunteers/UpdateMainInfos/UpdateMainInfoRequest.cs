@@ -12,5 +12,6 @@ public record UpdateMainInfoDto(
     string Email,
     string PhoneNumber,
     string Description,
-    string Experience);
+    string Experience,
+    RequisiteDetailsDto RequisiteDetails);
 
