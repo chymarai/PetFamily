@@ -49,7 +49,14 @@ public class UpdateMainInfoHandler
 
         var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
 
-        _logger.LogInformation("Update volunteer {fullName}", fullName);
+        _logger.LogInformation(
+            "Update volunteer {fullName}, {email}, {phoneNumber}, {description}, {experience}, {requisit}",
+            fullName,
+            email,
+            phoneNumber,
+            description,
+            experience,
+            requisiteDetails);
 
         return result;
     }
