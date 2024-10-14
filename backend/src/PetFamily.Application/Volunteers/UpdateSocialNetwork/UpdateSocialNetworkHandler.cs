@@ -40,7 +40,7 @@ public class UpdateSocialNetworkHandler
 
         var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
 
-        _logger.LogInformation("Update {socialNetwork}", socialNetworkDetails);
+        _logger.LogInformation("Update {socialNetwork} with id {volunteerId}", socialNetworkDetails, volunteerResult.Value);
 
         return result;
     }
