@@ -19,7 +19,7 @@ public class SoftDeleteInterceptor : SaveChangesInterceptor //интерсепт
             return await base.SavingChangesAsync(eventData, result, cancellationToken);
 
         var entries = eventData.Context.ChangeTracker
-             .Entries<ISoftDeletable>()
+             .Entries()
              .Where(e => e.State == EntityState.Deleted); 
 
         foreach(var entry in entries) 
