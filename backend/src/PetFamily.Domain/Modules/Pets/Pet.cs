@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.Modules.Pets;
 
-public class Pet : Shared.Entity<PetId>
+public class Pet : Shared.Entity<PetId>, ISoftDeletable
 {
+    private bool _isDeleted = false;
+
     private Pet(PetId id) : base(id)
     {
 
@@ -51,4 +53,9 @@ public class Pet : Shared.Entity<PetId>
 
         return new Pet(petId, name, description);
     }
+
+    public void Delete() => _isDeleted = true;
+
+    public void Restore() => _isDeleted = false;
+
 }

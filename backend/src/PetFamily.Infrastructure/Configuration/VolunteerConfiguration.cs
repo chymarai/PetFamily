@@ -82,11 +82,13 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             {
                 mbBuilder.Property(p => p.Name)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                    .HasColumnName("social_network_name");
 
                 mbBuilder.Property(p => p.Url)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                    .HasColumnName("social_network_url");
             });
         });
 
@@ -108,6 +110,12 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
         builder.HasMany(m => m.Pets)
             .WithOne()
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey("volunteer_id")
+            .OnDelete(DeleteBehavior.Cascade); //при удалении волонтера, удаляются все животные
+
+
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
     }
 }

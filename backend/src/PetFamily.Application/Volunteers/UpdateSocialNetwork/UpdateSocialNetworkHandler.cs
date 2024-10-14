@@ -38,7 +38,7 @@ public class UpdateSocialNetworkHandler
 
         volunteerResult.Value.UpdateSocialNetwork(socialNetworkDetails);
 
-        var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
+        var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
 
         _logger.LogInformation("Update {socialNetwork}", socialNetworkDetails);
 

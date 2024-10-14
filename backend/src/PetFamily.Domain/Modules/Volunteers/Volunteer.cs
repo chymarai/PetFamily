@@ -1,8 +1,8 @@
 ﻿using PetFamily.Domain.Shared;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using PetFamily.Domain.Modules.Pets;
 using PetFamily.Domain.Modules.Volunteers;
@@ -10,8 +10,12 @@ using CSharpFunctionalExtensions;
 
 namespace PetFamily.Domain.Modules.Volunteers;
 
-public class Volunteer : Shared.Entity<VolunteerId>
+public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {
+    private bool _isDeleted = false;
+
+    private readonly List<Pet> _pets = [];
+
     private Volunteer(VolunteerId id) : base(id)
     {
 
@@ -35,8 +39,6 @@ public class Volunteer : Shared.Entity<VolunteerId>
         SocialNetworkDetails = socialNetworkDetails;
         RequisiteDetails = requisiteDetails;
     }
-
-    private readonly List<Pet> _pets = [];
 
     public FullName FullName { get; private set; } = default!;
     public Email Email { get; private set; } = default!;
@@ -72,10 +74,11 @@ public class Volunteer : Shared.Entity<VolunteerId>
         SocialNetworkDetails = socialNetworkDetails;
     }
 
-    public void AddPet(Pet pet)
-    {
-        _pets.Add(pet);
-    }
+    public void AddPet(Pet pet) => _pets.Add(pet);
+
+    public void Delete() => _isDeleted = true;
+
+    public void Restore() => _isDeleted = false;
 
     public static Result<Volunteer, Error> Create(
         VolunteerId volunteerId,

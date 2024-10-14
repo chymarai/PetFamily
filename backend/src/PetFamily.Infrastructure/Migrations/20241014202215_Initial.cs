@@ -27,6 +27,7 @@ namespace PetFamily.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     experience = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
@@ -77,6 +78,7 @@ namespace PetFamily.Infrastructure.Migrations
                     assistance_status = table.Column<int>(type: "integer", maxLength: 100, nullable: false),
                     birth_date = table.Column<DateOnly>(type: "date", nullable: false),
                     date_of_creation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: true),
                     city = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),

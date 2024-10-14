@@ -47,7 +47,7 @@ public class UpdateMainInfoHandler
 
         volunteerResult.Value.UpdateMainInfo(fullName, email, phoneNumber, description, experience, requisiteDetails);
 
-        var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
+        var result = await _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
 
         _logger.LogInformation("Update volunteer {fullName}", fullName);
 

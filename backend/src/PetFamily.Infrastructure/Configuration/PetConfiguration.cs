@@ -135,5 +135,9 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             });
         });
+
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
     }
 }

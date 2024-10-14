@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PetFamily.Application.Volunteers.CreateVolunteer;
+using PetFamily.Infrastructure.Interceptors;
 using PetFamily.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ public static class Inject
     {
         services.AddScoped<ApplicationDbContext>();
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
+
+        services.AddSingleton<SoftDeleteInterceptor>();
 
         return services;
     }

@@ -25,7 +25,7 @@ public class DeleteVolunteerHandler
     }
 
     public async Task<Result<Guid, Error>> Handle(
-        DeleteVolunteerRequest request, CancellationToken cancellationToken)
+        DeleteVolunteerRequest request, CancellationToken cancellationToken = default)
     {
         var volunteerResult = await _volunteersRepository.GetById(VolunteerId.Create(request.VolunteerId), cancellationToken);
         if (volunteerResult.IsFailure)
