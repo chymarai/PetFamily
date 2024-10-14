@@ -19,6 +19,5 @@ public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteer
             .MustBeValueObject(r => SocialNetwork.Create(r.Name, r.Url));
         RuleForEach(c => c.RequisiteDetails.Requisite)
             .MustBeValueObject(r => Requisite.Create(r.Name, r.Description));
-
     }
 }

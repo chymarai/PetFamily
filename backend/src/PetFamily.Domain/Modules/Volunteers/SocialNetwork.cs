@@ -10,6 +10,7 @@ namespace PetFamily.Domain.Modules.Volunteers;
 
 public record SocialNetwork
 {
+    private SocialNetwork() { }
     private SocialNetwork(string name, string url)
     {
         Name = name;

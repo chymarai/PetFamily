@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetFamily.Domain.Modules.Pets;
 using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Infrastructure.Interceptors;
 
 namespace PetFamily.Infrastructure;
 
@@ -21,7 +22,10 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
         optionsBuilder.UseSnakeCaseNamingConvention(); //подключаем расширение для создание таблиц в определенном стиле
+        optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory()); //создание логов
+
+        optionsBuilder.AddInterceptors(new SoftDeleteInterceptor());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

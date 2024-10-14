@@ -102,13 +102,17 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("phone_number");
 
-                    b.Property<Guid?>("VolunteerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("volunteer_id");
-
                     b.Property<int>("Weight")
                         .HasColumnType("integer")
                         .HasColumnName("weight");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("volunteer_id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("volunteer_id");
 
                     b.ComplexProperty<Dictionary<string, object>>("Address", "PetFamily.Domain.Modules.Pets.Pet.Address#Address", b1 =>
                         {
@@ -155,7 +159,7 @@ namespace PetFamily.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_pet");
 
-                    b.HasIndex("VolunteerId")
+                    b.HasIndex("volunteer_id")
                         .HasDatabaseName("ix_pet_volunteer_id");
 
                     b.ToTable("pet", (string)null);
@@ -178,6 +182,10 @@ namespace PetFamily.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<bool>("_isDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
 
                     b.ComplexProperty<Dictionary<string, object>>("Description", "PetFamily.Domain.Modules.Volunteers.Volunteer.Description#Description", b1 =>
                         {
@@ -265,7 +273,7 @@ namespace PetFamily.Infrastructure.Migrations
                 {
                     b.HasOne("PetFamily.Domain.Modules.Volunteers.Volunteer", null)
                         .WithMany("Pets")
-                        .HasForeignKey("VolunteerId")
+                        .HasForeignKey("volunteer_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("fk_pet_volunteer_volunteer_id");
 
@@ -401,12 +409,14 @@ namespace PetFamily.Infrastructure.Migrations
                                     b2.Property<string>("Name")
                                         .IsRequired()
                                         .HasMaxLength(100)
-                                        .HasColumnType("character varying(100)");
+                                        .HasColumnType("character varying(100)")
+                                        .HasColumnName("social_network_name");
 
                                     b2.Property<string>("Url")
                                         .IsRequired()
                                         .HasMaxLength(100)
-                                        .HasColumnType("character varying(100)");
+                                        .HasColumnType("character varying(100)")
+                                        .HasColumnName("social_network_url");
 
                                     b2.HasKey("SocialNetworkDetailsVolunteerId", "Id");
 
