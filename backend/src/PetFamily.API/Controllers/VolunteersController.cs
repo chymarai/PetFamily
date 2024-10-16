@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Extensions;
 using PetFamily.API.Response;
+using PetFamily.Application.FileProvider;
 using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Application.Volunteers.Delete;
 using PetFamily.Application.Volunteers.DeleteVolunteer;
@@ -10,12 +11,12 @@ using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Application.Volunteers.UpdateSocialNetwork;
 using PetFamily.Domain.Shared;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata;
 
 namespace PetFamily.API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class VolunteersController : ControllerBase
+
+public class VolunteersController : ApplicationController
 {
     [HttpPost]
     public async Task<ActionResult> Create(
@@ -86,17 +87,17 @@ public class VolunteersController : ControllerBase
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,
         [FromServices] IValidator<DeleteVolunteerRequest> validator,
-        CancellationToken cancellationToken = default)
+        CancellationToken token = default)
     {
         var request = new DeleteVolunteerRequest(id);
 
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await validator.ValidateAsync(request, token);
         if (validationResult.IsValid == false)
         {
             return validationResult.ToValidationErrorResponse();
         }
 
-        var result = await handler.Handle(request, cancellationToken);
+        var result = await handler.Handle(request, token);
 
         if (result.IsFailure)
             return result.Error.ToResponse();

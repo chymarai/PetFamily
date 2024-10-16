@@ -18,7 +18,7 @@ public class Species : Entity<SpeciesId>
     {
         Breeds = breeds;
     }
-    public IReadOnlyList<Breed> Breeds { get; } = [];
+    public IReadOnlyList<Breed> Breeds { get; private set; } = [];
 
     public static Species Create(SpeciesId id, IReadOnlyList<Breed> breeds)
     {
