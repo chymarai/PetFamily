@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.PetsManagment.Aggregate;
 
 namespace PetFamily.Infrastructure.Configuration;
 

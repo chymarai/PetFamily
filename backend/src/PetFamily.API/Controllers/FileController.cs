@@ -8,7 +8,7 @@ namespace PetFamily.API.Controllers;
 public class FileController : ApplicationController
 {
     [HttpPost]
-    public async Task<ActionResult> Add(
+    public async Task<ActionResult> UploadFile(
         IFormFile file,
         [FromServices] AddFileHandler handler,
         CancellationToken cancellationToken = default)

@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
+using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.Shared;
 using PetFamily.Infrastructure.Repositories;
 using System;

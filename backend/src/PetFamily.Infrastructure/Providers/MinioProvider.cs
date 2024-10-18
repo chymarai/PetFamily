@@ -25,7 +25,7 @@ public class MinioProvider : IFileProvider
         _logger = logger;
     }
 
-    public async Task<Result<string, Error>> UploadFile(FileData fileData, CancellationToken token = default)
+    public async Task<Result<string, Error>> UploadFile(FileData  fileData, CancellationToken token = default)
     {
         try
         {

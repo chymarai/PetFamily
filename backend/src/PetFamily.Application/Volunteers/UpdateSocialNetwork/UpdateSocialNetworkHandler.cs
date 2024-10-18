@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Org.BouncyCastle.Asn1.Ocsp;
 using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.Shared;
 using PetFamily.Infrastructure.Repositories;
 using System;

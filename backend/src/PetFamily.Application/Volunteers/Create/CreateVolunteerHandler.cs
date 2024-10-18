@@ -10,6 +10,9 @@ using PetFamily.Infrastructure.Repositories;
 using FluentValidation;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
+using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
+using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
+using PetFamily.Domain.PetsManagment.Aggregate;
 
 namespace PetFamily.Application.Volunteers.CreateVolunteer;
 
@@ -46,12 +49,9 @@ public class CreateVolunteerHandler
         var requisiteDetails = RequisiteDetails.Create(requisiteDetailsDto.Requisite
             .Select(r => Requisite.Create(r.Name, r.Description).Value));
 
-
-        var volunteer = await _volunteersRepository.GetByEmail(email);
-
         var volunteerId = VolunteerId.NewVolunteerId();
 
-        var volunteerToCreate = Volunteer.Create(
+        var volunteerToCreate = new Volunteer(
             volunteerId,
             fullName,
             email,
@@ -61,7 +61,7 @@ public class CreateVolunteerHandler
             socialNetworkDetails,
             requisiteDetails);
 
-        await _volunteersRepository.Add(volunteerToCreate.Value, cancellationToken);
+        await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
 
         _logger.LogInformation("Create volunteer {fullName} with id {volunteerId}", fullName, volunteerId);
 

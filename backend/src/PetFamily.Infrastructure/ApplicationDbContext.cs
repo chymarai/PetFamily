@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PetFamily.Domain.Modules.Pets;
-using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.PetsManagment.Aggregate;
+using PetFamily.Domain.SpeciesManagment;
 using PetFamily.Infrastructure.Interceptors;
 
 namespace PetFamily.Infrastructure;

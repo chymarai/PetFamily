@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetFamily.Domain.Modules.Pets;
+using PetFamily.Domain.SpeciesManagment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
