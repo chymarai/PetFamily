@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Application.Volunteers.UpdateSocialNetwork;
 
-public record UpdateSocialNetworkRequest(
+public record UpdateSocialNetworkCommand(
     Guid VolunteerId,
     UpdateSocialNetworkDto Dto);
 

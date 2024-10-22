@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 using PetFamily.Domain.Shared;
 using System;
 using System.Collections.Generic;
@@ -9,5 +10,5 @@ using System.Threading.Tasks;
 namespace PetFamily.Application.FileProvider;
 public interface IFileProvider
 {
-    Task<Result<string, Error>> UploadFile(FileData fileData, CancellationToken token = default);
+    Task<Result<IReadOnlyList<FilePath>, Error>> UploadFiles(IEnumerable<FileData> filesData, CancellationToken token = default);
 }

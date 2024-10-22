@@ -1,23 +1,21 @@
 ﻿using FluentValidation;
 using PetFamily.Application.Validation;
+using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
 using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
-using System.Net;
+using PetFamily.Domain.Shared;
 
+namespace PetFamily.Application.Volunteers.UpdateMainInfo;
 
-namespace PetFamily.Application.Volunteers.CreateVolunteer;
-
-public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteerCommand> //валидация входных данных с помощью библиотеки FluentValidation
+public class UpdateMainInfoCommandValidator : AbstractValidator<UpdateMainInfoCommand>
 {
-    public CreateVolunteerRequestValidator() //правила для валидации
+    public UpdateMainInfoCommandValidator()
     {
+        RuleFor(r => r.VolunteerId).NotEmpty().WithError(Errors.General.ValueIsRequired());
         RuleFor(c => c.FullName).MustBeValueObject(x => FullName.Create(x.FirstName, x.LastName, x.Surname));
-        RuleFor(c => c.Email).MustBeValueObject(Email.Create);
         RuleFor(c => c.PhoneNumber).MustBeValueObject(PhoneNumber.Create);
         RuleFor(c => c.Description).MustBeValueObject(Description.Create);
         RuleFor(c => c.Experience).MustBeValueObject(Experience.Create);
-        RuleForEach(c => c.SocialNetworkDetails.SocialNetwork)
-            .MustBeValueObject(r => SocialNetwork.Create(r.Name, r.Url));
         RuleForEach(c => c.RequisiteDetails.Requisite)
             .MustBeValueObject(r => Requisite.Create(r.Name, r.Description));
     }

@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PetFamily.Application.Volunteers.UpdateSocialNetwork;
-public class UpdateSocialNetworkRequestValidator : AbstractValidator<UpdateSocialNetworkRequest>
+public class UpdateSocialNetworkCommandValidator : AbstractValidator<UpdateSocialNetworkCommand>
 {
-    public UpdateSocialNetworkRequestValidator()
+    public UpdateSocialNetworkCommandValidator()
     {
         RuleForEach(c => c.Dto.SocialNetworkDetails.SocialNetwork)
            .MustBeValueObject(r => SocialNetwork.Create(r.Name, r.Url));

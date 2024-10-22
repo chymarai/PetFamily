@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PetFamily.Application.Volunteers.DeleteVolunteer;
-public class DeleteVolunteerValidator : AbstractValidator<DeleteVolunteerRequest>
+public class DeleteVolunteerValidator : AbstractValidator<DeleteVolunteerCommand>
 {
     public DeleteVolunteerValidator()
     {

@@ -5,4 +5,4 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PetFamily.Application.Volunteers.DeleteVolunteer;
-public record DeleteVolunteerRequest(Guid VolunteerId);
+public record DeleteVolunteerCommand(Guid VolunteerId);

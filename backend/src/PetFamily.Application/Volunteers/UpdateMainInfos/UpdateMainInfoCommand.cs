@@ -3,11 +3,8 @@ using PetFamily.Domain.Modules.Volunteers;
 
 namespace PetFamily.Application.Volunteers.UpdateMainInfo;
 
-public record UpdateMainInfoRequest(
+public record UpdateMainInfoCommand(
     Guid VolunteerId,
-    UpdateMainInfoDto Dto);
-
-public record UpdateMainInfoDto(
     FullNameDto FullName,
     string Email,
     string PhoneNumber,

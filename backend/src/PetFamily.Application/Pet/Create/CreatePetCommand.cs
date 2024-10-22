@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Application.Pets;
-public record CreatPetCommand(
+namespace PetFamily.Application.Pet.Create;
+public record CreatePetCommand(
     Guid VolunteerId,
     string Name,
     string Description,
@@ -25,5 +25,7 @@ public record CreatPetCommand(
     DateOnly BirthDate,
     DateTime DateOfCreation,
     RequisiteDetailsDto RequisiteDetails,
-    GalleryDto Gallery
+    IEnumerable<CreateFileCommand> Files
     );
+
+public record CreateFileCommand(Stream Stream, string FileName);

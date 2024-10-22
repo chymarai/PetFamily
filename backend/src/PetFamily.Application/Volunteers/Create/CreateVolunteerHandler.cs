@@ -23,7 +23,7 @@ public class CreateVolunteerHandler
 
     public CreateVolunteerHandler(
         IVolunteersRepository volunteersRepository,
-        IValidator<CreateVolunteerRequest> validator,
+        IValidator<CreateVolunteerCommand> validator,
         ILogger<CreateVolunteerHandler> looger)
     {
         _volunteersRepository = volunteersRepository;
@@ -31,21 +31,21 @@ public class CreateVolunteerHandler
     }
 
     public async Task<Result<Guid, Error>> Handle(
-        CreateVolunteerRequest request, CancellationToken cancellationToken = default)
+        CreateVolunteerCommand command, CancellationToken cancellationToken = default)
     {
-        var fullNameDto = request.FullName;
+        var fullNameDto = command.FullName;
         var fullName = FullName.Create(fullNameDto.LastName, fullNameDto.FirstName, fullNameDto.Surname).Value;
 
-        var email = Email.Create(request.Email).Value;
-        var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
-        var description = Description.Create(request.Description).Value;
-        var experience = Experience.Create(request.Experience).Value;
+        var email = Email.Create(command.Email).Value;
+        var phoneNumber = PhoneNumber.Create(command.PhoneNumber).Value;
+        var description = Description.Create(command.Description).Value;
+        var experience = Experience.Create(command.Experience).Value;
 
-        var socialNetworkDetailsDto = request.SocialNetworkDetails;
+        var socialNetworkDetailsDto = command.SocialNetworkDetails;
         var socialNetworkDetails = SocialNetworkDetails.Create(socialNetworkDetailsDto.SocialNetwork
             .Select(s => SocialNetwork.Create(s.Name, s.Url).Value));
 
-        var requisiteDetailsDto = request.RequisiteDetails;
+        var requisiteDetailsDto = command.RequisiteDetails;
         var requisiteDetails = RequisiteDetails.Create(requisiteDetailsDto.Requisite
             .Select(r => Requisite.Create(r.Name, r.Description).Value));
 

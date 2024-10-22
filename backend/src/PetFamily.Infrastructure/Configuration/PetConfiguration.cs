@@ -10,6 +10,7 @@ using PetFamily.Domain.Shared;
 using PetFamily.Domain.PetsManagment.Ids;
 using PetFamily.Domain.PetsManagment.Entities;
 using PetFamily.Domain.SpeciesManagment;
+using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 
 namespace PetFamily.Infrastructure.Configuration;
 
@@ -152,17 +153,16 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             });
         });
 
-        builder.OwnsOne(m => m.Gallery, mb =>
+        builder.OwnsOne(m => m.Files, mb =>
         {
             mb.ToJson("Gallery");
 
-            mb.OwnsMany(mb => mb.Value, mbBuilder =>
+            mb.OwnsMany(mb => mb.Values, mbBuilder =>
             {
-                mbBuilder.Property(p => p.Storage)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-
-                mbBuilder.Property(p => p.IsMain)
+                mbBuilder.Property(p => p.PathToStorage)
+                    .HasConversion(
+                        p => p.Path,
+                        value => FilePath.Create(value).Value)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             });

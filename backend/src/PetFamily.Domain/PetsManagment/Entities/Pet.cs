@@ -40,7 +40,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         DateOnly birthDate,
         DateTime dateOfCreation,
         RequisiteDetails requisiteDetails,
-        Gallery gallery
+        ValueObjectList<PetFiles> files 
         ) : base(petId)
     {
         Name = name;
@@ -58,7 +58,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         BirthDate = birthDate;
         DateOfCreation = dateOfCreation;
         RequisiteDetails = requisiteDetails;
-        Gallery = gallery;
+        Files = files;
     }
 
     public Name Name { get; private set; } = default!;
@@ -76,9 +76,12 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public DateOnly BirthDate { get; private set; } = default!;
     public DateTime DateOfCreation { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; }
-    public Gallery Gallery { get; private set; }
+    public ValueObjectList<PetFiles> Files { get; private set; }
 
     public void Delete() => _isDeleted = true;
 
     public void Restore() => _isDeleted = false;
+
+    public void UpdateFilesList(ValueObjectList<PetFiles> files) =>
+        Files = files;
 }
