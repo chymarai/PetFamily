@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
+using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.Shared;
 using PetFamily.Infrastructure.Repositories;
 using System;
@@ -26,28 +28,28 @@ public class UpdateMainInfoHandler
     }
 
     public async Task<Result<Guid, Error>> Handle(
-        UpdateMainInfoRequest request,
+        UpdateMainInfoCommand command,
         CancellationToken cancellationToken = default)
     {
-        var volunteerResult = await _volunteersRepository.GetById(VolunteerId.Create(request.VolunteerId), cancellationToken);
+        var volunteerResult = await _volunteersRepository.GetById(VolunteerId.Create(command.VolunteerId), cancellationToken);
         if (volunteerResult.IsFailure)
             return Errors.General.NotFound();
 
-        var fullNameDto = request.Dto.FullName;
+        var fullNameDto = command.FullName;
         var fullName = FullName.Create(fullNameDto.LastName, fullNameDto.FirstName, fullNameDto.Surname).Value;
 
-        var email = Email.Create(request.Dto.Email).Value;
-        var phoneNumber = PhoneNumber.Create(request.Dto.PhoneNumber).Value;
-        var description = Description.Create(request.Dto.Description).Value;
-        var experience = Experience.Create(request.Dto.Experience).Value;
+        var email = Email.Create(command.Email).Value;
+        var phoneNumber = PhoneNumber.Create(command.PhoneNumber).Value;
+        var description = Description.Create(command.Description).Value;
+        var experience = Experience.Create(command.Experience).Value;
 
-        var requisiteDetailsDto = request.Dto.RequisiteDetails;
+        var requisiteDetailsDto = command.RequisiteDetails;
         var requisiteDetails = RequisiteDetails.Create(requisiteDetailsDto.Requisite
             .Select(r => Requisite.Create(r.Name, r.Description).Value));
 
         volunteerResult.Value.UpdateMainInfo(fullName, email, phoneNumber, description, experience, requisiteDetails);
 
-        var result = await _volunteersRepository.Update(volunteerResult.Value, cancellationToken);
+        var result = _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
 
         _logger.LogInformation(
             "Update volunteer {fullName}, {email}, {phoneNumber}, {description}, {experience}, {requisit}",

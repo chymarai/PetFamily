@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Modules;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.Modules.Pets;
+using PetFamily.Domain.PetsManagment.Ids;
+using PetFamily.Domain.PetsManagment.Entities;
+using PetFamily.Domain.SpeciesManagment;
+using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 
 namespace PetFamily.Infrastructure.Configuration;
 
@@ -25,9 +28,13 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
                 value => PetId.Create(value))
             .IsRequired();
 
-        builder.Property(m => m.Name)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+        builder.ComplexProperty(m => m.Name, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("name");
+        });
 
         builder.ComplexProperty(p => p.SpeciesBreed, pb =>
         {
@@ -43,17 +50,29 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasColumnName("breed_id");
         });
 
-        builder.Property(m => m.Description)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+        builder.ComplexProperty(m => m.Description, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("description");
+        });
 
-            builder.Property(m => m.Color)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+        builder.ComplexProperty(m => m.Color, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("email");
+        });
 
-        builder.Property(m => m.HealthInformation)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+        builder.ComplexProperty(m => m.HealthInformation, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("healthInformation");
+        });
 
         builder.ComplexProperty(m => m.Address, tb =>
         {
@@ -77,16 +96,30 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
                 .HasColumnName("street");
         });
-        
-        builder.Property(m => m.Weight)
-            .IsRequired();
 
-        builder.Property(m => m.Height)
-            .IsRequired();
+        builder.ComplexProperty(m => m.Weight, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("height");
+        });
 
-        builder.Property(m => m.PhoneNumber)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+        builder.ComplexProperty(m => m.Height, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("height");
+        });
+
+        builder.ComplexProperty(m => m.PhoneNumber, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("phoneNumber");
+        });
 
         builder.Property(m => m.IsCastrated)
            .IsRequired();
@@ -120,20 +153,23 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             });
         });
 
-        builder.OwnsOne(m => m.Gallery, mb =>
+        builder.OwnsOne(m => m.Files, mb =>
         {
             mb.ToJson("Gallery");
 
-            mb.OwnsMany(mb => mb.Value, mbBuilder =>
+            mb.OwnsMany(mb => mb.Values, mbBuilder =>
             {
-                mbBuilder.Property(p => p.Storage)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-
-                mbBuilder.Property(p => p.IsMain)
+                mbBuilder.Property(p => p.PathToStorage)
+                    .HasConversion(
+                        p => p.Path,
+                        value => FilePath.Create(value).Value)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             });
         });
+
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
     }
 }

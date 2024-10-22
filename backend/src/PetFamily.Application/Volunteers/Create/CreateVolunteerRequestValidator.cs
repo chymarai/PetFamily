@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using PetFamily.Application.Validation;
-using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
+using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using System.Net;
 
 
 namespace PetFamily.Application.Volunteers.CreateVolunteer;
 
-public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteerRequest> //валидация входных данных с помощью библиотеки FluentValidation
+public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteerCommand> //валидация входных данных с помощью библиотеки FluentValidation
 {
     public CreateVolunteerRequestValidator() //правила для валидации
     {
@@ -19,6 +20,5 @@ public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteer
             .MustBeValueObject(r => SocialNetwork.Create(r.Name, r.Url));
         RuleForEach(c => c.RequisiteDetails.Requisite)
             .MustBeValueObject(r => Requisite.Create(r.Name, r.Description));
-
     }
 }
