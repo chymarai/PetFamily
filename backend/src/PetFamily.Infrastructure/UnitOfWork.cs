@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PetFamily.Infrastructure;
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork : IUnitOfWork //Управление транзакциями
 {
     private readonly ApplicationDbContext _dbContext;
     public UnitOfWork(ApplicationDbContext dbContext)

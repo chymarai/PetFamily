@@ -11,18 +11,9 @@ public static class ResponseExtensions
 {
     public static ActionResult ToResponse(this Error error)
     {
-        var statusCode = error.Type switch
-        {
-            ErrorType.Validation => StatusCodes.Status400BadRequest,
-            ErrorType.NotFound => StatusCodes.Status404NotFound,
-            ErrorType.Conflict => StatusCodes.Status409Conflict,
-            ErrorType.Failure => StatusCodes.Status500InternalServerError,
-            _ => StatusCodes.Status500InternalServerError
-        };
+        var statusCode = GetStatusCodeForErrorType(error.Type);
 
-        var responseError = new ResponseError(error.Code, error.Message, null);
-
-        var envelope = Envelope.Error([responseError]);
+        var envelope = Envelope.Error(error.ToErrorList());
 
         return new ObjectResult(envelope)
         {
@@ -30,34 +21,40 @@ public static class ResponseExtensions
         };
     }
 
-    public static ActionResult ToValidationErrorResponse(this ValidationResult result) //метод расширения
+    public static ActionResult ToResponse(this ErrorList errors) //получаем список ошибок
     {
-        if (result.IsValid)
-            throw new InvalidOperationException("Result can not be succeed");
-
-        var validationErrors = result.Errors;
-
-        List<ResponseError> errors = [];
-
-        foreach (var validationError in validationErrors)
+        if (!errors.Any()) //нет ошибок
         {
-            var errorMessage = validationError.ErrorMessage;
-
-            var error = Error.Deserialize(errorMessage);
-
-            var responseError = new ResponseError(
-                error.Code,
-                error.Message,
-                validationError.PropertyName);
-
-            errors.Add(responseError);
+            return new ObjectResult(null)
+            {
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
         }
+
+        var distinctErrorTypes = errors
+            .Select(x => x.Type)
+            .Distinct() //отбираем только уникальные ошибки
+            .ToList();
+
+        var statusCodes = distinctErrorTypes.Count > 1
+            ? StatusCodes.Status500InternalServerError //если ошибок >1
+            : GetStatusCodeForErrorType(distinctErrorTypes.First()); //если все ошибки одного типа
 
         var envelope = Envelope.Error(errors);
 
         return new ObjectResult(envelope)
         {
-            StatusCode = StatusCodes.Status400BadRequest
+            StatusCode = statusCodes
         };
     }
+
+    private static int GetStatusCodeForErrorType(ErrorType errorType) =>
+        errorType switch
+        {
+            ErrorType.Validation => StatusCodes.Status400BadRequest,
+            ErrorType.NotFound => StatusCodes.Status404NotFound,
+            ErrorType.Conflict => StatusCodes.Status409Conflict,
+            ErrorType.Failure => StatusCodes.Status500InternalServerError,
+            _ => StatusCodes.Status500InternalServerError
+        };
 }

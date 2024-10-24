@@ -15,7 +15,7 @@ public record SocialNetworkDetails
 
     }
 
-    private SocialNetworkDetails(IEnumerable<SocialNetwork> value)
+    public SocialNetworkDetails(IEnumerable<SocialNetwork> value)
     {
         Value = value.ToList();
     }

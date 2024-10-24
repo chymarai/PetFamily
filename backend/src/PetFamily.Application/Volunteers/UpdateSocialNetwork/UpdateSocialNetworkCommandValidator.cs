@@ -12,7 +12,7 @@ public class UpdateSocialNetworkCommandValidator : AbstractValidator<UpdateSocia
 {
     public UpdateSocialNetworkCommandValidator()
     {
-        RuleForEach(c => c.Dto.SocialNetworkDetails.SocialNetwork)
+        RuleForEach(c => c.SocialNetworkDetails.SocialNetwork)
            .MustBeValueObject(r => SocialNetwork.Create(r.Name, r.Url));
     }
 }

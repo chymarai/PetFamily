@@ -9,6 +9,5 @@ public record UpdateMainInfoCommand(
     string Email,
     string PhoneNumber,
     string Description,
-    string Experience,
-    RequisiteDetailsDto RequisiteDetails);
+    string Experience);
 

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 using PetFamily.Infrastructure.Services;
 using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
+using PetFamily.Application.Database;
 
 namespace PetFamily.Infrastructure;
 
@@ -24,6 +25,7 @@ public static class Inject
     {
         services.AddScoped<ApplicationDbContext>();
         services.AddScoped<IVolunteersRepository, VolunteersRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddMinio(configuration);
 
