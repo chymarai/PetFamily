@@ -1,4 +1,5 @@
 ﻿using PetFamily.Application.DTOs;
+using PetFamily.Application.Pet.Create;
 
 namespace PetFamily.API.Controllers.Volunteers.Contracts;
 
@@ -18,4 +19,9 @@ public record CreatePetRequest(
     DateOnly BirthDate,
     DateTime DateOfCreation,
     RequisiteDetailsDto RequisiteDetails,
-    IFormFileCollection Files);
+    IFormFileCollection Files)
+{
+    public CreatePetCommand ToCommand(Guid id, IEnumerable<CreateFileCommand> Files) =>
+        new(id, Name, Description, SpeciesBreed, Color, HealthInfornmation, Address, Weight, Height, PhoneNumber, IsCastrated, IsVaccination, 
+            AssistanceStatus, BirthDate, DateOfCreation, RequisiteDetails, Files);
+}

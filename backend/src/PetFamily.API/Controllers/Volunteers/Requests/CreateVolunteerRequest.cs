@@ -1,4 +1,5 @@
 ﻿using PetFamily.Application.DTOs;
+using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Domain.Modules.Volunteers;
 using System;
 using System.Collections.Generic;
@@ -17,4 +18,10 @@ public record CreateVolunteerRequest(
     string Description,
     string Experience,
     SocialNetworkDetailsDto SocialNetworkDetails,
-    RequisiteDetailsDto RequisiteDetails);
+    RequisiteDetailsDto RequisiteDetails)
+{
+    public CreateVolunteerCommand ToCommand() =>
+        new(FullName, Email, PhoneNumber, Description, Experience, SocialNetworkDetails, RequisiteDetails);
+}
+
+

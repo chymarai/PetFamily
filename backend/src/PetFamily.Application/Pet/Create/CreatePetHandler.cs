@@ -55,8 +55,8 @@ public class CreatePetHandler
             var name = Name.Create(command.Name).Value;
             var description = Description.Create(command.Description).Value;
 
-            var speciesId = SpeciesId.Create(command.SpeciesBreed.SpeciesId).Value;
-            var breedId = BreedId.Create(command.SpeciesBreed.BreedId).Value;
+            var speciesId = SpeciesId.NewSpeciesId().Value;
+            var breedId = BreedId.NewVolunteerId().Value;
             var speciesBreed = SpeciesBreed.Create(speciesId, breedId).Value;
 
             var color = Color.Create(command.Color).Value;
@@ -76,6 +76,8 @@ public class CreatePetHandler
 
             var requisite = RequisiteDetails.Create(command.RequisiteDetails.Requisite
                .Select(r => Requisite.Create(r.Name, r.Description).Value));
+
+            var birthDate = Birthday.Create(command.BirthDate).Value;
 
             var petId = PetId.NewPetId();
 
@@ -114,7 +116,7 @@ public class CreatePetHandler
                 command.IsCastrated,
                 command.IsVaccination,
                 assistanceStatus,
-                command.BirthDate,
+                birthDate,
                 command.DateOfCreation,
                 requisite,
                 petFiles);
