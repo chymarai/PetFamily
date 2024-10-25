@@ -77,8 +77,6 @@ public class CreatePetHandler
             var requisite = RequisiteDetails.Create(command.RequisiteDetails.Requisite
                .Select(r => Requisite.Create(r.Name, r.Description).Value));
 
-            var birthDate = Birthday.Create(command.BirthDate).Value;
-
             var petId = PetId.NewPetId();
 
             List<FileData> filesData = [];
@@ -116,7 +114,7 @@ public class CreatePetHandler
                 command.IsCastrated,
                 command.IsVaccination,
                 assistanceStatus,
-                birthDate,
+                command.BirthDate,
                 command.DateOfCreation,
                 requisite,
                 petFiles);

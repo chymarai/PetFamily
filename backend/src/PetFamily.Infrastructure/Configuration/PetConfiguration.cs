@@ -131,13 +131,8 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
-        builder.ComplexProperty(m => m.BirthDate, mb =>
-        {
-            mb.Property(b => b.Value)
-                .IsRequired()
-                .HasColumnName("Birthday");
-        });
-           
+        builder.Property(m => m.BirthDate)
+            .IsRequired();
 
         builder.Property(m => m.DateOfCreation)
            .IsRequired();

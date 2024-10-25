@@ -14,19 +14,21 @@ namespace PetFamily.Domain.PetsManagment.ValueObjects.Pets
 
         public Birthday() { }
 
-        public Birthday(DateOnly value)
+        public Birthday(DateTime value)
         {
             Value = value;
         }
 
-        public DateOnly Value { get; } 
+        public DateTime Value { get; } 
 
-        public static Result<Birthday, Error> Create(DateOnly value)
+        public static Result<Birthday, Error> Create(DateTime value)
         {
-            if (value.Year < MIN_YEAR_BIRTHDAY || value > DateOnly.FromDateTime(DateTime.Now))
-                return Errors.General.ValueIsInvalid("Birthday");
+            //if (value.Year < MIN_YEAR_BIRTHDAY || value > DateTime.Now)
+            //    return Errors.General.ValueIsInvalid("Birthday");
 
             return new Birthday(value);
         }
     }
+
+
 }

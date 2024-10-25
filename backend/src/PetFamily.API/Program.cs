@@ -40,6 +40,8 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 app.UseExceptionMiddleware();
 
 // Configure the HTTP request pipeline.

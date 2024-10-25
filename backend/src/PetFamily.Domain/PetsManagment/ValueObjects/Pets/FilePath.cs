@@ -7,7 +7,7 @@ public record FilePath
 {
     private FilePath(string path)
     {
-        Path = Path;
+        Path = path;
     }
 
     public string Path { get; }

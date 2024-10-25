@@ -117,6 +117,10 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("assistance_status");
 
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("birth_date");
+
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_of_creation");
@@ -164,15 +168,6 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("street");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("BirthDate", "PetFamily.Domain.PetsManagment.Entities.Pet.BirthDate#Birthday", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<DateOnly>("Value")
-                                .HasColumnType("date")
-                                .HasColumnName("Birthday");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Color", "PetFamily.Domain.PetsManagment.Entities.Pet.Color#Color", b1 =>
