@@ -1,7 +1,7 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using PetFamily.API.Extensions;
 using PetFamily.API.Middlewares;
-using PetFamily.API.Validation;
 using PetFamily.Application;
 using PetFamily.Infrastructure;
 using Serilog;
@@ -36,12 +36,11 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
 
-builder.Services.AddFluentValidationAutoValidation(configuration =>
-{
-    configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
-});
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 app.UseExceptionMiddleware();
 

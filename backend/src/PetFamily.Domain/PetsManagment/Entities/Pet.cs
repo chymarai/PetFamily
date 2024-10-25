@@ -37,7 +37,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         bool isCastrated,
         bool isVaccination,
         AssistanceStatus assistanceStatus,
-        DateOnly birthDate,
+        DateTime birthDate,
         DateTime dateOfCreation,
         RequisiteDetails requisiteDetails,
         ValueObjectList<PetFiles> files 
@@ -73,7 +73,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public bool IsCastrated { get; private set; } = default!;
     public bool IsVaccination { get; private set; }
     public AssistanceStatus AssistanceStatus { get; private set; } = default!;
-    public DateOnly BirthDate { get; private set; } = default!;
+    public DateTime BirthDate { get; private set; } = default!;
     public DateTime DateOfCreation { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; }
     public ValueObjectList<PetFiles> Files { get; private set; }

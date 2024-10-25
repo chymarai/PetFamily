@@ -22,7 +22,7 @@ public record CreatePetCommand(
     bool IsCastrated,
     bool IsVaccination,
     string AssistanceStatus,
-    DateOnly BirthDate,
+    DateTime BirthDate,
     DateTime DateOfCreation,
     RequisiteDetailsDto RequisiteDetails,
     IEnumerable<CreateFileCommand> Files

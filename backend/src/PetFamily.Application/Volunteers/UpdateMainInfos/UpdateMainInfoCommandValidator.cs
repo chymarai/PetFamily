@@ -16,7 +16,5 @@ public class UpdateMainInfoCommandValidator : AbstractValidator<UpdateMainInfoCo
         RuleFor(c => c.PhoneNumber).MustBeValueObject(PhoneNumber.Create);
         RuleFor(c => c.Description).MustBeValueObject(Description.Create);
         RuleFor(c => c.Experience).MustBeValueObject(Experience.Create);
-        RuleForEach(c => c.RequisiteDetails.Requisite)
-            .MustBeValueObject(r => Requisite.Create(r.Name, r.Description));
     }
 }

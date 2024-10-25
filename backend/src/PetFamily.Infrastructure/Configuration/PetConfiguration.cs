@@ -132,7 +132,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
 
         builder.Property(m => m.BirthDate)
-           .IsRequired();
+            .IsRequired();
 
         builder.Property(m => m.DateOfCreation)
            .IsRequired();

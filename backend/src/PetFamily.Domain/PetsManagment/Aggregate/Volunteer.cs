@@ -60,15 +60,13 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         Email email,
         PhoneNumber phoneNumber,
         Description description,
-        Experience experience,
-        RequisiteDetails requisiteDetails)
+        Experience experience)
     {
         FullName = fullName;
         Email = email;
         PhoneNumber = phoneNumber;
         Description = description;
         Experience = experience;
-        RequisiteDetails = requisiteDetails;
     }
 
     public void UpdateSocialNetwork(

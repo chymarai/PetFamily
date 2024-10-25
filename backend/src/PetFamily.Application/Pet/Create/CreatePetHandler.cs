@@ -55,8 +55,8 @@ public class CreatePetHandler
             var name = Name.Create(command.Name).Value;
             var description = Description.Create(command.Description).Value;
 
-            var speciesId = SpeciesId.Create(command.SpeciesBreed.SpeciesId).Value;
-            var breedId = BreedId.Create(command.SpeciesBreed.BreedId).Value;
+            var speciesId = SpeciesId.NewSpeciesId().Value;
+            var breedId = BreedId.NewVolunteerId().Value;
             var speciesBreed = SpeciesBreed.Create(speciesId, breedId).Value;
 
             var color = Color.Create(command.Color).Value;

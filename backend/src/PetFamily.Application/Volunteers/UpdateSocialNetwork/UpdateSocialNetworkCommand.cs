@@ -10,6 +10,4 @@ namespace PetFamily.Application.Volunteers.UpdateSocialNetwork;
 
 public record UpdateSocialNetworkCommand(
     Guid VolunteerId,
-    UpdateSocialNetworkDto Dto);
-
-public record UpdateSocialNetworkDto(SocialNetworkDetailsDto SocialNetworkDetails);
+    SocialNetworkDetailsDto SocialNetworkDetails);
