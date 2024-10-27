@@ -22,7 +22,7 @@ public class Breed : Shared.Entity<BreedId>
         BreedName = breedName;
     }
 
-    public string BreedName { get; }
+    public string BreedName { get; } = default!;
 
     public static Result<Breed, Error> Create(BreedId breedid, string breedName)
     {

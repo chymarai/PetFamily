@@ -117,10 +117,6 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("assistance_status");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("birth_date");
-
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_of_creation");
@@ -168,6 +164,15 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("street");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("BirthDate", "PetFamily.Domain.PetsManagment.Entities.Pet.BirthDate#Birthdate", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<DateTime>("Value")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("Birthdate");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Color", "PetFamily.Domain.PetsManagment.Entities.Pet.Color#Color", b1 =>
@@ -293,6 +298,17 @@ namespace PetFamily.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("SpeciesName", "PetFamily.Domain.SpeciesManagment.Species.SpeciesName#SpeciesName", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("species_name");
+                        });
 
                     b.HasKey("Id")
                         .HasName("pk_species");

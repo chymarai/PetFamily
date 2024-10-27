@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PetFamily.Application.File;
 using PetFamily.Application.Pet.Create;
+using PetFamily.Application.Specieses.Create;
 using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Application.Volunteers.Delete;
 using PetFamily.Application.Volunteers.UpdateMainInfo;
@@ -30,6 +31,8 @@ public static class Inject
         //services.AddScoped<AddFileHandler>();
 
         services.AddScoped<CreatePetHandler>();
+
+        services.AddScoped<CreateSpeciesHandler>();
 
         services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 
