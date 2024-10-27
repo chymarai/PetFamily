@@ -284,6 +284,17 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("species_id");
 
+                    b.ComplexProperty<Dictionary<string, object>>("BreedName", "PetFamily.Domain.SpeciesManagment.Breed.BreedName#BreedName", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("breed_name");
+                        });
+
                     b.HasKey("Id")
                         .HasName("pk_breed");
 

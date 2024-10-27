@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.SpeciesManagment;
 
-public class SpeciesName
+public record SpeciesName
 {
     private SpeciesName(string value)
     {

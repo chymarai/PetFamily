@@ -17,18 +17,10 @@ public class Breed : Shared.Entity<BreedId>
     {
 
     }
-    private Breed(BreedId breedid, string breedName) : base(breedid)
+    public Breed(BreedId id, BreedName breedName) : base(id)
     {
         BreedName = breedName;
     }
 
-    public string BreedName { get; } = default!;
-
-    public static Result<Breed, Error> Create(BreedId breedid, string breedName)
-    {
-        if (string.IsNullOrWhiteSpace(breedName) || breedName.Length > Constants.MAX_LOW_TEXT_LENGTH)
-            return Errors.General.ValueIsInvalid("Name");
-
-        return new Breed(breedid, breedName);
-    }
+    public BreedName BreedName { get; } = default!;
 }
