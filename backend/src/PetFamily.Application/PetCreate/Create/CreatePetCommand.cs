@@ -14,7 +14,7 @@ public record CreatePetCommand(
     string Description,
     SpeciesBreedDto SpeciesBreed,
     string Color,
-    string HealthInfornmation,
+    string HealthInformation,
     AddressDto Address,
     int Weight,
     int Height,
@@ -24,8 +24,4 @@ public record CreatePetCommand(
     string AssistanceStatus,
     DateTime BirthDate,
     DateTime DateOfCreation,
-    RequisiteDetailsDto RequisiteDetails,
-    IEnumerable<CreateFileCommand> Files
-    );
-
-public record CreateFileCommand(Stream Stream, string FileName);
+    RequisiteDetailsDto RequisiteDetails);
