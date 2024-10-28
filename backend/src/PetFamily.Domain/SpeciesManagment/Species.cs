@@ -9,19 +9,22 @@ namespace PetFamily.Domain.SpeciesManagment;
 
 public class Species : Entity<SpeciesId>
 {
+    private List<Breed> _breeds = [];
+
     private Species(SpeciesId id) : base(id)
     {
 
     }
 
-    private Species(SpeciesId id, IReadOnlyList<Breed> breeds) : base(id)
+    public Species(SpeciesId id, SpeciesName speciesName) : base(id)
     {
-        Breeds = breeds;
+        SpeciesName = speciesName;
     }
-    public IReadOnlyList<Breed> Breeds { get; private set; } = [];
 
-    public static Species Create(SpeciesId id, IReadOnlyList<Breed> breeds)
-    {
-        return new Species(id, breeds);
-    }
+    public SpeciesName SpeciesName { get; } = default!;
+
+    public IReadOnlyList<Breed> Breeds => _breeds;
+
+    public void AddBreed(Breed breed) => _breeds.Add(breed);
 }
+

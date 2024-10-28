@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 using System.Transactions;
 using System.Data.Common;
+using PetFamily.Application.Specieses;
 
 namespace PetFamily.Application.Pet.Create;
 public class CreatePetHandler
@@ -56,7 +57,7 @@ public class CreatePetHandler
             var description = Description.Create(command.Description).Value;
 
             var speciesId = SpeciesId.NewSpeciesId().Value;
-            var breedId = BreedId.NewVolunteerId().Value;
+            var breedId = BreedId.NewBreedId().Value;
             var speciesBreed = SpeciesBreed.Create(speciesId, breedId).Value;
 
             var color = Color.Create(command.Color).Value;
@@ -73,6 +74,8 @@ public class CreatePetHandler
             var phoneNumber = PhoneNumber.Create(command.PhoneNumber).Value;
 
             var assistanceStatus = AssistanceStatus.AtHome;
+
+            var birthdate = Birthdate.Create(command.BirthDate).Value;
 
             var requisite = RequisiteDetails.Create(command.RequisiteDetails.Requisite
                .Select(r => Requisite.Create(r.Name, r.Description).Value));
@@ -114,7 +117,7 @@ public class CreatePetHandler
                 command.IsCastrated,
                 command.IsVaccination,
                 assistanceStatus,
-                command.BirthDate,
+                birthdate,
                 command.DateOfCreation,
                 requisite,
                 petFiles);

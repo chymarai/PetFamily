@@ -13,7 +13,7 @@ using PetFamily.Infrastructure;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241025082107_Initial")]
+    [Migration("20241027214712_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -120,10 +120,6 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("assistance_status");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("birth_date");
-
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_of_creation");
@@ -171,6 +167,15 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("street");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("BirthDate", "PetFamily.Domain.PetsManagment.Entities.Pet.BirthDate#Birthdate", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<DateTime>("Value")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("Birthdate");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Color", "PetFamily.Domain.PetsManagment.Entities.Pet.Color#Color", b1 =>
@@ -282,6 +287,17 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("species_id");
 
+                    b.ComplexProperty<Dictionary<string, object>>("BreedName", "PetFamily.Domain.SpeciesManagment.Breed.BreedName#BreedName", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("breed_name");
+                        });
+
                     b.HasKey("Id")
                         .HasName("pk_breed");
 
@@ -296,6 +312,17 @@ namespace PetFamily.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("SpeciesName", "PetFamily.Domain.SpeciesManagment.Species.SpeciesName#SpeciesName", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("species_name");
+                        });
 
                     b.HasKey("Id")
                         .HasName("pk_species");

@@ -15,7 +15,8 @@ namespace PetFamily.Infrastructure.Migrations
                 name: "species",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    species_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +49,8 @@ namespace PetFamily.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    species_id = table.Column<Guid>(type: "uuid", nullable: true)
+                    species_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    breed_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,7 +71,6 @@ namespace PetFamily.Infrastructure.Migrations
                     is_castrated = table.Column<bool>(type: "boolean", nullable: false),
                     is_vaccination = table.Column<bool>(type: "boolean", nullable: false),
                     assistance_status = table.Column<int>(type: "integer", maxLength: 100, nullable: false),
-                    birth_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     date_of_creation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: true),
@@ -77,6 +78,7 @@ namespace PetFamily.Infrastructure.Migrations
                     country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     region = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     street = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Birthdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     healthInformation = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),

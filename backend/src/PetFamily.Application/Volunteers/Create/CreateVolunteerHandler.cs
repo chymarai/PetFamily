@@ -1,14 +1,8 @@
 ﻿using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using PetFamily.Infrastructure.Repositories;
 using FluentValidation;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
 using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
