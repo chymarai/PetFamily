@@ -18,10 +18,9 @@ public record CreatePetRequest(
     string AssistanceStatus,
     DateTime BirthDate,
     DateTime DateOfCreation,
-    RequisiteDetailsDto RequisiteDetails,
-    IFormFileCollection Files)
+    RequisiteDetailsDto RequisiteDetails)
 {
-    public CreatePetCommand ToCommand(Guid id, IEnumerable<CreateFileCommand> Files) =>
-        new(id, Name, Description, SpeciesBreed, Color, HealthInfornmation, Address, Weight, Height, PhoneNumber, IsCastrated, IsVaccination, 
-            AssistanceStatus, BirthDate, DateOfCreation, RequisiteDetails, Files);
+    public CreatePetCommand ToCommand(Guid volunteerd) =>
+        new(volunteerd, Name, Description, SpeciesBreed, Color, HealthInfornmation, Address, Weight, Height, PhoneNumber, IsCastrated, IsVaccination, 
+            AssistanceStatus, BirthDate, DateOfCreation, RequisiteDetails);
 }

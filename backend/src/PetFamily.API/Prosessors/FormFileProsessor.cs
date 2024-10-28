@@ -1,28 +1,26 @@
-﻿
-using Org.BouncyCastle.Asn1.Ocsp;
-using PetFamily.Application.DTOs;
-using PetFamily.Application.Pet.Create;
+﻿using PetFamily.Application.DTOs;
+using PetFamily.Application.Pet.AddFiles;
 
 namespace PetFamily.API.Prosessors;
 
 public class FormFileProsessor : IAsyncDisposable
 {
-    List<CreateFileCommand> _fileDto = [];
+    private readonly List<UploadFileDto> _fileDtos = [];
 
-    public List<CreateFileCommand> Process(IFormFileCollection files)
+    public List<UploadFileDto> Process(IFormFileCollection files)
     {
         foreach (var file in files)
         {
             var stream = file.OpenReadStream();
 
-            _fileDto.Add(new CreateFileCommand(stream, file.FileName));
+            _fileDtos.Add(new UploadFileDto(stream, file.FileName));
         }
 
-        return _fileDto;
+        return _fileDtos;
     }
     public async ValueTask DisposeAsync()
     {
-        foreach (var file in _fileDto)
+        foreach (var file in _fileDtos)
         {
             await file.Stream.DisposeAsync();
         }

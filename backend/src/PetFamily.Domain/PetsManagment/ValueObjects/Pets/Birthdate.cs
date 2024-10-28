@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 
-public record Birthdate
+public record BirthDate
 {
     private const int MIN_YEAR_BIRTHDAY = 1960;
 
-    public Birthdate() { }
+    public BirthDate() { }
 
-    public Birthdate(DateTime value)
+    public BirthDate(DateTime value)
     {
         Value = value;
     }
 
     public DateTime Value { get; } 
 
-    public static Result<Birthdate, Error> Create(DateTime value)
+    public static Result<BirthDate, Error> Create(DateTime value)
     {
         if (value.Year < MIN_YEAR_BIRTHDAY || value > DateTime.Now)
             return Errors.General.ValueIsInvalid("Birthday");
 
-        return new Birthdate(value);
+        return new BirthDate(value);
     }
 }

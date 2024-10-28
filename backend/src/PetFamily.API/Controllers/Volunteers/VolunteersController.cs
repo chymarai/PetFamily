@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Controllers;
 using PetFamily.API.Controllers.Volunteers.Contracts;
+using PetFamily.API.Controllers.Volunteers.Requests;
 using PetFamily.API.Extensions;
 using PetFamily.API.Prosessors;
 using PetFamily.Application.DTOs;
-using PetFamily.Application.Pet.Create;
+using PetFamily.Application.Pet.AddFiles;
+using PetFamily.Application.PetCreate.Create;
 using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Application.Volunteers.Delete;
 using PetFamily.Application.Volunteers.DeleteVolunteer;
@@ -81,15 +83,31 @@ public class VolunteersController : ApplicationController
     [HttpPost("{id:guid}/pet")]
     public async Task<ActionResult> CreatePet(
     [FromRoute] Guid id,
-    [FromForm] CreatePetRequest request,
+    [FromBody] CreatePetRequest request,
     [FromServices] CreatePetHandler handler,
+    CancellationToken cancellationToken = default)
+    {
+        var result = await handler.Handle(request.ToCommand(id), cancellationToken);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+
+    [HttpPost("{id:guid}/pet/{petId:guid}/files")]
+    public async Task<ActionResult> AddFilesForPet(
+    [FromRoute] Guid volunteerId,
+    [FromRoute] Guid petId,
+    [FromForm] IFormFileCollection files,
+    [FromServices] UploadFilesToPetHandler handler,
     CancellationToken cancellationToken = default)
     {
         await using var fileProsessor = new FormFileProsessor();
 
-        var filesDto = fileProsessor.Process(request.Files);
+        var fileDtos = fileProsessor.Process(files);
 
-        var command = request.ToCommand(id, filesDto);
+        var command = new UploadFilesToPetCommand(volunteerId, petId, fileDtos);
 
         var result = await handler.Handle(command, cancellationToken);
 
