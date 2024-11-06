@@ -13,7 +13,7 @@ using PetFamily.Infrastructure;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241027214712_Initial")]
+    [Migration("20241105180840_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -115,9 +115,9 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("AssistanceStatus")
-                        .HasMaxLength(100)
-                        .HasColumnType("integer")
+                    b.Property<string>("AssistanceStatus")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("assistance_status");
 
                     b.Property<DateTime>("DateOfCreation")
@@ -169,7 +169,7 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasColumnName("street");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("BirthDate", "PetFamily.Domain.PetsManagment.Entities.Pet.BirthDate#Birthdate", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("BirthDate", "PetFamily.Domain.PetsManagment.Entities.Pet.BirthDate#BirthDate", b1 =>
                         {
                             b1.IsRequired();
 
@@ -242,6 +242,16 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("phoneNumber");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Position", "PetFamily.Domain.PetsManagment.Entities.Pet.Position#Position", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<int>("Value")
+                                .HasMaxLength(100)
+                                .HasColumnType("integer")
+                                .HasColumnName("position");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("SpeciesBreed", "PetFamily.Domain.PetsManagment.Entities.Pet.SpeciesBreed#SpeciesBreed", b1 =>

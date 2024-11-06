@@ -7,9 +7,9 @@ using PetFamily.Domain.Shared;
 
 namespace PetFamily.Application.Volunteers.UpdateMainInfo;
 
-public class UpdateMainInfoCommandValidator : AbstractValidator<UpdateMainInfoCommand>
+public class UpdateMainInfoValidator : AbstractValidator<UpdateMainInfoCommand>
 {
-    public UpdateMainInfoCommandValidator()
+    public UpdateMainInfoValidator()
     {
         RuleFor(r => r.VolunteerId).NotEmpty().WithError(Errors.General.ValueIsRequired());
         RuleFor(c => c.FullName).MustBeValueObject(x => FullName.Create(x.FirstName, x.LastName, x.Surname));

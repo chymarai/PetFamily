@@ -95,9 +95,9 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
 
-    [HttpPost("{id:guid}/pet/{petId:guid}/files")]
+    [HttpPost("{VolunteerId:guid}/pet/{petId:guid}/files")]
     public async Task<ActionResult> AddFilesForPet(
-    [FromRoute] Guid volunteerId,
+    [FromRoute] Guid VolunteerId,
     [FromRoute] Guid petId,
     [FromForm] IFormFileCollection files,
     [FromServices] UploadFilesToPetHandler handler,
@@ -107,7 +107,7 @@ public class VolunteersController : ApplicationController
 
         var fileDtos = fileProsessor.Process(files);
 
-        var command = new UploadFilesToPetCommand(volunteerId, petId, fileDtos);
+        var command = new UploadFilesToPetCommand(VolunteerId, petId, fileDtos);
 
         var result = await handler.Handle(command, cancellationToken);
 
