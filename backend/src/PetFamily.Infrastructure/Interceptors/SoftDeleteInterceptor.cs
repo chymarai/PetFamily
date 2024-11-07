@@ -24,9 +24,9 @@ public class SoftDeleteInterceptor : SaveChangesInterceptor //интерсепт
 
         foreach(var entry in entries) 
         {
-            entry.State = EntityState.Modified; //Статус Deleted меняем на Modified
             if (entry.Entity is ISoftDeletable item)
             {
+                entry.State = EntityState.Modified; //Статус Deleted меняем на Modified
                 item.Delete();
             }            //Меняем свойство Deleted на true
         }

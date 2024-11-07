@@ -42,7 +42,6 @@ public class UpdateSocialNetworkHandler
         CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
-       
         if (validationResult.IsValid == false)
             return validationResult.ToErrorList();
 
@@ -55,13 +54,11 @@ public class UpdateSocialNetworkHandler
 
         volunteerResult.Value.UpdateSocialNetwork(new SocialNetworkDetails(socialNetworkDetails));
 
-        var result = _volunteersRepository.Save(volunteerResult.Value, cancellationToken);
-
         await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Update {socialNetwork} with id {volunteerId}", socialNetworkDetails, volunteerResult.Value);
 
-        return result;
+        return volunteerResult.Value.Id.Value;
     }
 
 }

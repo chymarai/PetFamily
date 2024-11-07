@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Win32.SafeHandles;
 using PetFamily.Domain.Modules.Volunteers;
+using PetFamily.Domain.PetsManagment.Aggregate;
 using PetFamily.Domain.PetsManagment.Ids;
 using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
@@ -18,7 +19,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
 {
     private bool _isDeleted = false;
 
-    private Pet(PetId id) : base(id)
+    private Pet(PetId id) : base(id) 
     {
 
     }
@@ -37,10 +38,10 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         bool isCastrated,
         bool isVaccination,
         AssistanceStatus assistanceStatus,
-        Birthdate birthDate,
+        BirthDate birthDate,
         DateTime dateOfCreation,
         RequisiteDetails requisiteDetails,
-        ValueObjectList<PetFiles> files 
+        ValueObjectList<PetFiles>? files 
         ) : base(petId)
     {
         Name = name;
@@ -58,11 +59,12 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         BirthDate = birthDate;
         DateOfCreation = dateOfCreation;
         RequisiteDetails = requisiteDetails;
-        Files = files;
+        Files = files ?? new ValueObjectList<PetFiles>([]);
     }
 
     public Name Name { get; private set; } = default!;
     public Description Description { get; private set; } = default!;
+    public Position Position { get; private set; } = default!;
     public SpeciesBreed SpeciesBreed { get; private set; } = default!;
     public Color Color { get; private set; } = default!;
     public HealthInformation HealthInformation { get; private set; } = default!;
@@ -73,7 +75,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public bool IsCastrated { get; private set; } = default!;
     public bool IsVaccination { get; private set; }
     public AssistanceStatus AssistanceStatus { get; private set; } = default!;
-    public Birthdate BirthDate { get; private set; } = default!;
+    public BirthDate BirthDate { get; private set; } = default!;
     public DateTime DateOfCreation { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; }
     public ValueObjectList<PetFiles> Files { get; private set; }
@@ -82,6 +84,31 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
 
     public void Restore() => _isDeleted = false;
 
-    public void UpdateFilesList(ValueObjectList<PetFiles> files) =>
+    public void UpdateFiles(ValueObjectList<PetFiles> files) =>
         Files = files;
+
+    public void SetPosition(Position position) =>
+        Position = position;
+
+    public UnitResult<Error> MoveForward()
+    {
+        var newPosition = Position.Forward();
+        if (newPosition.IsFailure)
+            return newPosition.Error;
+
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
+
+    public UnitResult<Error> MoveBack()
+    {
+        var newPosition = Position.Back();
+        if (newPosition.IsFailure)
+            return newPosition.Error;
+
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
 }

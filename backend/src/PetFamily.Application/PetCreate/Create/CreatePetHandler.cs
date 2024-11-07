@@ -21,6 +21,7 @@ using System.Data.Common;
 using PetFamily.Application.Specieses;
 using FluentValidation;
 using PetFamily.Application.Extensions;
+using PetFamily.Domain.Modules.Volunteers;
 
 namespace PetFamily.Application.PetCreate.Create;
 public class CreatePetHandler
@@ -48,7 +49,7 @@ public class CreatePetHandler
         if (validationResult.IsValid == false)
             validationResult.ToErrorList();
 
-        var volunteerResult = await _volunteersRepository.GetById(command.VolunteerId);
+        var volunteerResult = await _volunteersRepository.GetById(command.VolunteerId, token);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error;
 
@@ -72,7 +73,7 @@ public class CreatePetHandler
         var height = Height.Create(command.Height).Value;
         var phoneNumber = PhoneNumber.Create(command.PhoneNumber).Value;
 
-        var assistanceStatus = AssistanceStatus.AtHome;
+        var assistanceStatus = Enum.Parse<AssistanceStatus>(command.AssistanceStatus, true); ;
 
         var birthdate = BirthDate.Create(command.BirthDate).Value;
 

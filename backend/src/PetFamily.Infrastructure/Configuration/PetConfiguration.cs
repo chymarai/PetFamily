@@ -58,6 +58,14 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasColumnName("description");
         });
 
+        builder.ComplexProperty(m => m.Position, tb =>
+        {
+            tb.Property(b => b.Value)
+                .IsRequired()
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
+                .HasColumnName("position");
+        });
+
         builder.ComplexProperty(m => m.Color, tb =>
         {
             tb.Property(b => b.Value)
@@ -128,17 +136,23 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
            .IsRequired();
 
         builder.Property(m => m.AssistanceStatus)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
+            .HasConversion<string>()
+            .IsRequired();
 
         builder.ComplexProperty(m => m.BirthDate, mb =>
         {
             mb.Property(b => b.Value)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc))
                 .IsRequired()
                 .HasColumnName("Birthdate");
         });
 
         builder.Property(m => m.DateOfCreation)
+           .HasConversion(
+                v => v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc))
            .IsRequired();
 
         builder.OwnsOne(m => m.RequisiteDetails, mb =>
