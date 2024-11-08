@@ -16,6 +16,10 @@ using PetFamily.Infrastructure.Services;
 using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
 using PetFamily.Application.Database;
 using PetFamily.Application.Specieses;
+using PetFamily.Infrastructure.BackgroundServices;
+using PetFamily.Application.Messaging;
+using PetFamily.Infrastructure.MessageQueues;
+using PetFamily.Application.FileProvider;
 
 namespace PetFamily.Infrastructure;
 
@@ -30,8 +34,12 @@ public static class Inject
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddMinio(configuration);
+        
+        services.AddHostedService<FilesCleanerBackgroundService>();
 
         services.AddSingleton<SoftDeleteInterceptor>();
+
+        services.AddSingleton<IMessageQueue<IEnumerable<FileInfos>>, InMemoryCleanerMessageQueue<IEnumerable<FileInfos>>>();
 
         return services;
     }

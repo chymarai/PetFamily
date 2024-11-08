@@ -7,4 +7,6 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Application.FileProvider;
 
-public record FileData(Stream Stream, FilePath FilePath, string BucketName);
+public record FileData(Stream Stream, FileInfos Info);
+
+public record FileInfos(FilePath FilePath, string BucketName);
