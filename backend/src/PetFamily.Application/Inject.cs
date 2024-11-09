@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using PetFamily.Application.File;
 using PetFamily.Application.Pet.AddFiles;
 using PetFamily.Application.PetCreate.Create;
 using PetFamily.Application.Specieses.Create;
@@ -29,8 +28,6 @@ public static class Inject
         services.AddScoped<UpdateSocialNetworkHandler>();
 
         services.AddScoped<DeleteVolunteerHandler>();
-
-        //services.AddScoped<AddFileHandler>();
 
         services.AddScoped<CreatePetHandler>();
 

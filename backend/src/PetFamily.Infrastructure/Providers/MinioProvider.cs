@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
 
@@ -28,6 +29,41 @@ public class MinioProvider : IFileProvider
         _logger = logger;
     }
 
+    public async Task<UnitResult<Error>> RemoveFiles(
+        FileInfos fileInfo,
+        CancellationToken token = default)
+    {
+        try
+        {
+            await IfBucketsNotExistCreateBucket([fileInfo.BucketName], token);
+
+            var statArgs = new StatObjectArgs()
+                .WithBucket(fileInfo.BucketName)
+                .WithObject(fileInfo.FilePath.Path);
+
+            var objectStat = await _minioClient.StatObjectAsync(statArgs, token);
+            if (objectStat is null)
+                return Result.Success<Error>();
+
+            var removeArgs = new RemoveObjectArgs()
+                .WithBucket(fileInfo.BucketName)
+                .WithObject(fileInfo.FilePath.Path);
+
+            await _minioClient.RemoveObjectAsync(removeArgs, token);
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex,
+                "Fail to remove file in minio with path {path} in bucket {bucket}",
+                fileInfo.FilePath.Path,
+                fileInfo.BucketName);
+            return Error.Failure("file.upload", "Fail to upload file in minio");
+        }
+
+        return Result.Success<Error>();
+    }
+
     public async Task<Result<IReadOnlyList<FilePath>, Error>> UploadFiles(
        IEnumerable<FileData> filesData,
        CancellationToken cancellationToken = default)
@@ -37,7 +73,7 @@ public class MinioProvider : IFileProvider
 
         try
         {
-            await IfBucketsNotExistCreateBucket(filesList, cancellationToken);
+            await IfBucketsNotExistCreateBucket(filesList.Select(file => file.Info.BucketName), cancellationToken);
 
             var tasks = filesList.Select(async file =>
                 await PutObject(file, semaphoreSlim, cancellationToken));
@@ -68,23 +104,23 @@ public class MinioProvider : IFileProvider
         await semaphoreSlim.WaitAsync(cancellationToken);
 
         var putObjectArgs = new PutObjectArgs()
-            .WithBucket(fileData.BucketName)
+            .WithBucket(fileData.Info.BucketName)
             .WithStreamData(fileData.Stream)
             .WithObjectSize(fileData.Stream.Length)
-            .WithObject(fileData.FilePath.Path);
+            .WithObject(fileData.Info.FilePath.Path);
 
         try
         {
             await _minioClient
                 .PutObjectAsync(putObjectArgs, cancellationToken);
-            return fileData.FilePath;
+            return fileData.Info.FilePath;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex,
                 "Fail to upload file in minio with path {path} in bucket {bucket}",
-                fileData.FilePath.Path,
-                fileData.BucketName);
+                fileData.Info.FilePath.Path,
+                fileData.Info.BucketName);
             return Error.Failure("file.upload", "Fail to upload file in minio");
         }
         finally
@@ -93,10 +129,10 @@ public class MinioProvider : IFileProvider
         }
     }
     private async Task IfBucketsNotExistCreateBucket(
-        IEnumerable<FileData> filesData,
+        IEnumerable<string> buckets,
         CancellationToken cancellationToken) //проверка наличия бакэта, если нет, то создаем
     {
-        HashSet<string> bucketNames = [.. filesData.Select(file => file.BucketName)]; //отбираем уникальные значения
+        HashSet<string> bucketNames = [..buckets]; //отбираем уникальные значения
 
         foreach (var bucketName in bucketNames)
         {
