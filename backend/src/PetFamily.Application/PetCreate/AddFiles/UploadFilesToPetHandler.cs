@@ -24,7 +24,7 @@ public class UploadFilesToPetHandler
 {
     private const string BUCKET_NAME = "photos";
 
-    private readonly IVolunteersRepository _volunteersRepository;
+    private readonly IReadVolunteersRepository _volunteersRepository;
     private readonly FileProvider.IFileProvider _fileProvider;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<UploadFilesToPetCommand> _validator;
@@ -32,7 +32,7 @@ public class UploadFilesToPetHandler
     private readonly ILogger<UploadFilesToPetHandler> _logger;
 
     public UploadFilesToPetHandler(
-        IVolunteersRepository volunteersRepository,
+        IReadVolunteersRepository volunteersRepository,
         FileProvider.IFileProvider fileProvider,
         IUnitOfWork unitOfWork,
         IValidator<UploadFilesToPetCommand> validator,

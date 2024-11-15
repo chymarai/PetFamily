@@ -4,10 +4,11 @@ using PetFamily.Application.Pet.AddFiles;
 using PetFamily.Application.PetCreate.Create;
 using PetFamily.Application.Specieses.Create;
 using PetFamily.Application.Specieses.CreateBreed;
-using PetFamily.Application.Volunteers.CreateVolunteer;
-using PetFamily.Application.Volunteers.Delete;
-using PetFamily.Application.Volunteers.UpdateMainInfo;
-using PetFamily.Application.Volunteers.UpdateSocialNetwork;
+using PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
+using PetFamily.Application.Volunteers.WriteHandler.Create;
+using PetFamily.Application.Volunteers.WriteHandler.DeleteVolunteer;
+using PetFamily.Application.Volunteers.WriteHandler.UpdateMainInfos;
+using PetFamily.Application.Volunteers.WriteHandler.UpdateSocialNetwork;
 using PetFamily.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,8 @@ public static class Inject
         services.AddScoped<CreateSpeciesHandler>();
 
         services.AddScoped<CreateBreedHandler>();
+
+        services.AddScoped<GetVolunteersWithPaginationHandler>();
 
         services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 

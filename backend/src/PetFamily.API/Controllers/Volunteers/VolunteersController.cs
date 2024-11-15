@@ -1,24 +1,31 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PetFamily.API.Controllers;
-using PetFamily.API.Controllers.Volunteers.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Controllers.Volunteers.Requests;
 using PetFamily.API.Extensions;
 using PetFamily.API.Prosessors;
-using PetFamily.Application.DTOs;
 using PetFamily.Application.Pet.AddFiles;
 using PetFamily.Application.PetCreate.Create;
-using PetFamily.Application.Volunteers.CreateVolunteer;
-using PetFamily.Application.Volunteers.Delete;
-using PetFamily.Application.Volunteers.DeleteVolunteer;
-using PetFamily.Application.Volunteers.UpdateMainInfo;
-using PetFamily.Application.Volunteers.UpdateSocialNetwork;
+using PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
+using PetFamily.Application.Volunteers.WriteHandler.Create;
+using PetFamily.Application.Volunteers.WriteHandler.DeleteVolunteer;
+using PetFamily.Application.Volunteers.WriteHandler.UpdateMainInfos;
+using PetFamily.Application.Volunteers.WriteHandler.UpdateSocialNetwork;
 
 namespace PetFamily.API.Controllers.Volunteers;
 
 public class VolunteersController : ApplicationController
 {
+    [HttpGet]
+    public async Task<ActionResult> GetVolunteers(
+        [FromQuery]GetVolunteersWithPaginationHandler handler,
+        [FromBody]GetVolunteersWithPaginationRequest request,
+        CancellationToken token = default)
+    {
+        var result = await handler.Handle(request.ToCommand(), token);
+
+        return Ok(result);
+
+    }
+
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,

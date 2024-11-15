@@ -26,13 +26,13 @@ using PetFamily.Domain.Modules.Volunteers;
 namespace PetFamily.Application.PetCreate.Create;
 public class CreatePetHandler
 {
-    private readonly IVolunteersRepository _volunteersRepository;
+    private readonly IReadVolunteersRepository _volunteersRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<CreatePetCommand> _validator;
     private readonly ILogger<CreatePetHandler> _logger;
 
     public CreatePetHandler(
-        IVolunteersRepository volunteersRepository,
+        IReadVolunteersRepository volunteersRepository,
         IUnitOfWork unitOfWork,
         IValidator<CreatePetCommand> validator,
         ILogger<CreatePetHandler> logger)
