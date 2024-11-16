@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Application.DTOs;
 
-namespace PetFamily.Infrastructure.Configuration.Read;
+namespace PetFamily.Infrastructure.Configurations.Read;
 
 public class PetDtoConfiguration : IEntityTypeConfiguration<PetDto>
 {

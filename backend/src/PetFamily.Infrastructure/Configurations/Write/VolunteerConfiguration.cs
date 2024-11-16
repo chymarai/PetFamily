@@ -9,7 +9,7 @@ using PetFamily.Domain.Shared;
 using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.PetsManagment.Aggregate;
 
-namespace PetFamily.Infrastructure.Configuration.Write;
+namespace PetFamily.Infrastructure.Configurations.Write;
 
 public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 {
@@ -30,17 +30,17 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             tb.Property(m => m.FirstName)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("firstName");
+                .HasColumnName("first_name");
 
             tb.Property(m => m.LastName)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("lastName");
+                .HasColumnName("last_name");
 
             tb.Property(m => m.SurName)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("middleName");
+                .HasColumnName("middle_name");
         });
 
         builder.ComplexProperty(m => m.Email, tb =>
@@ -56,7 +56,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             tb.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("phoneNumber");
+                .HasColumnName("phone_number");
         });
 
         builder.ComplexProperty(m => m.Description, tb =>

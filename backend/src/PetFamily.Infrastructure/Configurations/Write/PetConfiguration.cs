@@ -12,7 +12,7 @@ using PetFamily.Domain.PetsManagment.Entities;
 using PetFamily.Domain.SpeciesManagment;
 using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 
-namespace PetFamily.Infrastructure.Configuration.Write;
+namespace PetFamily.Infrastructure.Configurations.Write;
 
 internal class PetConfiguration : IEntityTypeConfiguration<Pet>
 {
@@ -79,7 +79,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             tb.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("healthInformation");
+                .HasColumnName("health_information");
         });
 
         builder.ComplexProperty(m => m.Address, tb =>
@@ -126,7 +126,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             tb.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("phoneNumber");
+                .HasColumnName("phone_number");
         });
 
         builder.Property(m => m.IsCastrated)
@@ -146,7 +146,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
                     v => v.ToUniversalTime(),
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc))
                 .IsRequired()
-                .HasColumnName("Birthdate");
+                .HasColumnName("birthdate");
         });
 
         builder.Property(m => m.DateOfCreation)
@@ -173,7 +173,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.OwnsOne(m => m.Files, mb =>
         {
-            mb.ToJson("Gallery");
+            mb.ToJson("gallery");
 
             mb.OwnsMany(mb => mb.Values, mbBuilder =>
             {

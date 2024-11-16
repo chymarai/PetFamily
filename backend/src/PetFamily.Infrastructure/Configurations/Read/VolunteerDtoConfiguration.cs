@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Infrastructure.Configuration.Read;
+namespace PetFamily.Infrastructure.Configurations.Read;
 public class VolunteerDtoConfiguration : IEntityTypeConfiguration<VolunteerDto>
 {
     public void Configure(EntityTypeBuilder<VolunteerDto> builder)

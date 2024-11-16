@@ -16,8 +16,8 @@ public class VolunteersController : ApplicationController
 {
     [HttpGet]
     public async Task<ActionResult> GetVolunteers(
-        [FromQuery]GetVolunteersWithPaginationHandler handler,
-        [FromBody]GetVolunteersWithPaginationRequest request,
+        [FromServices]GetVolunteersWithPaginationHandler handler,
+        [FromQuery]GetVolunteersWithPaginationRequest request,
         CancellationToken token = default)
     {
         var result = await handler.Handle(request.ToCommand(), token);

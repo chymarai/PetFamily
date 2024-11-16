@@ -24,7 +24,7 @@ public class ReadDbContext(IConfiguration configuration) : DbContext, IReadDbCon
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
-        //optionsBuilder.UseSnakeCaseNamingConvention();
+        optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
     }
@@ -32,7 +32,7 @@ public class ReadDbContext(IConfiguration configuration) : DbContext, IReadDbCon
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
-            typeof(WriteDbContext).Assembly,
+            typeof(ReadDbContext).Assembly,
             type => type.FullName?.Contains("Configurations.Read") ?? false);
     }
     private ILoggerFactory CreateLoggerFactory() =>
