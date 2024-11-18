@@ -29,6 +29,8 @@ public static class Inject
             .AddHostedServices()
             .AddMessageQueues();
 
+        services.AddSingleton<SoftDeleteInterceptor>();
+
         return services;
     }
 
@@ -42,7 +44,7 @@ public static class Inject
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IReadVolunteersRepository, WriteVolunteersRepository>();
+        services.AddScoped<IWriteVolunteersRepository, WriteVolunteersRepository>();
         services.AddScoped<ISpeciesesRepository, SpeciesesRepository>();
 
         return services;

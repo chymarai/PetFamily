@@ -18,8 +18,8 @@ namespace PetFamily.Infrastructure.DbContexts;
 public class ReadDbContext(IConfiguration configuration) : DbContext, IReadDbContext
 {
     private const string DATABASE = "Database";
-    public DbSet<VolunteerDto> Volunteers => Set<VolunteerDto>();
-    public DbSet<PetDto> Pets => Set<PetDto>();
+    public IQueryable<VolunteerDto> Volunteers => Set<VolunteerDto>();
+    public IQueryable<PetDto> Pets => Set<PetDto>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -27,6 +27,8 @@ public class ReadDbContext(IConfiguration configuration) : DbContext, IReadDbCon
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
+
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); //отключение отслеживания состояния
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

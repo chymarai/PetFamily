@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PetFamily.Infrastructure.Repositories;
 
-public class WriteVolunteersRepository : IReadVolunteersRepository
+public class WriteVolunteersRepository : IWriteVolunteersRepository
 {
     private readonly WriteDbContext _dbContext;
 
