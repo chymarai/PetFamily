@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
-public class GetVolunteersWithPaginationHandler : IQueriesHandler<VolunteerDto, GetVolunteersWithPaginationQuery>
+public class GetVolunteersWithPaginationHandler : IQueriesHandler<PagedList<VolunteerDto>, GetVolunteersWithPaginationQuery>
 {
     private readonly IReadDbContext _readDbContext;
 

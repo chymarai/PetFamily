@@ -4,7 +4,7 @@ using PetFamily.Domain.PetsManagment.Aggregate;
 using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.Shared;
 
-namespace PetFamily.Infrastructure.Repositories;
+namespace PetFamily.Application.PetsManagment.Queries;
 
 public interface IWriteVolunteersRepository
 {
@@ -13,4 +13,4 @@ public interface IWriteVolunteersRepository
     Guid Delete(Volunteer volunteer, CancellationToken cancellationToken = default);
     Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken = default);
     Task<Result<Volunteer, Error>> GetByEmail(Email email, CancellationToken cancellationToken = default);
-} 
+}

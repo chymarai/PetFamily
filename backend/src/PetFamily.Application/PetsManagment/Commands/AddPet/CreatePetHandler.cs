@@ -8,7 +8,6 @@ using PetFamily.Domain.PetsManagment.Entities;
 using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.SpeciesManagment;
-using PetFamily.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +21,7 @@ using FluentValidation;
 using PetFamily.Application.Extensions;
 using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Application.Abstraction;
+using PetFamily.Application.PetsManagment.Queries;
 
 namespace PetFamily.Application.Volunteers.Commands.AddPet;
 public class CreatePetHandler : ICommandHandler<Guid, CreatePetCommand>

@@ -10,7 +10,6 @@ using PetFamily.Domain.PetsManagment.Entities;
 using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.SpeciesManagment;
-using PetFamily.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

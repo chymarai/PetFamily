@@ -4,11 +4,11 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Application.Abstraction;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
+using PetFamily.Application.PetsManagment.Queries;
 using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
 using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.Shared;
-using PetFamily.Infrastructure.Repositories;
 
 namespace PetFamily.Application.Volunteers.WriteHandler.UpdateMainInfos;
 public class UpdateMainInfoHandler : ICommandHandler<Guid, UpdateMainInfoCommand>

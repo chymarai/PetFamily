@@ -10,7 +10,6 @@ using PetFamily.Application.Volunteers.WriteHandler.Create;
 using PetFamily.Application.Volunteers.WriteHandler.DeleteVolunteer;
 using PetFamily.Application.Volunteers.WriteHandler.UpdateMainInfos;
 using PetFamily.Application.Volunteers.WriteHandler.UpdateSocialNetwork;
-using PetFamily.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

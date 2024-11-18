@@ -1,7 +1,6 @@
 ﻿using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.Shared;
 using CSharpFunctionalExtensions;
-using PetFamily.Infrastructure.Repositories;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
@@ -10,6 +9,7 @@ using PetFamily.Domain.PetsManagment.Aggregate;
 using PetFamily.Application.Extensions;
 using PetFamily.Application.Database;
 using PetFamily.Application.Abstraction;
+using PetFamily.Application.PetsManagment.Queries;
 
 namespace PetFamily.Application.Volunteers.WriteHandler.Create;
 

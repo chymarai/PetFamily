@@ -12,19 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Add services to the container.
 
-//Log.Logger = new LoggerConfiguration()
-//    .WriteTo.Console()
-//    .WriteTo.Debug()
-//    .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")
-//                 ?? throw new ArgumentNullException("Seq"))
-//    .Enrich.WithThreadId()
-//    .Enrich.WithEnvironmentName()
-//    .Enrich.WithMachineName()
-//    .Enrich.WithEnvironmentName()
-//    .MinimumLevel.Override("Microsoft.AspNetCore.Hosting", LogEventLevel.Warning)
-//    .MinimumLevel.Override("Microsoft.AspNetCore.Mvc", LogEventLevel.Warning)
-//    .MinimumLevel.Override("Microsoft.AspNetCore.Routing", LogEventLevel.Warning)
-//    .CreateLogger();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.Debug()
+    .WriteTo.Seq(builder.Configuration.GetConnectionString("Seq")
+                 ?? throw new ArgumentNullException("Seq"))
+    .Enrich.WithThreadId()
+    .Enrich.WithEnvironmentName()
+    .Enrich.WithMachineName()
+    .Enrich.WithEnvironmentName()
+    .MinimumLevel.Override("Microsoft.AspNetCore.Hosting", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.AspNetCore.Mvc", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.AspNetCore.Routing", LogEventLevel.Warning)
+    .CreateLogger();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

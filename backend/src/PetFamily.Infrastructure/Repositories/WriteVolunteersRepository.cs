@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using PetFamily.Application.PetsManagment.Queries;
 using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.PetsManagment.Aggregate;
 using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;

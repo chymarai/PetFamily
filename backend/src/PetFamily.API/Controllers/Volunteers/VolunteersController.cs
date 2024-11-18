@@ -2,6 +2,7 @@
 using PetFamily.API.Controllers.Volunteers.Requests;
 using PetFamily.API.Extensions;
 using PetFamily.API.Prosessors;
+using PetFamily.Application.PetsManagment.Queries.GetVolunteerById;
 using PetFamily.Application.Volunteers.Commands.AddFiles;
 using PetFamily.Application.Volunteers.Commands.AddPet;
 using PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
@@ -24,6 +25,22 @@ public class VolunteersController : ApplicationController
 
         return Ok(result);
 
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult> GetVolunteerById(
+        [FromServices]GetVolunteerByIdHandler handler,
+        [FromRoute]Guid id,
+        CancellationToken token = default)
+    {
+        var query = new GetVolunteerByIdQuery(id);
+
+        var result = await handler.Handle(query, token);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
     }
 
     [HttpPost]
@@ -70,7 +87,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:guid}/delete")]
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,

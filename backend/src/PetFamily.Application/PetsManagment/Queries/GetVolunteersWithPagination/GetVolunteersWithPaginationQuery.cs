@@ -6,4 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
-public record GetVolunteersWithPaginationQuery(int Page, int PageSize) : IQueries;
+public record GetVolunteersWithPaginationQuery(
+    string? LastName,
+    int Page, 
+    int PageSize) : IQueries;

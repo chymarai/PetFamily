@@ -13,6 +13,7 @@ using PetFamily.Application.Messaging;
 using PetFamily.Infrastructure.MessageQueues;
 using PetFamily.Application.FileProvider;
 using PetFamily.Infrastructure.DbContexts;
+using PetFamily.Application.PetsManagment.Queries;
 
 namespace PetFamily.Infrastructure;
 
