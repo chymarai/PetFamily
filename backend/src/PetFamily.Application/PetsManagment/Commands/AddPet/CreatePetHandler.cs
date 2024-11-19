@@ -27,20 +27,17 @@ namespace PetFamily.Application.Volunteers.Commands.AddPet;
 public class CreatePetHandler : ICommandHandler<Guid, CreatePetCommand>
 {
     private readonly IWriteVolunteersRepository _volunteersRepository;
-    private readonly IReadDbContext _readDbContext;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<CreatePetCommand> _validator;
     private readonly ILogger<CreatePetHandler> _logger;
 
     public CreatePetHandler(
         IWriteVolunteersRepository volunteersRepository,
-        IReadDbContext readDbContext,
         IUnitOfWork unitOfWork,
         IValidator<CreatePetCommand> validator,
         ILogger<CreatePetHandler> logger)
     {
         _volunteersRepository = volunteersRepository;
-        _readDbContext = readDbContext;
         _unitOfWork = unitOfWork;
         _validator = validator;
         _logger = logger;
@@ -56,23 +53,12 @@ public class CreatePetHandler : ICommandHandler<Guid, CreatePetCommand>
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
 
-        var speciesId = SpeciesId.Create(command.SpeciesBreed.SpeciesId).Value;
-
-        var speciesResult = _readDbContext.Breeds.FirstOrDefault(s => s.SpeciesId == speciesId);
-        if (speciesResult is null)
-            return Errors.General.NotFound(speciesId).ToErrorList();
-
-        var breedId = BreedId.Create(command.SpeciesBreed.BreedId).Value;
-
-        var breedResult = _readDbContext.Breeds.FirstOrDefault(s => s.Id == breedId);
-        if (breedResult is null)
-            return Errors.General.NotFound(breedId).ToErrorList();
-
-        var speciesBreed = SpeciesBreed.Create(speciesId, breedId).Value;
-
         var name = Name.Create(command.Name).Value;
         var description = Description.Create(command.Description).Value;
 
+        var speciesId = SpeciesId.NewSpeciesId().Value;
+        var breedId = BreedId.NewBreedId().Value;
+        var speciesBreed = SpeciesBreed.Create(speciesId, breedId).Value;
 
         var color = Color.Create(command.Color).Value;
         var healthInformation = HealthInformation.Create(command.HealthInformation).Value;
@@ -96,7 +82,7 @@ public class CreatePetHandler : ICommandHandler<Guid, CreatePetCommand>
 
         var petId = PetId.NewPetId();
 
-        var pet = new Pet(
+        var pet = new Domain.PetsManagment.Entities.Pet(
             petId,
             name,
             description,

@@ -9,7 +9,7 @@ namespace PetFamily.Domain.SpeciesManagment;
 
 public class Species : Entity<SpeciesId>
 {
-    private readonly List<Breed> _breeds = [];
+    private List<Breed> _breeds = [];
 
     private Species(SpeciesId id) : base(id)
     {
