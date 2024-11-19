@@ -20,6 +20,8 @@ public class ReadDbContext(IConfiguration configuration) : DbContext, IReadDbCon
     private const string DATABASE = "Database";
     public IQueryable<VolunteerDto> Volunteers => Set<VolunteerDto>();
     public IQueryable<PetDto> Pets => Set<PetDto>();
+    public IQueryable<SpeciesDto> Specieses => Set<SpeciesDto>();
+    public IQueryable<BreedDto> Breeds => Set<BreedDto>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
