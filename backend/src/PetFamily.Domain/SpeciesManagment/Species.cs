@@ -9,7 +9,7 @@ namespace PetFamily.Domain.SpeciesManagment;
 
 public class Species : Entity<SpeciesId>
 {
-    private List<Breed> _breeds = [];
+    private readonly List<Breed> _breeds = [];
 
     private Species(SpeciesId id) : base(id)
     {
@@ -26,5 +26,7 @@ public class Species : Entity<SpeciesId>
     public IReadOnlyList<Breed> Breeds => _breeds;
 
     public void AddBreed(Breed breed) => _breeds.Add(breed);
+
+    public void DeleteBreed(Breed breed) => _breeds.Remove(breed);
 }
 

@@ -2,16 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Minio.AspNetCore;
-using PetFamily.Application.Volunteers.CreateVolunteer;
 using PetFamily.Infrastructure.Interceptors;
 using PetFamily.Infrastructure.Repositories;
-using PetFamily.Infrastructure.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.FileProviders;
 using PetFamily.Infrastructure.Services;
 using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
 using PetFamily.Application.Database;
@@ -20,6 +12,8 @@ using PetFamily.Infrastructure.BackgroundServices;
 using PetFamily.Application.Messaging;
 using PetFamily.Infrastructure.MessageQueues;
 using PetFamily.Application.FileProvider;
+using PetFamily.Infrastructure.DbContexts;
+using PetFamily.Application.PetsManagment.Queries;
 
 namespace PetFamily.Infrastructure;
 
@@ -28,17 +22,52 @@ public static class Inject
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<ApplicationDbContext>();
-        services.AddScoped<IVolunteersRepository, VolunteersRepository>();
-        services.AddScoped<ISpeciesesRepository, SpeciesesRepository>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-        services.AddMinio(configuration);
-        
-        services.AddHostedService<FilesCleanerBackgroundService>();
+        services
+            .AddDbContexts()
+            .AddMinio(configuration)
+            .AddRepositories()
+            .AddDatabase()
+            .AddHostedServices()
+            .AddMessageQueues();
 
         services.AddSingleton<SoftDeleteInterceptor>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddDbContexts(this IServiceCollection services)
+    {
+        services.AddScoped<WriteDbContext>();
+        services.AddScoped<IReadDbContext, ReadDbContext>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IWriteVolunteersRepository, WriteVolunteersRepository>();
+        services.AddScoped<ISpeciesesRepository, SpeciesesRepository>();
+
+        return services;
+    }
+
+
+    private static IServiceCollection AddHostedServices(this IServiceCollection services)
+    {
+        services.AddHostedService<FilesCleanerBackgroundService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddDatabase(this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddMessageQueues(this IServiceCollection services)
+    {
         services.AddSingleton<IMessageQueue<IEnumerable<FileInfos>>, InMemoryCleanerMessageQueue<IEnumerable<FileInfos>>>();
 
         return services;

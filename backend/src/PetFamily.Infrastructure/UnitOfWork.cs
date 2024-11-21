@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using PetFamily.Application.Database;
+using PetFamily.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,8 +11,8 @@ using System.Threading.Tasks;
 namespace PetFamily.Infrastructure;
 public class UnitOfWork : IUnitOfWork //Управление транзакциями
 {
-    private readonly ApplicationDbContext _dbContext;
-    public UnitOfWork(ApplicationDbContext dbContext)
+    private readonly WriteDbContext _dbContext;
+    public UnitOfWork(WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

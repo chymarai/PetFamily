@@ -1,24 +1,48 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PetFamily.API.Controllers;
-using PetFamily.API.Controllers.Volunteers.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Controllers.Volunteers.Requests;
 using PetFamily.API.Extensions;
 using PetFamily.API.Prosessors;
-using PetFamily.Application.DTOs;
-using PetFamily.Application.Pet.AddFiles;
-using PetFamily.Application.PetCreate.Create;
-using PetFamily.Application.Volunteers.CreateVolunteer;
-using PetFamily.Application.Volunteers.Delete;
-using PetFamily.Application.Volunteers.DeleteVolunteer;
-using PetFamily.Application.Volunteers.UpdateMainInfo;
-using PetFamily.Application.Volunteers.UpdateSocialNetwork;
+using PetFamily.Application.PetsManagment.Queries.GetVolunteerById;
+using PetFamily.Application.Volunteers.Commands.AddFiles;
+using PetFamily.Application.Volunteers.Commands.AddPet;
+using PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
+using PetFamily.Application.Volunteers.WriteHandler.Create;
+using PetFamily.Application.Volunteers.WriteHandler.DeleteVolunteer;
+using PetFamily.Application.Volunteers.WriteHandler.UpdateMainInfos;
+using PetFamily.Application.Volunteers.WriteHandler.UpdateSocialNetwork;
 
 namespace PetFamily.API.Controllers.Volunteers;
 
 public class VolunteersController : ApplicationController
 {
+    [HttpGet]
+    public async Task<ActionResult> GetVolunteers(
+        [FromServices]GetVolunteersWithPaginationHandler handler,
+        [FromQuery]GetVolunteersWithPaginationRequest request,
+        CancellationToken token = default)
+    {
+        var result = await handler.Handle(request.ToCommand(), token);
+
+        return Ok(result);
+
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult> GetVolunteerById(
+        [FromServices]GetVolunteerByIdHandler handler,
+        [FromRoute]Guid id,
+        CancellationToken token = default)
+    {
+        var query = new GetVolunteerByIdQuery(id);
+
+        var result = await handler.Handle(query, token);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,
@@ -63,7 +87,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:guid}/delete")]
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,

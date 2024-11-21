@@ -1,7 +1,7 @@
 ﻿using PetFamily.Application.DTOs;
-using PetFamily.Application.Pet.Create;
+using PetFamily.Application.Volunteers.Commands.AddPet;
 
-namespace PetFamily.API.Controllers.Volunteers.Contracts;
+namespace PetFamily.API.Controllers.Volunteers.Requests;
 
 public record CreatePetRequest(
     string Name,
@@ -21,6 +21,6 @@ public record CreatePetRequest(
     RequisiteDetailsDto RequisiteDetails)
 {
     public CreatePetCommand ToCommand(Guid volunteerd) =>
-        new(volunteerd, Name, Description, SpeciesBreed, Color, HealthInfornmation, Address, Weight, Height, PhoneNumber, IsCastrated, IsVaccination, 
+        new(volunteerd, Name, Description, SpeciesBreed, Color, HealthInfornmation, Address, Weight, Height, PhoneNumber, IsCastrated, IsVaccination,
             AssistanceStatus, BirthDate, DateOfCreation, RequisiteDetails);
 }

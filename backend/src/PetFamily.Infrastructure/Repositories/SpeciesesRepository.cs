@@ -4,6 +4,7 @@ using PetFamily.Application.Specieses;
 using PetFamily.Domain.Modules.Volunteers;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.SpeciesManagment;
+using PetFamily.Infrastructure.DbContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace PetFamily.Infrastructure.Repositories;
 
 public class SpeciesesRepository : ISpeciesesRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly WriteDbContext _dbContext;
 
-    public SpeciesesRepository(ApplicationDbContext dbContext)
+    public SpeciesesRepository(WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

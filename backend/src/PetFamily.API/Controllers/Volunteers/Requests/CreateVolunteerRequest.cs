@@ -1,5 +1,5 @@
 ﻿using PetFamily.Application.DTOs;
-using PetFamily.Application.Volunteers.CreateVolunteer;
+using PetFamily.Application.Volunteers.WriteHandler.Create;
 using PetFamily.Domain.Modules.Volunteers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace PetFamily.API.Controllers.Volunteers.Contracts;
+namespace PetFamily.API.Controllers.Volunteers.Requests;
 
 public record CreateVolunteerRequest(
     FullNameDto FullName,
