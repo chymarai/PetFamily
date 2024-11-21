@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,26 @@ public static class Errors
             var label = name ?? "value";
 
             return Error.Validation("record.already.exist", $"{label} already exist");
+        }
+    }
+
+    public static class Species
+    {
+        public static Error Exist(Guid? id = null)
+        {
+            var Id = id == null ? "" : $" {id}";
+
+            return Error.Conflict("animal.of.this.species.exist", $"animal.of.this.species{Id}.exist");
+        }
+    }
+
+    public static class Breed
+    {
+        public static Error Exist(Guid? id = null)
+        {
+            var Id = id == null ? "" : $" {id}";
+
+            return Error.Conflict("animal.of.this.breed.exist", $"animal.of.this.breed{Id}.exist");
         }
     }
 }

@@ -62,7 +62,7 @@ public class CreatePetHandler : ICommandHandler<Guid, CreatePetCommand>
         if (speciesResult is null)
             return Errors.General.NotFound(speciesId).ToErrorList();
 
-        var breedId = BreedId.Create(command.SpeciesBreed.BreedId).Value;
+        var breedId = BreedId.Create(command.SpeciesBreed.Id).Value;
 
         var breedResult = _readDbContext.Breeds.FirstOrDefault(s => s.Id == breedId);
         if (breedResult is null)

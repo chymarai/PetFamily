@@ -26,5 +26,7 @@ public class Species : Entity<SpeciesId>
     public IReadOnlyList<Breed> Breeds => _breeds;
 
     public void AddBreed(Breed breed) => _breeds.Add(breed);
+
+    public void DeleteBreed(Breed breed) => _breeds.Remove(breed);
 }
 

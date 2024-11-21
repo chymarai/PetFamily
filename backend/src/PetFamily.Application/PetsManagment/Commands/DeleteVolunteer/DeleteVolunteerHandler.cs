@@ -37,11 +37,10 @@ public class DeleteVolunteerHandler : ICommandHandler<Guid, DeleteVolunteerComma
         DeleteVolunteerCommand command, CancellationToken cancellationToken = default)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
         if (validationResult.IsValid == false)
             return validationResult.ToErrorList();
 
-        var volunteerResult = await _volunteersRepository.GetById(VolunteerId.Create(command.VolunteerId), cancellationToken);
+        var volunteerResult = await _volunteersRepository.GetById(command.VolunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
 

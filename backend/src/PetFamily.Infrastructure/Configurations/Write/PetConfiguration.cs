@@ -71,7 +71,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             tb.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("email");
+                .HasColumnName("color");
         });
 
         builder.ComplexProperty(m => m.HealthInformation, tb =>
@@ -173,7 +173,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.OwnsOne(m => m.Files, mb =>
         {
-            mb.ToJson("gallery");
+            mb.ToJson("files");
 
             mb.OwnsMany(mb => mb.Values, mbBuilder =>
             {

@@ -16,7 +16,7 @@ public class VolunteerDtoConfiguration : IEntityTypeConfiguration<VolunteerDto>
     {
         builder.ToTable("volunteer");
 
-        builder.HasKey(v => v.Id);
+        builder.HasKey(m => m.Id);
 
         //builder.HasMany(p => p.Pets)
         //    .WithOne()

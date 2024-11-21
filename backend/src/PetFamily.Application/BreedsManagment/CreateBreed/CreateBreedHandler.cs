@@ -50,9 +50,6 @@ public class CreateBreedHandler : ICommandHandler<Guid, CreateBreedCommand>
         if (speciesResult.IsFailure)
             return speciesResult.Error.ToErrorList();
 
-        if (validationResult.IsValid == false)
-            return validationResult.ToErrorList();
-
         var breedId = BreedId.NewBreedId();
 
         var breedName = BreedName.Create(command.BreedName).Value;

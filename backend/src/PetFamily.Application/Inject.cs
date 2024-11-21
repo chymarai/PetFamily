@@ -34,7 +34,7 @@ public static class Inject
     {
         return services.Scan(scan => scan.FromAssemblies(typeof(Inject).Assembly)
            .AddClasses(classes => classes.
-               AssignableToAny(typeof(IQueriesHandler<,>)))
+               AssignableToAny(typeof(IQueriesHandler<,>), typeof(IQueriesHandler<>)))
            .AsSelfWithInterfaces()
            .WithScopedLifetime());
     }
