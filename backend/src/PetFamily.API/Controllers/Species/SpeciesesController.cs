@@ -3,6 +3,8 @@ using PetFamily.API.Controllers.Species.Request;
 using PetFamily.API.Extensions;
 using PetFamily.Application.BreedsManagment.DeleteBreed;
 using PetFamily.Application.BreedsManagment.DeleteSpecies;
+using PetFamily.Application.BreedsManagment.GetBreeds;
+using PetFamily.Application.BreedsManagment.GetSpecies;
 using PetFamily.Application.Specieses.Create;
 using PetFamily.Application.Specieses.CreateBreed;
 
@@ -10,6 +12,16 @@ namespace PetFamily.API.Controllers.Species;
 
 public class SpeciesesController : ApplicationController
 {
+    [HttpGet]
+    public async Task<ActionResult> GetSpesiesesOrderByName(
+        [FromServices] GetSpeciesesOrderByNameHandler handler,
+        CancellationToken token = default)
+    {
+        var result = await handler.Handle(token);
+
+        return Ok(result);
+    }
+
     [HttpGet("{id:guid}/breed")]
     public async Task<ActionResult> GetBreedsOrderByName(
        [FromRoute] Guid id,
@@ -22,6 +34,7 @@ public class SpeciesesController : ApplicationController
 
         return Ok(result);
     }
+
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromBody] CreateSpeciesRequest request,
