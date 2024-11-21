@@ -10,6 +10,18 @@ namespace PetFamily.API.Controllers.Species;
 
 public class SpeciesesController : ApplicationController
 {
+    [HttpGet("{id:guid}/breed")]
+    public async Task<ActionResult> GetBreedsOrderByName(
+       [FromRoute] Guid id,
+       [FromServices] GetBreedsOrderByNameHandler handler,
+       CancellationToken token = default)
+    {
+        var query = new GetBreedsOrderByNameQuery(id);
+
+        var result = await handler.Handle(query, token);
+
+        return Ok(result);
+    }
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromBody] CreateSpeciesRequest request,
