@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Controllers.Species.Request;
 using PetFamily.API.Extensions;
+using PetFamily.Application.BreedsManagment.DeleteBreed;
+using PetFamily.Application.BreedsManagment.DeleteSpecies;
 using PetFamily.Application.Specieses.Create;
 using PetFamily.Application.Specieses.CreateBreed;
 
@@ -36,6 +38,21 @@ public class SpeciesesController : ApplicationController
 
         return Ok(result.Value);
     }
+
+    [HttpDelete("{id:guid}/delete")]
+    public async Task<ActionResult> DeleteSpecies(
+        [FromRoute] Guid id,
+        [FromServices] DeleteSpeciesHandler handler, 
+        CancellationToken token)
+    {
+        var result = await handler.Handle(new DeleteSpeciesCommand(id), token);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+
     [HttpDelete("{speciesId:guid}/{breedId:guid}/delete")]
     public async Task<ActionResult> DeleteBreed(
     [FromRoute] Guid speciesId,
