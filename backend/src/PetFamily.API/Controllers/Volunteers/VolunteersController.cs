@@ -2,6 +2,7 @@
 using PetFamily.API.Controllers.Volunteers.Requests;
 using PetFamily.API.Extensions;
 using PetFamily.API.Prosessors;
+using PetFamily.Application.PetsManagment.Commands.UpdatePetInfo;
 using PetFamily.Application.PetsManagment.Queries.GetVolunteerById;
 using PetFamily.Application.Volunteers.Commands.AddFiles;
 using PetFamily.Application.Volunteers.Commands.AddPet;
@@ -134,6 +135,22 @@ public class VolunteersController : ApplicationController
         var command = new UploadFilesToPetCommand(VolunteerId, petId, fileDtos);
 
         var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+
+    [HttpPut("{VolunteerId:guid}/pet/{PetId:guid}/info")]
+    public async Task<ActionResult> Create(
+    [FromRoute] Guid VolunteerId,
+    [FromRoute] Guid PetId,
+    [FromServices] UpdatePetInfoHandler handler,
+    [FromBody] UpdatePetInfoRequest request,
+    CancellationToken cancellationToken = default)
+    {
+        var result = await handler.Handle(request.ToCommand(VolunteerId, PetId), cancellationToken);
 
         if (result.IsFailure)
             return result.Error.ToResponse();

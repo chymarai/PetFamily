@@ -11,6 +11,9 @@ using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
 using PetFamily.Domain.PetsManagment.Entities;
 using PetFamily.Domain.PetsManagment.Ids;
+using PetFamily.Domain.SpeciesManagment;
+using System.Net;
+using System.Xml.Linq;
 
 namespace PetFamily.Domain.PetsManagment.Aggregate;
 
@@ -92,10 +95,17 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
             return position.Error;
 
         pet.SetPosition(position.Value);
-
         _pets.Add(pet);
 
         return Result.Success<Error>();
+    }
+
+    public void UpdatePetInfo(Pet pet)
+    { 
+        var index = _pets.FindIndex(p => p.Id == pet.Id);
+
+        if (index != -1)
+            _pets[index] = pet;
     }
 
     public UnitResult<Error> ShiftPetPosition(Pet pet, Position newPosition)
