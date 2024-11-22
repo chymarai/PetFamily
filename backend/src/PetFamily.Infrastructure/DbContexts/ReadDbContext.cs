@@ -5,7 +5,6 @@ using PetFamily.Application.Database;
 using PetFamily.Application.DTOs;
 using PetFamily.Domain.PetsManagment.Aggregate;
 using PetFamily.Domain.SpeciesManagment;
-using PetFamily.Infrastructure.Interceptors;
 using System;
 using System.Collections.Generic;
 using System.Linq;

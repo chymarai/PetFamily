@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Minio.AspNetCore;
-using PetFamily.Infrastructure.Interceptors;
 using PetFamily.Infrastructure.Repositories;
 using PetFamily.Infrastructure.Services;
 using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
@@ -29,8 +28,6 @@ public static class Inject
             .AddDatabase()
             .AddHostedServices()
             .AddMessageQueues();
-
-        services.AddSingleton<SoftDeleteInterceptor>();
 
         return services;
     }

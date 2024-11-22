@@ -17,13 +17,10 @@ using System.Xml.Linq;
 
 namespace PetFamily.Domain.PetsManagment.Entities;
 
-public class Pet : Shared.Entity<PetId>, ISoftDeletable
+public class Pet : SoftDeletableEntity<PetId>
 {
-    private bool _isDeleted = false;
-
     private Pet(PetId id) : base(id) 
     {
-
     }
 
     public Pet(
@@ -81,10 +78,6 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public DateTime DateOfCreation { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; }
     public ValueObjectList<PetFiles> Files { get; private set; }
-
-    public void Delete() => _isDeleted = true;
-
-    public void Restore() => _isDeleted = false;
 
     public void UpdateFiles(ValueObjectList<PetFiles> files) =>
         Files = files;

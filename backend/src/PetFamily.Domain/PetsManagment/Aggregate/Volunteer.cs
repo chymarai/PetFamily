@@ -17,10 +17,8 @@ using System.Xml.Linq;
 
 namespace PetFamily.Domain.PetsManagment.Aggregate;
 
-public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
+public class Volunteer : SoftDeletableEntity<VolunteerId>
 {
-    private bool _isDeleted = false;
-
     private readonly List<Pet> _pets = [];
 
     private Volunteer(VolunteerId id) : base(id)
@@ -164,9 +162,21 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         return lastPosition.Value;
     }
 
-    public void Delete() => _isDeleted = true;
+    public override void Delete()
+    {
+        base.Delete();
 
-    public void Restore() => _isDeleted = false;
+        foreach (var pet in _pets)
+            pet.Delete();
+    }
+
+    public override void Restore()
+    {
+        base.Restore();
+
+        foreach (var pet in _pets)
+            pet.Restore();
+    }
 }
 
 

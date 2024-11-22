@@ -186,7 +186,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             });
         });
 
-        builder.Property<bool>("_isDeleted")
+        builder.Property<bool>("IsDeleted")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("is_deleted");
     }
