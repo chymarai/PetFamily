@@ -87,7 +87,7 @@ public class CreatePetHandler : ICommandHandler<Guid, CreatePetCommand>
         var height = Height.Create(command.Height).Value;
         var phoneNumber = PhoneNumber.Create(command.PhoneNumber).Value;
 
-        var assistanceStatus = Enum.Parse<AssistanceStatus>(command.AssistanceStatus, true); ;
+        var assistanceStatus = Enum.Parse<AssistanceStatus>(command.AssistanceStatus, true);
 
         var birthdate = BirthDate.Create(command.BirthDate).Value;
 

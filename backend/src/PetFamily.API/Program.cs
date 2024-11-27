@@ -44,14 +44,21 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 app.UseExceptionMiddleware();
 
+app.UseStaticFiles();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI");
+        c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
+    });
 
-   /* app.ApplyMigration();*/ //авто вызов миграций
+    /* app.ApplyMigration();*/ //авто вызов миграций
 }
+
 
 app.UseSerilogRequestLogging();
 

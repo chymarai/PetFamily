@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetFamily.Domain.Modules;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.PetsManagment.Ids;
 using PetFamily.Domain.PetsManagment.Entities;
 using PetFamily.Domain.SpeciesManagment;
 using PetFamily.Domain.PetsManagment.ValueObjects.Pets;
+using PetFamily.Infrastructure.Extensions;
+using PetFamily.Application.DTOs;
 
 namespace PetFamily.Infrastructure.Configurations.Write;
 
@@ -171,20 +172,11 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             });
         });
 
-        builder.OwnsOne(m => m.Files, mb =>
-        {
-            mb.ToJson("files");
-
-            mb.OwnsMany(mb => mb.Values, mbBuilder =>
-            {
-                mbBuilder.Property(p => p.PathToStorage)
-                    .HasConversion(
-                        p => p.Path,
-                        value => FilePath.Create(value).Value)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-            });
-        });
+        builder.Property(p => p.Files)
+             .ValueObjectsCollectionJsonConversion(
+                 file => new PetFileDto { PathToStorage = file.PathToStorage.Path },
+                 dto => new PetFiles(FilePath.Create(dto.PathToStorage).Value))
+             .HasColumnName("photos");
 
         builder.Property<bool>("IsDeleted")
             .UsePropertyAccessMode(PropertyAccessMode.Field)

@@ -10,5 +10,5 @@ public class PetDto
     public string Description { get; init; } = string.Empty;
     public string Color { get; init; } = string.Empty;
     public string HealthInformation { get; init; } = string.Empty;
-    public string Files { get; private set; } = string.Empty;
+    public PetFileDto[] Files { get; private set; } = null!;
 }

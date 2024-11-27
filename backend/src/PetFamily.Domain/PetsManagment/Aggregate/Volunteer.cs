@@ -106,6 +106,11 @@ public class Volunteer : SoftDeletableEntity<VolunteerId>
             _pets[index] = pet;
     }
 
+    public void HardDeletePet(Pet pet)
+    {
+        _pets.Remove(pet);
+    }
+
     public UnitResult<Error> ShiftPetPosition(Pet pet, Position newPosition)
     {
         var oldPosition = pet.Position;

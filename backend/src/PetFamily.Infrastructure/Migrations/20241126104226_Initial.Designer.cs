@@ -13,7 +13,7 @@ using PetFamily.Infrastructure.DbContexts;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20241116164153_Initial")]
+    [Migration("20241126104226_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -32,7 +32,7 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<bool>("_isDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean")
                         .HasColumnName("is_deleted");
 
@@ -124,17 +124,22 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_of_creation");
 
+                    b.Property<string>("Files")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("photos");
+
                     b.Property<bool>("IsCastrated")
                         .HasColumnType("boolean")
                         .HasColumnName("is_castrated");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
                     b.Property<bool>("IsVaccination")
                         .HasColumnType("boolean")
                         .HasColumnName("is_vaccination");
-
-                    b.Property<bool>("_isDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
 
                     b.Property<Guid?>("volunteer_id")
                         .HasColumnType("uuid")
@@ -186,7 +191,7 @@ namespace PetFamily.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
-                                .HasColumnName("email");
+                                .HasColumnName("color");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Description", "PetFamily.Domain.PetsManagment.Entities.Pet.Description#Description", b1 =>
@@ -503,52 +508,6 @@ namespace PetFamily.Infrastructure.Migrations
 
                             b1.Navigation("Value");
                         });
-
-                    b.OwnsOne("PetFamily.Domain.PetsManagment.ValueObjects.Shared.ValueObjectList<PetFamily.Domain.PetsManagment.ValueObjects.Pets.PetFiles>", "Files", b1 =>
-                        {
-                            b1.Property<Guid>("PetId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("PetId");
-
-                            b1.ToTable("pet");
-
-                            b1.ToJson("gallery");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PetId")
-                                .HasConstraintName("fk_pet_pet_id");
-
-                            b1.OwnsMany("PetFamily.Domain.PetsManagment.ValueObjects.Pets.PetFiles", "Values", b2 =>
-                                {
-                                    b2.Property<Guid>("ValueObjectListPetId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("integer");
-
-                                    b2.Property<string>("PathToStorage")
-                                        .IsRequired()
-                                        .HasMaxLength(100)
-                                        .HasColumnType("character varying(100)");
-
-                                    b2.HasKey("ValueObjectListPetId", "Id");
-
-                                    b2.ToTable("pet");
-
-                                    b2.ToJson("gallery");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("ValueObjectListPetId")
-                                        .HasConstraintName("fk_pet_pet_value_object_list_pet_id");
-                                });
-
-                            b1.Navigation("Values");
-                        });
-
-                    b.Navigation("Files")
-                        .IsRequired();
 
                     b.Navigation("RequisiteDetails")
                         .IsRequired();
