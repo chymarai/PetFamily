@@ -19,6 +19,8 @@ namespace PetFamily.Domain.PetsManagment.Entities;
 
 public class Pet : SoftDeletableEntity<PetId>
 {
+    private readonly List<PetFiles> _files = [];
+
     private Pet(PetId id) : base(id) 
     {
     }
@@ -58,7 +60,7 @@ public class Pet : SoftDeletableEntity<PetId>
         BirthDate = birthDate;
         DateOfCreation = dateOfCreation;
         RequisiteDetails = requisiteDetails;
-        Files = files ?? new ValueObjectList<PetFiles>([]);
+        _files = files ?? new ValueObjectList<PetFiles>([]);
     }
 
     public Name Name { get; private set; } = default!;
@@ -77,13 +79,21 @@ public class Pet : SoftDeletableEntity<PetId>
     public BirthDate BirthDate { get; private set; } = default!;
     public DateTime DateOfCreation { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; }
-    public ValueObjectList<PetFiles> Files { get; private set; }
+    public IReadOnlyList<PetFiles> Files => _files;
 
     public void UpdateFiles(ValueObjectList<PetFiles> files) =>
-        Files = files;
+        _files.AddRange(files);
+
+    public void RemoveFiles(PetFiles files) =>
+        _files.Remove(files);
 
     public void SetPosition(Position position) =>
         Position = position;
+
+    public void UpdateAssistanceStatus(AssistanceStatus assistanceStatus)
+    {
+        AssistanceStatus = assistanceStatus;
+    }
 
     public UnitResult<Error> MoveForward()
     {

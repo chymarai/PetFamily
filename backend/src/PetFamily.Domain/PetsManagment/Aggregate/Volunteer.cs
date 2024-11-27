@@ -54,7 +54,7 @@ public class Volunteer : SoftDeletableEntity<VolunteerId>
     public RequisiteDetails RequisiteDetails { get; private set; } = default!;
     public IReadOnlyList<Pet> Pets => _pets;
     public int CountPetsOnTreatment => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.OnTreatment);
-    public int CountPetsAtTheShelter => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtTheShelter);
+    public int CountPetsLookingHome => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.LookingHome);
     public int CountPetsAtHome => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtHome);
 
     public void UpdateMainInfo(
