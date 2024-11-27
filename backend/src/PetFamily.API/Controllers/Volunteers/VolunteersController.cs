@@ -2,6 +2,7 @@
 using PetFamily.API.Controllers.Volunteers.Requests;
 using PetFamily.API.Extensions;
 using PetFamily.API.Prosessors;
+using PetFamily.Application.PetsManagment.Commands.HardDeletePet;
 using PetFamily.Application.PetsManagment.Commands.SoftDeletePet;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetAssistanceStatus;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetInfo;
@@ -175,7 +176,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
 
-    [HttpDelete("{VolunteerId:guid}/pet/{PetId:guid}/delete")]
+    [HttpDelete("{VolunteerId:guid}/pet/{PetId:guid}/soft-delete")]
     public async Task<ActionResult> SoftDeletePet(
         [FromRoute] Guid VolunteerId,
         [FromRoute] Guid PetId,
@@ -183,6 +184,23 @@ public class VolunteersController : ApplicationController
         CancellationToken token = default)
     {
         var command = new SoftDeletePetCommand(VolunteerId, PetId);
+
+        var result = await handler.Handle(command, token);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+
+    [HttpDelete("{VolunteerId:guid}/pet/{PetId:guid}/hard-delete")]
+    public async Task<ActionResult> SoftDeletePet(
+    [FromRoute] Guid VolunteerId,
+    [FromRoute] Guid PetId,
+    [FromServices] HardDeletePetHandler handler,
+    CancellationToken token = default)
+    {
+        var command = new HardDeletePetCommand(VolunteerId, PetId);
 
         var result = await handler.Handle(command, token);
 
