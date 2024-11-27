@@ -14,6 +14,8 @@ public class UpdatePetAssistanceStatusValidator : AbstractValidator<UpdatePetAss
 {
     public UpdatePetAssistanceStatusValidator()
     {
+        RuleFor(d => d.VolunteerId).NotEmpty();
+        RuleFor(d => d.PetId).NotEmpty();
         RuleFor(p => p.AssistanceStatus).MustBeEnum(typeof(AssistanceStatus));
     }
 }
