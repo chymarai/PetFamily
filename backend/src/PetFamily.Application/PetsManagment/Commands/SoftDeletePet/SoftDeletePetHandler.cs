@@ -48,6 +48,8 @@ public class SoftDeletePetHandler : ICommandHandler<Guid, SoftDeletePetCommand>
 
         await _unitOfWork.SaveChanges(token);
 
+        _logger.LogInformation("Updates deleted with id {petId}", petResult);
+
         return petResult.Id.Value;
     }
 }
