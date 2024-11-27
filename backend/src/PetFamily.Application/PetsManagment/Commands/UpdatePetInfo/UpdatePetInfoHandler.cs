@@ -49,6 +49,8 @@ public class UpdatePetInfoHandler : ICommandHandler<Guid, UpdatePetInfoCommand>
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
 
+        var petResult = volunteerResult.Value.GetPetById(command.PetId).Value;
+
         var speciesId = SpeciesId.Create(command.SpeciesBreed.SpeciesId).Value;
 
         var speciesResult = _readDbContext.Breeds.FirstOrDefault(s => s.SpeciesId == speciesId);
@@ -79,17 +81,14 @@ public class UpdatePetInfoHandler : ICommandHandler<Guid, UpdatePetInfoCommand>
         var height = Height.Create(command.Height).Value;
         var phoneNumber = PhoneNumber.Create(command.PhoneNumber).Value;
 
-        var assistanceStatus = Enum.Parse<AssistanceStatus>(command.AssistanceStatus, true); ;
+        var assistanceStatus = Enum.Parse<AssistanceStatus>(command.AssistanceStatus, true);
 
         var birthdate = BirthDate.Create(command.BirthDate).Value;
 
         var requisite = RequisiteDetails.Create(command.RequisiteDetails.Requisite
            .Select(r => Requisite.Create(r.Name, r.Description).Value));
 
-        var petId = PetId.Create(command.PetId);
-
-        var pet = new Pet(
-            petId,
+        petResult.UpdatePetInfo(
             name,
             description,
             speciesBreed,
@@ -104,13 +103,12 @@ public class UpdatePetInfoHandler : ICommandHandler<Guid, UpdatePetInfoCommand>
             assistanceStatus,
             birthdate,
             command.DateOfCreation,
-            requisite,
-            null);
-
-        volunteerResult.Value.UpdatePetInfo(pet);
+            requisite);
 
         await _unitOfWork.SaveChanges(token);
 
-        return pet.Id.Value;
+        _logger.LogInformation("Update info with id {petId}", petResult.Id);
+
+        return petResult.Id.Value;
     }
 }
