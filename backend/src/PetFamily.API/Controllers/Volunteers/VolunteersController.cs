@@ -5,6 +5,7 @@ using PetFamily.API.Prosessors;
 using PetFamily.Application.PetsManagment.Commands.HardDeletePet;
 using PetFamily.Application.PetsManagment.Commands.SoftDeletePet;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetAssistanceStatus;
+using PetFamily.Application.PetsManagment.Commands.UpdatePetFiles;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetInfo;
 using PetFamily.Application.PetsManagment.Queries.GetVolunteerById;
 using PetFamily.Application.Volunteers.Commands.AddFiles;
@@ -137,6 +138,24 @@ public class VolunteersController : ApplicationController
         var command = new UploadFilesToPetCommand(VolunteerId, petId, fileDtos);
 
         var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
+    }
+
+    [HttpDelete("{VolunteerId:guid}/pet/{PetId:guid}/file-delete")]
+    public async Task<ActionResult> FileDelete(
+        [FromRoute] Guid VolunteerId,
+        [FromRoute] Guid PetId,
+        [FromServices] DeletePetFileHandler handler,
+        [FromBody] RemovePetFilesRequest request,
+        CancellationToken token = default)
+    {
+        var command = request.ToCommand(VolunteerId, PetId);
+
+        var result = await handler.Handle(command, token);
 
         if (result.IsFailure)
             return result.Error.ToResponse();
