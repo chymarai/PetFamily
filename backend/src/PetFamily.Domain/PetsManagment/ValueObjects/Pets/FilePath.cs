@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
+using System.Text.Json.Serialization;
 
 namespace PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 

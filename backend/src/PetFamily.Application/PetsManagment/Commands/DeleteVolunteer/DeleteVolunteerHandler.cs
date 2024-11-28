@@ -44,13 +44,15 @@ public class DeleteVolunteerHandler : ICommandHandler<Guid, DeleteVolunteerComma
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
 
-        var result = _volunteersRepository.Delete(volunteerResult.Value, cancellationToken);
+        var volunteer = volunteerResult.Value;
+
+        volunteer.Delete();
 
         await _unitOfWork.SaveChanges(cancellationToken);
 
         _logger.LogInformation("Updates deleted with id {moduleId}", volunteerResult);
 
-        return result;
+        return volunteer.Id.Value;
     }
 }
 

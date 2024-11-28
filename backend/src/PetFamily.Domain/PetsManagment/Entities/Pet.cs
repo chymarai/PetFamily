@@ -10,18 +10,19 @@ using PetFamily.Domain.SpeciesManagment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PetFamily.Domain.PetsManagment.Entities;
 
-public class Pet : Shared.Entity<PetId>, ISoftDeletable
+public class Pet : SoftDeletableEntity<PetId>
 {
-    private bool _isDeleted = false;
+    private readonly List<PetFiles> _files = [];
 
     private Pet(PetId id) : base(id) 
     {
-
     }
 
     public Pet(
@@ -59,7 +60,7 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         BirthDate = birthDate;
         DateOfCreation = dateOfCreation;
         RequisiteDetails = requisiteDetails;
-        Files = files ?? new ValueObjectList<PetFiles>([]);
+        _files = files ?? new ValueObjectList<PetFiles>([]);
     }
 
     public Name Name { get; private set; } = default!;
@@ -78,17 +79,55 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
     public BirthDate BirthDate { get; private set; } = default!;
     public DateTime DateOfCreation { get; private set; } = default!;
     public RequisiteDetails RequisiteDetails { get; private set; }
-    public ValueObjectList<PetFiles> Files { get; private set; }
-
-    public void Delete() => _isDeleted = true;
-
-    public void Restore() => _isDeleted = false;
+    public IReadOnlyList<PetFiles> Files => _files;
 
     public void UpdateFiles(ValueObjectList<PetFiles> files) =>
-        Files = files;
+        _files.AddRange(files);
+
+    public void RemoveFiles(PetFiles files) =>
+        _files.Remove(files);
 
     public void SetPosition(Position position) =>
         Position = position;
+
+    public void UpdatePetInfo(
+        Name name,
+        Description description,
+        SpeciesBreed speciesBreed,
+        Color color,
+        HealthInformation healthInformation,
+        Address address,
+        Weight weight,
+        Height height,
+        PhoneNumber phoneNumber,
+        bool isCastrated,
+        bool isVaccination,
+        AssistanceStatus assistanceStatus,
+        BirthDate birthDate,
+        DateTime dateOfCreation,
+        RequisiteDetails requisiteDetails)
+    {
+        Name = name;
+        Description = description;
+        SpeciesBreed = speciesBreed;
+        Color = color;
+        HealthInformation = healthInformation;
+        Address = address;
+        Weight = weight;
+        Height = height;
+        PhoneNumber = phoneNumber;
+        IsCastrated = isCastrated;
+        IsVaccination = isVaccination;
+        AssistanceStatus = assistanceStatus;
+        BirthDate = birthDate;
+        DateOfCreation = dateOfCreation;
+        RequisiteDetails = requisiteDetails;
+    }
+
+    public void UpdateAssistanceStatus(AssistanceStatus assistanceStatus)
+    {
+        AssistanceStatus = assistanceStatus;
+    }
 
     public UnitResult<Error> MoveForward()
     {
@@ -110,5 +149,37 @@ public class Pet : Shared.Entity<PetId>, ISoftDeletable
         Position = newPosition.Value;
 
         return Result.Success<Error>();
+    }
+
+    public void DeleteFiles(string[] photoPaths)
+    {
+        bool primaryPhotoWasDeleted = false;
+        bool deletedAtLeastOnePhoto = false;
+
+        foreach (var path in photoPaths)
+        {
+            int photoToDeleteIdx = _files.FindIndex(x => string.Equals(path, x.PathToStorage));
+            if (photoToDeleteIdx == -1)
+                continue;
+
+            var photoToDelete = _files[photoToDeleteIdx];
+
+            if (photoToDelete.IsMain)
+                primaryPhotoWasDeleted = true;
+
+            _files.RemoveAt(photoToDeleteIdx);
+            deletedAtLeastOnePhoto = true;
+        }
+
+        if (deletedAtLeastOnePhoto == false)
+            return;
+
+        if (primaryPhotoWasDeleted && _files.Count > 0)
+        {
+            var firstPhotoMadePrimary = new PetFiles(_files[0].PathToStorage);
+            _files[0] = firstPhotoMadePrimary;
+        }
+
+        var deepCopyData = _files.Select(x => new PetFiles(x.PathToStorage));
     }
 }

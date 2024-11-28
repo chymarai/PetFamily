@@ -1,4 +1,6 @@
-﻿namespace PetFamily.Domain.PetsManagment.ValueObjects.Pets;
+﻿using System.Text.Json.Serialization;
+
+namespace PetFamily.Domain.PetsManagment.ValueObjects.Pets;
 
 public record PetFiles
 {
@@ -7,4 +9,6 @@ public record PetFiles
         PathToStorage = pathToStorage;
     }
     public FilePath PathToStorage { get; }
+
+    public bool IsMain {  get; }
 }

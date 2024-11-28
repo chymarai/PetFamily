@@ -3,6 +3,6 @@
 public enum AssistanceStatus
 {
     OnTreatment,
-    AtTheShelter,
-    AtHome,
+    LookingHome,
+    AtHome
 }

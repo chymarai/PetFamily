@@ -11,13 +11,14 @@ using PetFamily.Domain.PetsManagment.ValueObjects.Volunteers;
 using PetFamily.Domain.PetsManagment.ValueObjects.Shared;
 using PetFamily.Domain.PetsManagment.Entities;
 using PetFamily.Domain.PetsManagment.Ids;
+using PetFamily.Domain.SpeciesManagment;
+using System.Net;
+using System.Xml.Linq;
 
 namespace PetFamily.Domain.PetsManagment.Aggregate;
 
-public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
+public class Volunteer : SoftDeletableEntity<VolunteerId>
 {
-    private bool _isDeleted = false;
-
     private readonly List<Pet> _pets = [];
 
     private Volunteer(VolunteerId id) : base(id)
@@ -53,7 +54,7 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     public RequisiteDetails RequisiteDetails { get; private set; } = default!;
     public IReadOnlyList<Pet> Pets => _pets;
     public int CountPetsOnTreatment => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.OnTreatment);
-    public int CountPetsAtTheShelter => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtTheShelter);
+    public int CountPetsLookingHome => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.LookingHome);
     public int CountPetsAtHome => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.AtHome);
 
     public void UpdateMainInfo(
@@ -92,10 +93,22 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
             return position.Error;
 
         pet.SetPosition(position.Value);
-
         _pets.Add(pet);
 
         return Result.Success<Error>();
+    }
+
+    public void UpdatePetInfo(Pet pet)
+    { 
+        var index = _pets.FindIndex(p => p.Id == pet.Id);
+
+        if (index != -1)
+            _pets[index] = pet;
+    }
+
+    public void HardDeletePet(Pet pet)
+    {
+        _pets.Remove(pet);
     }
 
     public UnitResult<Error> ShiftPetPosition(Pet pet, Position newPosition)
@@ -154,9 +167,21 @@ public class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         return lastPosition.Value;
     }
 
-    public void Delete() => _isDeleted = true;
+    public override void Delete()
+    {
+        base.Delete();
 
-    public void Restore() => _isDeleted = false;
+        foreach (var pet in _pets)
+            pet.Delete();
+    }
+
+    public override void Restore()
+    {
+        base.Restore();
+
+        foreach (var pet in _pets)
+            pet.Restore();
+    }
 }
 
 
