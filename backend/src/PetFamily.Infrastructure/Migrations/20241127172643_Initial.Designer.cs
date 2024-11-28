@@ -13,7 +13,7 @@ using PetFamily.Infrastructure.DbContexts;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20241126104226_Initial")]
+    [Migration("20241127172643_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -127,7 +127,7 @@ namespace PetFamily.Infrastructure.Migrations
                     b.Property<string>("Files")
                         .IsRequired()
                         .HasColumnType("jsonb")
-                        .HasColumnName("photos");
+                        .HasColumnName("files");
 
                     b.Property<bool>("IsCastrated")
                         .HasColumnType("boolean")
@@ -141,7 +141,7 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_vaccination");
 
-                    b.Property<Guid?>("volunteer_id")
+                    b.Property<Guid>("volunteer_id")
                         .HasColumnType("uuid")
                         .HasColumnName("volunteer_id");
 
@@ -298,7 +298,7 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid?>("species_id")
+                    b.Property<Guid>("species_id")
                         .HasColumnType("uuid")
                         .HasColumnName("species_id");
 
@@ -458,6 +458,7 @@ namespace PetFamily.Infrastructure.Migrations
                         .WithMany("Pets")
                         .HasForeignKey("volunteer_id")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_pet_volunteer_volunteer_id");
 
                     b.OwnsOne("PetFamily.Domain.PetsManagment.ValueObjects.Shared.RequisiteDetails", "RequisiteDetails", b1 =>
@@ -519,6 +520,7 @@ namespace PetFamily.Infrastructure.Migrations
                         .WithMany("Breeds")
                         .HasForeignKey("species_id")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_breed_species_species_id");
                 });
 

@@ -49,7 +49,7 @@ namespace PetFamily.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    species_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    species_id = table.Column<Guid>(type: "uuid", nullable: false),
                     breed_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -72,8 +72,8 @@ namespace PetFamily.Infrastructure.Migrations
                     is_vaccination = table.Column<bool>(type: "boolean", nullable: false),
                     assistance_status = table.Column<string>(type: "text", nullable: false),
                     date_of_creation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    photos = table.Column<string>(type: "jsonb", nullable: false),
-                    volunteer_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    files = table.Column<string>(type: "jsonb", nullable: false),
+                    volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
                     city = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     region = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
