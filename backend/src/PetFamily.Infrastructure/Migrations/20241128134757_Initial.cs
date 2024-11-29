@@ -88,6 +88,7 @@ namespace PetFamily.Infrastructure.Migrations
                     position = table.Column<int>(type: "integer", maxLength: 100, nullable: false),
                     breed_id = table.Column<Guid>(type: "uuid", nullable: false),
                     species_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    weight = table.Column<int>(type: "integer", maxLength: 100, nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     requisite = table.Column<string>(type: "jsonb", nullable: false)
                 },

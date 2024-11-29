@@ -7,6 +7,7 @@ using PetFamily.Application.PetsManagment.Commands.SoftDeletePet;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetAssistanceStatus;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetFiles;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetInfo;
+using PetFamily.Application.PetsManagment.Queries.GetPetsWithPaginationAndFiltering;
 using PetFamily.Application.PetsManagment.Queries.GetVolunteerById;
 using PetFamily.Application.Volunteers.Commands.AddFiles;
 using PetFamily.Application.Volunteers.Commands.AddPet;
@@ -46,6 +47,17 @@ public class VolunteersController : ApplicationController
             return result.Error.ToResponse();
 
         return Ok(result.Value);
+    }
+
+    [HttpGet("/pet")]
+    public async Task<ActionResult> GetPets(
+       [FromServices] GetPetsWithPaginationAndFilteringHandler handler,
+       [FromQuery] GetPetsWithPaginationAndFilteringRequest request,
+       CancellationToken token = default)
+    {
+        var result = await handler.Handle(request.ToCommand(), token);
+
+        return Ok(result);
     }
 
     [HttpPost]

@@ -111,7 +111,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             tb.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("height");
+                .HasColumnName("weight");
         });
 
         builder.ComplexProperty(m => m.Height, tb =>

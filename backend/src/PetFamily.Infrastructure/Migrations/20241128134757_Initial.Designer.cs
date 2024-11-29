@@ -13,7 +13,7 @@ using PetFamily.Infrastructure.DbContexts;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20241127172643_Initial")]
+    [Migration("20241128134757_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -221,7 +221,6 @@ namespace PetFamily.Infrastructure.Migrations
                             b1.IsRequired();
 
                             b1.Property<int>("Value")
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(100)
                                 .HasColumnType("integer")
                                 .HasColumnName("height");
@@ -277,10 +276,9 @@ namespace PetFamily.Infrastructure.Migrations
                             b1.IsRequired();
 
                             b1.Property<int>("Value")
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(100)
                                 .HasColumnType("integer")
-                                .HasColumnName("height");
+                                .HasColumnName("weight");
                         });
 
                     b.HasKey("Id")
