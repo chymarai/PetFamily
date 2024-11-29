@@ -26,7 +26,7 @@ public class GetVolunteerByIdHandler : IQueriesHandler<Result<VolunteerDto, Erro
     {
         var volunteerId = VolunteerId.Create(query.VolunteerId);
 
-        var volunteerQuery = await _readDbContext.Volunteers.FirstOrDefaultAsync(v => v.Id == query.VolunteerId);
+        var volunteerQuery = await _readDbContext.Volunteers.FirstOrDefaultAsync(v => v.Id == query.VolunteerId, token);
 
         if (volunteerQuery is null)
             return Errors.General.NotFound(volunteerId);

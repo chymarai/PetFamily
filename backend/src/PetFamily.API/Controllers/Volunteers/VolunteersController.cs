@@ -7,11 +7,12 @@ using PetFamily.Application.PetsManagment.Commands.SoftDeletePet;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetAssistanceStatus;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetFiles;
 using PetFamily.Application.PetsManagment.Commands.UpdatePetInfo;
+using PetFamily.Application.PetsManagment.Queries.GetPetsWithId;
 using PetFamily.Application.PetsManagment.Queries.GetPetsWithPaginationAndFiltering;
 using PetFamily.Application.PetsManagment.Queries.GetVolunteerById;
+using PetFamily.Application.PetsManagment.Queries.GetVolunteersWithPagination;
 using PetFamily.Application.Volunteers.Commands.AddFiles;
 using PetFamily.Application.Volunteers.Commands.AddPet;
-using PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
 using PetFamily.Application.Volunteers.WriteHandler.Create;
 using PetFamily.Application.Volunteers.WriteHandler.DeleteVolunteer;
 using PetFamily.Application.Volunteers.WriteHandler.UpdateMainInfos;
@@ -58,6 +59,22 @@ public class VolunteersController : ApplicationController
         var result = await handler.Handle(request.ToCommand(), token);
 
         return Ok(result);
+    }
+
+    [HttpGet("/pet/{id:guid}")]
+    public async Task<ActionResult> GetPetById(
+      [FromServices] GetPetByIdHandler handler,
+      [FromRoute] Guid id,
+      CancellationToken token = default)
+    {
+        var query = new GetPetByIdQuery(id);
+
+        var result = await handler.Handle(query, token);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result.Value);
     }
 
     [HttpPost]
