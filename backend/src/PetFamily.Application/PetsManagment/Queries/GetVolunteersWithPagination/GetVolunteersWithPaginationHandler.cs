@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Application.Volunteers.Queries.GetVolunteersWithPagination;
+namespace PetFamily.Application.PetsManagment.Queries.GetVolunteersWithPagination;
 public class GetVolunteersWithPaginationHandler : IQueriesHandler<PagedList<VolunteerDto>, GetVolunteersWithPaginationQuery>
 {
     private readonly IReadDbContext _readDbContext;

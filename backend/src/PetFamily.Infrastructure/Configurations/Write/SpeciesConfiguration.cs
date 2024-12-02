@@ -15,6 +15,8 @@ public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
     {
         builder.ToTable("species");
 
+        
+
         builder.HasKey(m => m.Id);
 
         builder.Property(m => m.Id)
@@ -34,6 +36,7 @@ public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
         builder.HasMany(m => m.Breeds)
             .WithOne()
             .HasForeignKey("species_id")
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
     }
 }

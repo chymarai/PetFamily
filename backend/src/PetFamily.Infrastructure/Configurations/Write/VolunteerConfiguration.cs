@@ -112,7 +112,8 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         builder.HasMany(m => m.Pets)
             .WithOne()
             .HasForeignKey("volunteer_id")
-            .OnDelete(DeleteBehavior.Cascade); //при удалении волонтера, удаляются все животные
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(); 
 
 
         builder.Property<bool>("IsDeleted")

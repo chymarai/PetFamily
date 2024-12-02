@@ -111,7 +111,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
             tb.Property(b => b.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("height");
+                .HasColumnName("weight");
         });
 
         builder.ComplexProperty(m => m.Height, tb =>
@@ -176,7 +176,7 @@ internal class PetConfiguration : IEntityTypeConfiguration<Pet>
              .ValueObjectsCollectionJsonConversion(
                  file => new PetFileDto { PathToStorage = file.PathToStorage.Path },
                  dto => new PetFiles(FilePath.Create(dto.PathToStorage).Value))
-             .HasColumnName("photos");
+             .HasColumnName("files");
 
         builder.Property<bool>("IsDeleted")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
