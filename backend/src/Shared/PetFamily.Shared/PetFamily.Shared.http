@@ -1,0 +1,6 @@
+@PetFamily.Shared_HostAddress = http://localhost:5022
+
+GET {{PetFamily.Shared_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,5 +1,5 @@
 ﻿using FluentValidation.Results;
-using PetFamily.Domain.Shared;
+using PetFamilty.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
