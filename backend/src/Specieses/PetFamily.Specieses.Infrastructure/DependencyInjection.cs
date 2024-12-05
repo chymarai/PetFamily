@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PetFamily.Core.Abstraction;
 using PetFamily.Core.BackgroundServices;
 using PetFamily.Specieses.Application;
 using PetFamily.Specieses.Contracts;
@@ -45,7 +44,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDatabase(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork, SpeciesUnitOfWork>();
 
         return services;
     }

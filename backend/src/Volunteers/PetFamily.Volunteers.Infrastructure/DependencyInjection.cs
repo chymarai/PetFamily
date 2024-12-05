@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Minio.AspNetCore;
-using PetFamily.Core.Abstraction;
 using PetFamily.Core.BackgroundServices;
 using PetFamily.Core.FileProvider;
 using PetFamily.Core.MessageQueues;

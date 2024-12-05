@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetFamily.Web", "src\PetFamily.API\PetFamily.Web.csproj", "{56153891-7DFE-4E48-B269-3AB9B452D305}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetFamily.Web", "src\PetFamily.Web\PetFamily.Web.csproj", "{56153891-7DFE-4E48-B269-3AB9B452D305}"
 	ProjectSection(ProjectDependencies) = postProject
 		{28BB8DB4-513A-4A01-A66F-EF18605531CC} = {28BB8DB4-513A-4A01-A66F-EF18605531CC}
 		{46DDB4E0-37E9-4631-8786-FCE0C17A93FD} = {46DDB4E0-37E9-4631-8786-FCE0C17A93FD}
@@ -23,20 +23,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.UnitTests", "..\PetFamily.UnitTests\PetFamily.UnitTests.csproj", "{91EB4BAB-E5DD-4F04-8919-B2B4D8E35ACD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.UnitTests", "src\PetFamily.UnitTests\PetFamily.UnitTests.csproj", "{91EB4BAB-E5DD-4F04-8919-B2B4D8E35ACD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{56153891-7DFE-4E48-B269-3AB9B452D305} = {56153891-7DFE-4E48-B269-3AB9B452D305}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.SharedKernel", "..\ClassLibrary1\PetFamily.SharedKernel.csproj", "{46DDB4E0-37E9-4631-8786-FCE0C17A93FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.SharedKernel", "src\Shared\PetFamily.SharedKernel\PetFamily.SharedKernel.csproj", "{46DDB4E0-37E9-4631-8786-FCE0C17A93FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Application", "..\PetFamily.Volunteers.Applicattion\PetFamily.Volunteers.Application.csproj", "{75F42749-003A-48E5-A0A6-AF9A57CB9F65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Application", "src\Volunteers\PetFamily.Volunteers.Application\PetFamily.Volunteers.Application.csproj", "{75F42749-003A-48E5-A0A6-AF9A57CB9F65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Presentation", "..\PetFamily.Volunteers.Controllers\PetFamily.Volunteers.Presentation.csproj", "{84DCE47F-36D6-427D-8267-BEC5C645FD19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Presentation", "src\Volunteers\PetFamily.Volunteers.Controllers\PetFamily.Volunteers.Presentation.csproj", "{84DCE47F-36D6-427D-8267-BEC5C645FD19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Domain", "..\PetFamily.Volunteers.Domain\PetFamily.Volunteers.Domain.csproj", "{EE04AB9A-6B85-427B-8448-B5493D34735E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Domain", "src\Volunteers\PetFamily.Volunteers.Domain\PetFamily.Volunteers.Domain.csproj", "{EE04AB9A-6B85-427B-8448-B5493D34735E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Infrastructure", "..\PetFamily.Volunteers.Infrastructure\PetFamily.Volunteers.Infrastructure.csproj", "{95BE8EA2-3F1B-47DD-AE8D-CFDD78AFF05E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Infrastructure", "src\Volunteers\PetFamily.Volunteers.Infrastructure\PetFamily.Volunteers.Infrastructure.csproj", "{95BE8EA2-3F1B-47DD-AE8D-CFDD78AFF05E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Volunteers", "Volunteers", "{7785C522-1A97-4123-93EE-D2FF1CB0106E}"
 EndProject
@@ -49,21 +49,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8F4A74
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{419BB64C-31EC-46D3-A098-3E8D5BD8AC34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Application", "..\PetFamily.Specieses.Application\PetFamily.Specieses.Application.csproj", "{C24945C2-CC69-47E0-83ED-A1DB903BBC06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Application", "src\Specieses\PetFamily.Specieses.Application\PetFamily.Specieses.Application.csproj", "{C24945C2-CC69-47E0-83ED-A1DB903BBC06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Presentation", "..\PetFamily.Specieses.Controllers\PetFamily.Specieses.Presentation.csproj", "{56E53A20-134A-4E14-B036-DB49164B324C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Presentation", "src\Specieses\PetFamily.Specieses.Controllers\PetFamily.Specieses.Presentation.csproj", "{56E53A20-134A-4E14-B036-DB49164B324C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Domain", "..\PetFamily.Specieses.Domain\PetFamily.Specieses.Domain.csproj", "{6459F424-1FC1-4846-B011-8070552E64D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Domain", "src\Specieses\PetFamily.Specieses.Domain\PetFamily.Specieses.Domain.csproj", "{6459F424-1FC1-4846-B011-8070552E64D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Infrastructure", "..\PetFamily.Specieses.Infrastructure\PetFamily.Specieses.Infrastructure.csproj", "{A39AEBB4-70A5-4857-94A7-A0EA15616A85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Infrastructure", "src\Specieses\PetFamily.Specieses.Infrastructure\PetFamily.Specieses.Infrastructure.csproj", "{A39AEBB4-70A5-4857-94A7-A0EA15616A85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Core", "..\PetFamily.Core\PetFamily.Core.csproj", "{28BB8DB4-513A-4A01-A66F-EF18605531CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Core", "src\Shared\PetFamily.Core\PetFamily.Core.csproj", "{28BB8DB4-513A-4A01-A66F-EF18605531CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Framework", "..\PetFamily.Framework\PetFamily.Framework.csproj", "{E2EFE01E-49FD-4FC8-AA5B-1F8506F3E071}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Framework", "src\Shared\PetFamily.Framework\PetFamily.Framework.csproj", "{E2EFE01E-49FD-4FC8-AA5B-1F8506F3E071}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Contracts", "..\PetFamily.Specieses.Comtracts\PetFamily.Specieses.Contracts.csproj", "{70E3F573-EE9F-43DC-98D5-AA3556E3B15C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Specieses.Contracts", "src\Specieses\PetFamily.Specieses.Contracts\PetFamily.Specieses.Contracts.csproj", "{70E3F573-EE9F-43DC-98D5-AA3556E3B15C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Contracts", "..\PetFamily.Volunteers.Contracts\PetFamily.Volunteers.Contracts.csproj", "{32361F10-26D0-40B6-BA32-F42DB54F3426}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Contracts", "src\Volunteers\PetFamily.Volunteers.Contracts\PetFamily.Volunteers.Contracts.csproj", "{32361F10-26D0-40B6-BA32-F42DB54F3426}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,10 +11,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ClassLibrary1\PetFamily.SharedKernel.csproj" />
-		<ProjectReference Include="..\PetFamily.Core\PetFamily.Core.csproj" />
-		<ProjectReference Include="..\PetFamily.Framework\PetFamily.Framework.csproj" />
-		<ProjectReference Include="..\PetFamily.Volunteers.Applicattion\PetFamily.Volunteers.Application.csproj" />
+		<ProjectReference Include="..\..\Shared\PetFamily.Core\PetFamily.Core.csproj" />
+		<ProjectReference Include="..\..\Shared\PetFamily.Framework\PetFamily.Framework.csproj" />
+		<ProjectReference Include="..\..\Shared\PetFamily.SharedKernel\PetFamily.SharedKernel.csproj" />
+		<ProjectReference Include="..\PetFamily.Volunteers.Application\PetFamily.Volunteers.Application.csproj" />
 		<ProjectReference Include="..\PetFamily.Volunteers.Contracts\PetFamily.Volunteers.Contracts.csproj" />
 		<ProjectReference Include="..\PetFamily.Volunteers.Domain\PetFamily.Volunteers.Domain.csproj" />
 	</ItemGroup>

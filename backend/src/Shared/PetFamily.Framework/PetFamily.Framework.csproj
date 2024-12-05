@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\PetFamily.SharedKernel.csproj" />
     <ProjectReference Include="..\PetFamily.Core\PetFamily.Core.csproj" />
   </ItemGroup>
 

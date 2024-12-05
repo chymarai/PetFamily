@@ -26,19 +26,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ClassLibrary1\PetFamily.SharedKernel.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Core\PetFamily.Core.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Framework\PetFamily.Framework.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Specieses.Application\PetFamily.Specieses.Application.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Specieses.Comtracts\PetFamily.Specieses.Contracts.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Specieses.Controllers\PetFamily.Specieses.Presentation.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Specieses.Domain\PetFamily.Specieses.Domain.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Specieses.Infrastructure\PetFamily.Specieses.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Volunteers.Applicattion\PetFamily.Volunteers.Application.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Volunteers.Contracts\PetFamily.Volunteers.Contracts.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Volunteers.Controllers\PetFamily.Volunteers.Presentation.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Volunteers.Domain\PetFamily.Volunteers.Domain.csproj" />
-    <ProjectReference Include="..\..\..\PetFamily.Volunteers.Infrastructure\PetFamily.Volunteers.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shared\PetFamily.Core\PetFamily.Core.csproj" />
+    <ProjectReference Include="..\Shared\PetFamily.Framework\PetFamily.Framework.csproj" />
+    <ProjectReference Include="..\Shared\PetFamily.SharedKernel\PetFamily.SharedKernel.csproj" />
+    <ProjectReference Include="..\Specieses\PetFamily.Specieses.Application\PetFamily.Specieses.Application.csproj" />
+    <ProjectReference Include="..\Specieses\PetFamily.Specieses.Contracts\PetFamily.Specieses.Contracts.csproj" />
+    <ProjectReference Include="..\Specieses\PetFamily.Specieses.Controllers\PetFamily.Specieses.Presentation.csproj" />
+    <ProjectReference Include="..\Specieses\PetFamily.Specieses.Domain\PetFamily.Specieses.Domain.csproj" />
+    <ProjectReference Include="..\Specieses\PetFamily.Specieses.Infrastructure\PetFamily.Specieses.Infrastructure.csproj" />
+    <ProjectReference Include="..\Volunteers\PetFamily.Volunteers.Application\PetFamily.Volunteers.Application.csproj" />
+    <ProjectReference Include="..\Volunteers\PetFamily.Volunteers.Contracts\PetFamily.Volunteers.Contracts.csproj" />
+    <ProjectReference Include="..\Volunteers\PetFamily.Volunteers.Controllers\PetFamily.Volunteers.Presentation.csproj" />
+    <ProjectReference Include="..\Volunteers\PetFamily.Volunteers.Domain\PetFamily.Volunteers.Domain.csproj" />
+    <ProjectReference Include="..\Volunteers\PetFamily.Volunteers.Infrastructure\PetFamily.Volunteers.Infrastructure.csproj" />
   </ItemGroup>	          
 
 </Project>

@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using PetFamily.Volunteers.Application;
-using PetFamily.Volunteers.Infrastructure.DbContexts;
+using PetFamily.Core.Abstraction;
+using PetFamily.Specieses.Application;
+using PetFamily.Specieses.Infrastructure.DbContexts;
 using System.Data;
 
-namespace PetFamily.Volunteers.Infrastructure;
-public class UnitOfWork : IUnitOfWork //Управление транзакциями
+namespace PetFamily.Specieses.Infrastructure;
+public class SpeciesUnitOfWork : IUnitOfWork //Управление транзакциями
 {
     private readonly WriteDbContext _dbContext;
-    public UnitOfWork(WriteDbContext dbContext)
+    public SpeciesUnitOfWork(WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

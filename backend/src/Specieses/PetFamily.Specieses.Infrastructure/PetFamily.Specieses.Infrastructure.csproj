@@ -18,10 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\PetFamily.SharedKernel.csproj" />
-    <ProjectReference Include="..\PetFamily.Core\PetFamily.Core.csproj" />
+    <ProjectReference Include="..\..\Shared\PetFamily.Core\PetFamily.Core.csproj" />
+    <ProjectReference Include="..\..\Shared\PetFamily.SharedKernel\PetFamily.SharedKernel.csproj" />
     <ProjectReference Include="..\PetFamily.Specieses.Application\PetFamily.Specieses.Application.csproj" />
-    <ProjectReference Include="..\PetFamily.Specieses.Comtracts\PetFamily.Specieses.Contracts.csproj" />
+    <ProjectReference Include="..\PetFamily.Specieses.Contracts\PetFamily.Specieses.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
