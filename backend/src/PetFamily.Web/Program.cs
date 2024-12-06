@@ -6,6 +6,7 @@ using PetFamily.Web.Middlewares;
 using Serilog;
 using Serilog.Events;
 using PetFamily.Volunteers.Application;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,12 @@ builder.Services
     .AddSpeciesApplication()
     .AddSpeciesInfrastructure(builder.Configuration);
 
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme);
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
@@ -65,6 +72,8 @@ app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 
