@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.Framework;
 using PetFamily.Volunteers.Application.Commands.AddFiles;
@@ -23,6 +24,7 @@ namespace PetFamily.Volunteers.Presentation;
 
 public class VolunteersController : ApplicationController
 {
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult> GetVolunteers(
         [FromServices] GetVolunteersWithPaginationHandler handler,

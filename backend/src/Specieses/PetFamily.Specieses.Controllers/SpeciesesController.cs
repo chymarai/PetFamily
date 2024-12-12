@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetFamily.Framework;
 using PetFamily.Specieses.Application.Commands.CreateBreed;
 using PetFamily.Specieses.Application.Commands.CreateSpecies;
@@ -12,6 +13,7 @@ namespace PetFamily.Specieses.Presentation;
 
 public class SpeciesesController : ApplicationController
 {
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult> GetSpesiesesOrderByName(
         [FromServices] GetSpeciesesOrderByNameHandler handler,
