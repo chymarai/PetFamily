@@ -9,4 +9,6 @@ public static class Constants
     public const int MIN_EXPERIENCE_PARAMETER = 0;
 
     public const int MAX_EXPERIENCE_PARAMETER = 100;
+
+    public const string DATABASE = "Database";
 }

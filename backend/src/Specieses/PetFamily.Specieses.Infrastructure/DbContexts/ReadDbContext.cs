@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core.DTOs;
+using PetFamily.SharedKernel;
 using PetFamily.Specieses.Application;
 
 namespace PetFamily.Specieses.Infrastructure.DbContexts;
@@ -9,13 +10,12 @@ namespace PetFamily.Specieses.Infrastructure.DbContexts;
 
 public class ReadDbContext(IConfiguration configuration) : DbContext, IReadDbContext
 {
-    private const string DATABASE = "Database";
     public IQueryable<SpeciesDto> Specieses => Set<SpeciesDto>();
     public IQueryable<BreedDto> Breeds => Set<BreedDto>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
+        optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constants.DATABASE));
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());

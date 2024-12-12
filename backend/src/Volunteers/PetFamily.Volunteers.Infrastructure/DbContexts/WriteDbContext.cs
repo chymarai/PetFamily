@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PetFamily.SharedKernel;
 using PetFamily.Volunteers.Domain;
 
 namespace PetFamily.Volunteers.Infrastructure.DbContexts;
 
 public class WriteDbContext(IConfiguration configuration) : DbContext
 {
-    private const string DATABASE = "Database";
     public DbSet<Volunteer> Volunteers => Set<Volunteer>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
+        optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constants.DATABASE));
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());

@@ -67,15 +67,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Volunteers.Contra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accounts", "Accounts", "{A8EDE689-3A84-4F7D-881F-18F0A66970D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Application", "..\PetFamily.Accounts.Application\PetFamily.Accounts.Application.csproj", "{38510D2F-2A0B-4E77-BA51-98D500C2B0DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Application", "src\Accounts\PetFamily.Accounts.Application\PetFamily.Accounts.Application.csproj", "{38510D2F-2A0B-4E77-BA51-98D500C2B0DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Contracts", "..\PetFamily.Accounts.Contracts\PetFamily.Accounts.Contracts.csproj", "{38AF93B7-53F1-4E7C-A13D-BC7277043A86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Contracts", "src\Accounts\PetFamily.Accounts.Contracts\PetFamily.Accounts.Contracts.csproj", "{38AF93B7-53F1-4E7C-A13D-BC7277043A86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Domain", "..\PetFamily.Accounts.Domain\PetFamily.Accounts.Domain.csproj", "{09396112-1AAF-4461-B631-F0D1774BE2EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Domain", "src\Accounts\PetFamily.Accounts.Domain\PetFamily.Accounts.Domain.csproj", "{09396112-1AAF-4461-B631-F0D1774BE2EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Infrastructure", "..\PetFamily.Accounts.Infrastructure\PetFamily.Accounts.Infrastructure.csproj", "{FB7FE4A3-04C4-42AF-BB96-65520C070D49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Infrastructure", "src\Accounts\PetFamily.Accounts.Infrastructure\PetFamily.Accounts.Infrastructure.csproj", "{FB7FE4A3-04C4-42AF-BB96-65520C070D49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Presentation", "..\PetFamily.Accounts.Presentation\PetFamily.Accounts.Presentation.csproj", "{0D078D6D-A66C-4E78-8787-A4D7E26EF6C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Accounts.Presentation", "src\Accounts\PetFamily.Accounts.Presentation\PetFamily.Accounts.Presentation.csproj", "{0D078D6D-A66C-4E78-8787-A4D7E26EF6C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

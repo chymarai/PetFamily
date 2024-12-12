@@ -23,15 +23,20 @@ public static class Errors
 
             return Error.Validation("length.is.invalid", $"invalid{label}length");
         }
-    }
 
-    public static class Volunteer
-    {
         public static Error AlreadyExist(string? name = null)
         {
             var label = name ?? "value";
 
             return Error.Validation("record.already.exist", $"{label} already exist");
+        }
+    }
+
+    public static class User
+    {
+        public static Error InvalidIdentity()
+        {
+            return Error.Validation("incorrect.login.information", "incorrect.login.information");
         }
     }
 
