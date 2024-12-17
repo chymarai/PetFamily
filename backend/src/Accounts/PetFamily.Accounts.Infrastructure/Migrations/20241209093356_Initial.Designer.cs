@@ -11,7 +11,7 @@ using PetFamily.Accounts.Infrastructure;
 
 namespace PetFamily.Accounts.Infrastructure.Migrations
 {
-    [DbContext(typeof(AuthorizationDbContext))]
+    [DbContext(typeof(AccountsDbContext))]
     [Migration("20241209093356_Initial")]
     partial class Initial
     {

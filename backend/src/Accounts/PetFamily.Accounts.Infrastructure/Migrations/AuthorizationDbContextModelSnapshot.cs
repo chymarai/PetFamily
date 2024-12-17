@@ -10,7 +10,7 @@ using PetFamily.Accounts.Infrastructure;
 
 namespace PetFamily.Accounts.Infrastructure.Migrations
 {
-    [DbContext(typeof(AuthorizationDbContext))]
+    [DbContext(typeof(AccountsDbContext))]
     partial class AuthorizationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

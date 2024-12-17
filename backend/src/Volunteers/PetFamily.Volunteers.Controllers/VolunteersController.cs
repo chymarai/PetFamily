@@ -24,7 +24,6 @@ namespace PetFamily.Volunteers.Presentation;
 
 public class VolunteersController : ApplicationController
 {
-    [Authorize]
     [HttpGet]
     public async Task<ActionResult> GetVolunteers(
         [FromServices] GetVolunteersWithPaginationHandler handler,

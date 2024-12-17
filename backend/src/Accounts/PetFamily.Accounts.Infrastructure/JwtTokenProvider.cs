@@ -28,7 +28,8 @@ public class JwtTokenProvider : ITokenProvider
         Claim[] claims =
         [
             new Claim(CustomClaims.Id, user.Id.ToString()),
-            new Claim(CustomClaims.Email, user.Email ?? "")
+            new Claim(CustomClaims.Email, user.Email ?? ""),
+            new Claim("Permission", "pet.create")
         ];
 
         var jwtToken = new JwtSecurityToken(

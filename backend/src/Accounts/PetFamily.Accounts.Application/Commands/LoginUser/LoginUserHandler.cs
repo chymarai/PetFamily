@@ -13,21 +13,15 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace PetFamily.Accounts.Application.Commands.LoginUser;
-public class LoginUserHandler : ICommandHandler<string, LoginUserCommand>
+public class LoginUserHandler(
+    UserManager<User> userManager,
+    ITokenProvider tokenProvider,
+    ILogger<LoginUserHandler> logger) : ICommandHandler<string, LoginUserCommand>
 {
-    private readonly UserManager<User> _userManager;
-    private readonly ITokenProvider _tokenProvider;
-    private readonly ILogger<LoginUserHandler> _logger;
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly ITokenProvider _tokenProvider = tokenProvider;
+    private readonly ILogger<LoginUserHandler> _logger = logger;
 
-    public LoginUserHandler(
-        UserManager<User> userManager,
-        ITokenProvider tokenProvider,
-        ILogger<LoginUserHandler> logger)
-    {
-        _userManager = userManager;
-        _tokenProvider = tokenProvider;
-        _logger = logger;
-    }
     public async Task<Result<string, ErrorList>> Handle(LoginUserCommand command, CancellationToken token = default)
     {
         var user = await _userManager.FindByEmailAsync(command.Email);

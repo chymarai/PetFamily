@@ -15,10 +15,9 @@ namespace PetFamily.Accounts.Application.Commands.RegisterUser;
 public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
 {
     private readonly UserManager<User> _userManager;
-    private readonly ILogger _logger;
+    private readonly ILogger<RegisterUserHandler> _logger;
 
-    public RegisterUserHandler(UserManager<User> userManager,
-        ILogger<RegisterUserCommand> logger)
+    public RegisterUserHandler(UserManager<User> userManager, ILogger<RegisterUserHandler> logger)
     {
         _userManager = userManager;
         _logger = logger;

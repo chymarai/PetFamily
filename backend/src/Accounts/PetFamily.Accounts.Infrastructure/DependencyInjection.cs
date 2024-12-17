@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,11 +24,20 @@ public static class DependencyInjection
 
         services
             .AddIdentity<User, Role>(options => options.User.RequireUniqueEmail = true)
-            .AddEntityFrameworkStores<AuthorizationDbContext>()
+            .AddEntityFrameworkStores<AccountsDbContext>()
             .AddDefaultTokenProviders();
 
+        services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
+
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
         services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
                 var jwtOptions = configuration.GetSection(JwtOptions.JWT).Get<JwtOptions>()
@@ -42,19 +52,20 @@ public static class DependencyInjection
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
                 };
             });
 
-        services.AddAuthorization();
-
         services.AddDbContexts();
+
+        services.AddAuthorization();
 
         return services;
     }
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services)
     {
-        services.AddScoped<AuthorizationDbContext>();
+        services.AddScoped<AccountsDbContext>();
 
         return services;
     }

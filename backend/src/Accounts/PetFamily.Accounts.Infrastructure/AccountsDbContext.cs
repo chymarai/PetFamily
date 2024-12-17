@@ -13,9 +13,10 @@ using System.Threading.Tasks;
 using static CSharpFunctionalExtensions.Result;
 
 namespace PetFamily.Accounts.Infrastructure;
-public class AuthorizationDbContext(IConfiguration configuration)
+public class AccountsDbContext(IConfiguration configuration)
     : IdentityDbContext<User, Role, Guid>
 {
+    public DbSet<RolePermission> 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constants.DATABASE));
