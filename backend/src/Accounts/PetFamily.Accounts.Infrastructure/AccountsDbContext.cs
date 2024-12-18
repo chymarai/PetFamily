@@ -16,7 +16,10 @@ namespace PetFamily.Accounts.Infrastructure;
 public class AccountsDbContext(IConfiguration configuration)
     : IdentityDbContext<User, Role, Guid>
 {
-    public DbSet<RolePermission> 
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+    public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<Role> Role => Set<Role>();
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constants.DATABASE));
@@ -49,6 +52,14 @@ public class AccountsDbContext(IConfiguration configuration)
 
         modelBuilder.Entity<IdentityUserRole<Guid>>()
             .ToTable("user_roles");
+
+        modelBuilder.Entity<Permission>()
+            .ToTable("permission")
+            .HasMany(p => p.Roles)
+            .WithMany(r  => r.Permissions);
+
+        modelBuilder.Entity<RolePermission>()
+            .ToTable("rolePermission");
     }
 
     private ILoggerFactory CreateLoggerFactory() =>
