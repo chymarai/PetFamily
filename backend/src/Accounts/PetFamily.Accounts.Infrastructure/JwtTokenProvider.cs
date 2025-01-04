@@ -25,12 +25,16 @@ public class JwtTokenProvider : ITokenProvider
 
         var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+        var roleClaims = user.Roles.Select(r => new Claim(CustomClaims.Role, r.Name ?? string.Empty));
+
         Claim[] claims =
         [
-            new Claim(CustomClaims.Id, user.Id.ToString()),
-            new Claim(CustomClaims.Email, user.Email ?? ""),
-            new Claim("Permission", "pet.create")
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
+            new Claim("User", "pet.create")
         ];
+
+        claims = claims.Concat(roleClaims).ToArray();
 
         var jwtToken = new JwtSecurityToken(
             issuer: _jwtOptions.Issuer,

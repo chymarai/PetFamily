@@ -37,9 +37,7 @@ public class VolunteersTests
             email,
             phoneNumber,
             description,
-            experience,
-            socialNetworkDetails,
-            requisiteDetails);
+            experience);
 
         var name = Name.Create("Test").Value;
         var descriptionPet = Description.Create("Test").Value;
@@ -181,9 +179,7 @@ public class VolunteersTests
             email,
             phoneNumber,
             description,
-            experience,
-            socialNetworkDetails,
-            requisiteDetails);
+            experience);
 
         var name = Name.Create("Test").Value;
         var descriptionPet = Description.Create("Test").Value;

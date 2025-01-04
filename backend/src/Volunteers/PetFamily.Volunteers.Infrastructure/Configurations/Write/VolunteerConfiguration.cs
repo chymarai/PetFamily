@@ -70,40 +70,6 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                .HasColumnName("experience");
         });
 
-        builder.OwnsOne(m => m.SocialNetworkDetails, mb =>
-        {
-            mb.ToJson("social_network");
-
-            mb.OwnsMany(mb => mb.Value, mbBuilder =>
-            {
-                mbBuilder.Property(p => p.Name)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                    .HasColumnName("social_network_name");
-
-                mbBuilder.Property(p => p.Url)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                    .HasColumnName("social_network_url");
-            });
-        });
-
-        builder.OwnsOne(m => m.RequisiteDetails, mb =>
-        {
-            mb.ToJson("requisite");
-
-            mb.OwnsMany(mb => mb.Value, mbBuilder =>
-            {
-                mbBuilder.Property(p => p.Name)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-
-                mbBuilder.Property(p => p.Description)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-            });
-        });
-
         builder.HasMany(m => m.Pets)
             .WithOne()
             .HasForeignKey("volunteer_id")

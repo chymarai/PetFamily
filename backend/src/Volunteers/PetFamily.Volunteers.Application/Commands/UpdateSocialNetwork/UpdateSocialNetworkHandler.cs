@@ -5,7 +5,7 @@ using PetFamily.Core.Abstraction;
 using PetFamily.Core.Extensions;
 using PetFamily.SharedKernel;
 using PetFamily.SharedKernel.Ids;
-using PetFamily.Volunteers.Domain.VolunteersValueObjects;
+using PetFamily.SharedKernel.ValueObjects;
 
 namespace PetFamily.Volunteers.Application.Commands.UpdateSocialNetwork;
 public class UpdateSocialNetworkHandler : ICommandHandler<Guid, UpdateSocialNetworkCommand>
@@ -42,7 +42,7 @@ public class UpdateSocialNetworkHandler : ICommandHandler<Guid, UpdateSocialNetw
         var socialNetworkDetails = command.SocialNetworkDetails.SocialNetwork
             .Select(s => SocialNetwork.Create(s.Name, s.Url).Value);
 
-        volunteerResult.Value.UpdateSocialNetwork(new SocialNetworkDetails(socialNetworkDetails));
+        //volunteerResult.Value.UpdateSocialNetwork(new SocialNetworkDetails(socialNetworkDetails));
 
         await _unitOfWork.SaveChanges(cancellationToken);
 

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PetFamily.Framework;
+using PetFamily.Framework.Authorization;
 using PetFamily.Specieses.Application.Commands.CreateBreed;
 using PetFamily.Specieses.Application.Commands.CreateSpecies;
 using PetFamily.Specieses.Application.Commands.DeleteBreed;
@@ -13,7 +13,7 @@ namespace PetFamily.Specieses.Presentation;
 
 public class SpeciesesController : ApplicationController
 {
-    [Authorize]
+    [Permission(Permissions.Specieses.GetSpecies)]
     [HttpGet]
     public async Task<ActionResult> GetSpesiesesOrderByName(
         [FromServices] GetSpeciesesOrderByNameHandler handler,
@@ -24,6 +24,7 @@ public class SpeciesesController : ApplicationController
         return Ok(result);
     }
 
+    [Permission(Permissions.Breeds.GetBreed)]
     [HttpGet("{id:guid}/breed")]
     public async Task<ActionResult> GetBreedsOrderByName(
        [FromRoute] Guid id,
@@ -37,6 +38,7 @@ public class SpeciesesController : ApplicationController
         return Ok(result);
     }
 
+    [Permission(Permissions.Specieses.CreateSpecies)]
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromBody] CreateSpeciesRequest request,
@@ -51,6 +53,7 @@ public class SpeciesesController : ApplicationController
         return Ok(result.Value);
     }
 
+    [Permission(Permissions.Breeds.CreateBreed)]
     [HttpPost("{id:guid}/breed")]
     public async Task<ActionResult> CreateBreed(
         [FromRoute] Guid id,
@@ -66,6 +69,7 @@ public class SpeciesesController : ApplicationController
         return Ok(result.Value);
     }
 
+    [Permission(Permissions.Specieses.DeleteSpecies)]
     [HttpDelete("{id:guid}/delete")]
     public async Task<ActionResult> DeleteSpecies(
         [FromRoute] Guid id,
@@ -80,12 +84,13 @@ public class SpeciesesController : ApplicationController
         return Ok(result.Value);
     }
 
+    [Permission(Permissions.Breeds.DeleteBreed)]
     [HttpDelete("{speciesId:guid}/{breedId:guid}/delete")]
     public async Task<ActionResult> DeleteBreed(
-    [FromRoute] Guid speciesId,
-    [FromRoute] Guid breedId,
-    [FromServices] DeleteBreedHandler handler,
-    CancellationToken token)
+        [FromRoute] Guid speciesId,
+        [FromRoute] Guid breedId,
+        [FromServices] DeleteBreedHandler handler,
+        CancellationToken token)
     {
         var result = await handler.Handle(new DeleteBreedCommand(speciesId, breedId), token);
 

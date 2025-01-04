@@ -6,6 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application.DataModels;
 using PetFamily.Accounts.Domain;
+using PetFamily.Accounts.Infrastructure.IdentityManagers;
+using PetFamily.Accounts.Infrastructure.Options;
+using PetFamily.Accounts.Infrastructure.Seeding;
+using PetFamily.Framework.Authorization;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 
@@ -15,6 +20,9 @@ public static class DependencyInjection
     public static IServiceCollection AddAccountsInfractructue
         (this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<AccountsSeeder>();
+        services.AddScoped<AccountsSeederService>();
+
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
 
         services.Configure<JwtOptions>(
@@ -22,10 +30,7 @@ public static class DependencyInjection
 
         services.AddOptions<JwtOptions>();
 
-        services
-            .AddIdentity<User, Role>(options => options.User.RequireUniqueEmail = true)
-            .AddEntityFrameworkStores<AccountsDbContext>()
-            .AddDefaultTokenProviders();
+        services.RegisterIdentity();
 
         services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
 
@@ -56,11 +61,26 @@ public static class DependencyInjection
                 };
             });
 
+        services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
+
         services.AddDbContexts();
 
         services.AddAuthorization();
 
+
         return services;
+    }
+
+    private static void RegisterIdentity(this IServiceCollection services)
+    {
+        services
+            .AddIdentity<User, Role>(options => options.User.RequireUniqueEmail = true)
+            .AddEntityFrameworkStores<AccountsDbContext>()
+            .AddDefaultTokenProviders();
+
+        services
+            .AddScoped<PermissionManager>()
+            .AddScoped<RolePermissionManager>();
     }
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services)

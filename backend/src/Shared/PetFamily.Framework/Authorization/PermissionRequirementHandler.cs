@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PetFamily.Accounts.Infrastructure;
+namespace PetFamily.Framework.Authorization;
 public class PermissionRequirementHandler : AuthorizationHandler<PermissionAttribute>
 {
     public PermissionRequirementHandler()
@@ -16,6 +11,7 @@ public class PermissionRequirementHandler : AuthorizationHandler<PermissionAttri
         AuthorizationHandlerContext context, 
         PermissionAttribute permission)
     {
+        //проверяем что у пользователя есть нужные разрешения
         var permissionUser = context.User.Claims.FirstOrDefault(c => c.Type == "Permission");
         if (permissionUser == null)
             return;

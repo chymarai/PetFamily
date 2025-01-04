@@ -62,9 +62,7 @@ public class CreateVolunteerHandler : ICommandHandler<Guid, CreateVolunteerComma
             email,
             phoneNumber,
             description,
-            experience,
-            socialNetworkDetails,
-            requisiteDetails);
+            experience);
 
         await _volunteersRepository.Add(volunteerToCreate, cancellationToken);
 

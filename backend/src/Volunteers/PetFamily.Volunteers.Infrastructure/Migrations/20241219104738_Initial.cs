@@ -11,8 +11,12 @@ namespace PetFamily.Volunteers.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "volunteers");
+
             migrationBuilder.CreateTable(
                 name: "volunteer",
+                schema: "volunteers",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -34,6 +38,7 @@ namespace PetFamily.Volunteers.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "pet",
+                schema: "volunteers",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -67,6 +72,7 @@ namespace PetFamily.Volunteers.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "fk_pet_volunteer_volunteer_id",
                         column: x => x.volunteer_id,
+                        principalSchema: "volunteers",
                         principalTable: "volunteer",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -74,6 +80,7 @@ namespace PetFamily.Volunteers.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "ix_pet_volunteer_id",
+                schema: "volunteers",
                 table: "pet",
                 column: "volunteer_id");
         }
@@ -82,10 +89,12 @@ namespace PetFamily.Volunteers.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "pet");
+                name: "pet",
+                schema: "volunteers");
 
             migrationBuilder.DropTable(
-                name: "volunteer");
+                name: "volunteer",
+                schema: "volunteers");
         }
     }
 }

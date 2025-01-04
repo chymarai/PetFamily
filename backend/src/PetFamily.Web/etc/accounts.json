@@ -1,5 +1,72 @@
 {
-  "Permission" {
+  "Roles": {
+    "Admin": [
+      "volunteer.create",
+      "volunteer.update",
+      "volunteer.delete",
+      "volunteer.get",
+      "pet.create",
+      "pet.update",
+      "pet.soft.delete",
+      "pet.hard.delete",
+      "pet.get",
+      "pet.file.update",
+      "pet.file.delete",
+      "species.create",
+      "species.delete",
+      "species.get",
+      "breed.create",
+      "breed.delete",
+      "breed.get"
+    ],
+    "User": [
+      "volunteer.get",
+      "pet.get",
+      "species.get",
+      "breed.get"
+    ],
+    "Volunteer": [
+      "volunteer.create",
+      "volunteer.update",
+      "volunteer.delete",
+      "volunteer.get",
+      "pet.create",
+      "pet.update",
+      "pet.soft.delete",
+      "pet.get",
+      "pet.file.update",
+      "pet.file.delete",
+      "species.get",
+      "breed.get"
+    ]
+  },
 
+  "Permissions": {
+    "Volunteers": [
+      "volunteer.create",
+      "volunteer.update",
+      "volunteer.delete",
+      "volunteer.get"
+    ],
+    "Pets": [
+      "pet.create",
+      "pet.update",
+      "pet.soft.delete",
+      "pet.hard.delete",
+      "pet.get",
+      "pet.file.update",
+      "pet.file.delete"
+
+    ],
+    "Specieses": [
+      "species.create",
+      "species.delete",
+      "species.get"
+    ],
+    "Breeds": [
+      "breed.create",
+      "breed.delete",
+      "breed.get"
+    ]
   }
 }

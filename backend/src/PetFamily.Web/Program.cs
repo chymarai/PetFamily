@@ -72,6 +72,8 @@ builder.Services
     .AddAccountsApplication()
     .AddAccountsInfractructue(builder.Configuration);
 
+
+
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
@@ -95,8 +97,8 @@ app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

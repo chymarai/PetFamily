@@ -6,6 +6,7 @@ using PetFamily.Accounts.Application.Commands.RegisterUser;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Presentation.Requests;
 using PetFamily.Framework;
+using PetFamily.Framework.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
