@@ -13,7 +13,7 @@ using PetFamily.Accounts.Infrastructure;
 namespace PetFamily.Accounts.Infrastructure.Migrations
 {
     [DbContext(typeof(AccountsDbContext))]
-    [Migration("20241225071715_Initial")]
+    [Migration("20250110142356_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -252,10 +252,6 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("normalized_name");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("role_id");
-
                     b.HasKey("Id")
                         .HasName("pk_roles");
 
@@ -373,8 +369,15 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id")
                         .HasName("pk_volunteer_account");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_volunteer_account_user_id");
 
                     b.ToTable("volunteer_account", "accounts");
                 });
@@ -471,6 +474,13 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
 
             modelBuilder.Entity("PetFamily.Accounts.Domain.VolunteerAccount", b =>
                 {
+                    b.HasOne("PetFamily.Accounts.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_volunteer_account_users_user_id");
+
                     b.OwnsOne("PetFamily.SharedKernel.ValueObjects.RequisiteDetails", "RequisiteDetails", b1 =>
                         {
                             b1.Property<Guid>("VolunteerAccountId")
@@ -574,6 +584,8 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
 
                     b.Navigation("SocialNetworkDetails")
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PetFamily.Accounts.Domain.Role", b =>

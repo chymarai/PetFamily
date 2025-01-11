@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Application;
 using Microsoft.OpenApi.Models;
+using PetFamily.Accounts.Infrastructure.Seeding;
+using PetFamily.Accounts.Presentation;
+
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
-//Add services to the container.
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -70,13 +72,16 @@ builder.Services
     .AddSpeciesInfrastructure(builder.Configuration)
 
     .AddAccountsApplication()
-    .AddAccountsInfractructue(builder.Configuration);
-
-
+    .AddAccountsInfractructue(builder.Configuration)
+    .AddAccountsPresentation();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
+
+var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
+
+await accountsSeeder.SeedAsync();
 
 app.UseExceptionMiddleware();
 

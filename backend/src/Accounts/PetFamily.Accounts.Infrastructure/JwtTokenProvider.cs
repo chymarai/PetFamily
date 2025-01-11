@@ -31,7 +31,7 @@ public class JwtTokenProvider : ITokenProvider
         [
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-            new Claim("User", "pet.create")
+            new Claim("User", "pet.get")
         ];
 
         claims = claims.Concat(roleClaims).ToArray();

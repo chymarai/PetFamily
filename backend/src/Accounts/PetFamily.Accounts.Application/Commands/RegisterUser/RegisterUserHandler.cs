@@ -31,6 +31,9 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
         };
 
         var result = await _userManager.CreateAsync(user, command.Password);
+
+        var roles = await _userManager.AddToRoleAsync(user, "User");
+
         if (result.Succeeded)
         {
             _logger.LogInformation("User {userName} created", command.UserName);

@@ -25,8 +25,8 @@ public static class DependencyInjection
 
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
 
-        services.Configure<JwtOptions>(
-            configuration.GetSection(JwtOptions.JWT));
+        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
+        services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
 
         services.AddOptions<JwtOptions>();
 
@@ -79,8 +79,9 @@ public static class DependencyInjection
             .AddDefaultTokenProviders();
 
         services
+            .AddScoped<RolePermissionManager>()
             .AddScoped<PermissionManager>()
-            .AddScoped<RolePermissionManager>();
+            .AddScoped<AdminAccountManager>();
     }
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services)

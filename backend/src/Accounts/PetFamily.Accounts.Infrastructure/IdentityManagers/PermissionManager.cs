@@ -25,4 +25,17 @@ public class PermissionManager(AccountsDbContext accountsDbContext)
 
         await accountsDbContext.SaveChangesAsync();
     }
+
+    public async Task<HashSet<string>> GetUserPermissionCodes(Guid userId)
+    {
+        var permissions = await accountsDbContext.Users
+            .Include(u => u.Roles)
+            .Where(u => u.Id == userId)
+            .SelectMany(u => u.Roles)
+            .SelectMany(r => r.RolePermissions)
+            .Select(rp => rp.Permission.Code)
+            .ToListAsync();
+
+        return permissions.ToHashSet();
+    }
 }

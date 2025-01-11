@@ -10,11 +10,14 @@ public class AdminAccount
     {
     }
 
-    public AdminAccount(FullName fullName, User user)
+    public static AdminAccount Create(User user, FullName fullName)
     {
-        Id = Guid.NewGuid();    
-        FullName = fullName;
-        User = user;
+        return new AdminAccount
+        {
+            Id = Guid.NewGuid(),
+            User = user,
+            FullName = fullName,
+        };
     }
 
     public Guid Id { get; set; }

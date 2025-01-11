@@ -18,6 +18,7 @@ public class AccountsSeederService(
     RoleManager<Role> roleManager,
     PermissionManager permissionManager,
     RolePermissionManager rolePermissionManager,
+    AdminAccountManager adminAccountManager,
     IOptions<AdminOptions> adminOptions,
     ILogger<AccountsSeederService> logger)
 {
@@ -30,24 +31,30 @@ public class AccountsSeederService(
         var seedData = JsonSerializer.Deserialize<RolePermissionOptions>(json)
                        ?? throw new ArgumentNullException("Could not deserilize role permission config");
 
-        await SeedRoles(seedData);
-
         await SeedPermissions(seedData);
+
+        await SeedRoles(seedData);
 
         await SeedRolePermissions(seedData);
 
+        await SeedAdmin();
+    }
+
+    private async Task SeedAdmin()
+    {
         var adminRole = await roleManager.FindByNameAsync(AdminAccount.ADMIN)
                         ?? throw new ApplicationException("Could not find admin role.");
 
         var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
-        await userManager.CreateAsync(adminUser);
-
+        await userManager.CreateAsync(adminUser, _adminOptions.Password);
+        
         var fullName = FullName.Create(_adminOptions.UserName, _adminOptions.UserName, _adminOptions.UserName).Value;
-        var adminAccount = new AdminAccount(fullName, adminUser);
+        var adminAccount = AdminAccount.Create(adminUser, fullName);
 
-        await userManager.CreateAsync(adminUser);
+        await adminAccountManager.CreateAdminAccount(adminAccount);
+
+        logger.LogInformation("Admin account added to database.");
     }
-
 
     private async Task SeedRoles(RolePermissionOptions seedData)
     {

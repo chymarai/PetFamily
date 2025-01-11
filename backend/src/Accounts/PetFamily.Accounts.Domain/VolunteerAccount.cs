@@ -9,6 +9,8 @@ namespace PetFamily.Accounts.Domain;
 public class VolunteerAccount
 {
     public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public User User { get; set; }
     public RequisiteDetails RequisiteDetails { get; set; } = default!;
     public SocialNetworkDetails SocialNetworkDetails { get; set; } = default!;
 }
