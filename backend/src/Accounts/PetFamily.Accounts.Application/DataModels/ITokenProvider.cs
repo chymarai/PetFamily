@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 namespace PetFamily.Accounts.Application.DataModels;
 public interface ITokenProvider
 {
-    string GenerateAccessToken(User user);
+    Task<JwtTokenResult> GenerateAccessToken(User user, CancellationToken cancellationToken);
 }

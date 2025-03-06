@@ -128,6 +128,7 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false),
                     first_name = table.Column<string>(type: "text", nullable: false),
                     last_name = table.Column<string>(type: "text", nullable: false),
                     sur_name = table.Column<string>(type: "text", nullable: false)

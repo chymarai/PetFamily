@@ -5,6 +5,7 @@ using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.IdentityManagers;
 using PetFamily.Accounts.Infrastructure.Options;
 using PetFamily.SharedKernel.ValueObjects;
+using PetFamily.Volunteers.Domain.VolunteersValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,9 @@ public class AccountsSeederService(
         await userManager.CreateAsync(adminUser, _adminOptions.Password);
         
         var fullName = FullName.Create(_adminOptions.UserName, _adminOptions.UserName, _adminOptions.UserName).Value;
-        var adminAccount = AdminAccount.Create(adminUser, fullName);
+        var email = Email.Create(_adminOptions.Email).Value;
+
+        var adminAccount = AdminAccount.Create(adminUser, fullName, email);
 
         await adminAccountManager.CreateAdminAccount(adminAccount);
 

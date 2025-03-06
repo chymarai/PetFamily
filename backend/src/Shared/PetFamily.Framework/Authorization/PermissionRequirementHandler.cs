@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using PetFamily.Accounts.Contracts;
+using PetFamily.Accounts.Domain;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace PetFamily.Framework.Authorization;
@@ -14,31 +15,21 @@ public class PermissionRequirementHandler : AuthorizationHandler<PermissionAttri
     }
 
     protected override async Task HandleRequirementAsync(
-        AuthorizationHandlerContext context, 
-        PermissionAttribute permission)
+        AuthorizationHandlerContext context,
+        PermissionAttribute permissionAttribute)
     {
         //проверяем что у пользователя есть нужные разрешения
 
-        using var scope = _serviceScopeFactory.CreateScope();
+        var permissions = context.User.Claims
+            .Where(claim => claim.Type == CustomClaims.Permission)
+            .Select(claim => claim.Value)
+            .ToList();
 
-        var accountContract = scope.ServiceProvider.GetRequiredService<IAccountsContract>();
-
-        var userIdString = context.User.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)?.Value;
-       
-        if (!Guid.TryParse(userIdString, out var userId))
+        if (permissions.Contains(permissionAttribute.Code))
         {
-            context.Fail();
+            context.Succeed(permissionAttribute);
             return;
         }
-
-        var permissions = await accountContract.GetUserPermissionCodes(userId);
-
-        if (permissions.Contains(permission.Code))
-        {
-            context.Succeed(permission);
-            return;
-        }
-
-        context.Succeed(permission);
+        context.Fail();
     }
 }

@@ -13,7 +13,7 @@ using PetFamily.Accounts.Infrastructure;
 namespace PetFamily.Accounts.Infrastructure.Migrations
 {
     [DbContext(typeof(AccountsDbContext))]
-    [Migration("20250110142356_Initial")]
+    [Migration("20250306121735_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -167,6 +167,16 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Email", "PetFamily.Accounts.Domain.AdminAccount.Email#Email", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("email");
+                        });
 
                     b.ComplexProperty<Dictionary<string, object>>("FullName", "PetFamily.Accounts.Domain.AdminAccount.FullName#FullName", b1 =>
                         {

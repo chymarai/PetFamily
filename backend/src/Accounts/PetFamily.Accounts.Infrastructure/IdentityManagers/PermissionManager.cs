@@ -26,7 +26,7 @@ public class PermissionManager(AccountsDbContext accountsDbContext)
         await accountsDbContext.SaveChangesAsync();
     }
 
-    public async Task<HashSet<string>> GetUserPermissionCodes(Guid userId)
+    public async Task<HashSet<string>> GetUserPermissionCodes(Guid userId, CancellationToken cancellationToken)
     {
         var permissions = await accountsDbContext.Users
             .Include(u => u.Roles)

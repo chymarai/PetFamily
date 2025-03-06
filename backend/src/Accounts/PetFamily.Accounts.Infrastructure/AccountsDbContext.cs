@@ -50,6 +50,14 @@ public class AccountsDbContext(IConfiguration configuration)
                 tb.Property(m => m.SurName).IsRequired().HasColumnName("sur_name");
             });
 
+        modelBuilder.Entity<AdminAccount>()
+            .ComplexProperty(a => a.Email, tb =>
+            {
+                tb.Property(m => m.Value)
+                .IsRequired()
+                .HasColumnName("email");
+            });
+
         modelBuilder.Entity<VolunteerAccount>()
             .OwnsOne(m => m.SocialNetworkDetails, mb =>
             {
