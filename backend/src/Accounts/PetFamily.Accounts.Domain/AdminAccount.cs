@@ -1,4 +1,4 @@
-﻿using PetFamily.Volunteers.Domain.VolunteersValueObjects;
+﻿using PetFamily.SharedKernel.ValueObjects;
 
 namespace PetFamily.Accounts.Domain;
 

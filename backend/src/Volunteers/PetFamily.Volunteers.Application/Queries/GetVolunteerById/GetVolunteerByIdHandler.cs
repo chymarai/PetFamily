@@ -28,3 +28,5 @@ public class GetVolunteerByIdHandler : IQueriesHandler<Result<VolunteerDto, Erro
         return volunteerQuery;
     }
 }
+
+

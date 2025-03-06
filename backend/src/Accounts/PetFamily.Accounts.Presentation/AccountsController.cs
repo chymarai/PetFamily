@@ -16,8 +16,8 @@ using System.Threading.Tasks;
 namespace PetFamily.Accounts.Presentation;
 public class AccountsController : ApplicationController
 {
-    [Permission("pet.get")]
-    [HttpPost("test")]
+    //[Permission("pet.get")]
+    [HttpGet("test")]
     public ActionResult TestAdmin()
     {
         return Ok();

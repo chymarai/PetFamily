@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.IdentityManagers;
 using PetFamily.Accounts.Infrastructure.Options;
-using PetFamily.Volunteers.Domain.VolunteersValueObjects;
+using PetFamily.SharedKernel.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
