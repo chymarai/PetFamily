@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using PetFamily.SharedKernel;
 
-namespace PetFamily.Volunteers.Domain.VolunteersValueObjects;
+namespace PetFamily.SharedKernel.ValueObjects;
 
 public record SocialNetwork
 {

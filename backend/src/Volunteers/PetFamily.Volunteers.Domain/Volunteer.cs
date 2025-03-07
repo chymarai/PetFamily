@@ -13,7 +13,6 @@ public class Volunteer : SoftDeletableEntity<VolunteerId>
 
     private Volunteer(VolunteerId id) : base(id)
     {
-
     }
 
     public Volunteer(
@@ -22,17 +21,13 @@ public class Volunteer : SoftDeletableEntity<VolunteerId>
         Email email,
         PhoneNumber phoneNumber,
         Description description,
-        Experience experience,
-        SocialNetworkDetails socialNetworkDetails,
-        RequisiteDetails requisiteDetails) : base(volunteerId)
+        Experience experience) : base(volunteerId)
     {
         FullName = fullName;
         Email = email;
         PhoneNumber = phoneNumber;
         Description = description;
         Experience = experience;
-        SocialNetworkDetails = socialNetworkDetails;
-        RequisiteDetails = requisiteDetails;
     }
 
     public FullName FullName { get; private set; } = default!;
@@ -40,8 +35,6 @@ public class Volunteer : SoftDeletableEntity<VolunteerId>
     public PhoneNumber PhoneNumber { get; private set; } = default!;
     public Description Description { get; private set; } = default!;
     public Experience Experience { get; private set; } = default!;
-    public SocialNetworkDetails SocialNetworkDetails { get; private set; } = default!;
-    public RequisiteDetails RequisiteDetails { get; private set; } = default!;
     public IReadOnlyList<Pet> Pets => _pets;
     public int CountPetsOnTreatment => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.OnTreatment);
     public int CountPetsLookingHome => _pets.Count(p => p.AssistanceStatus == AssistanceStatus.LookingHome);
@@ -59,12 +52,6 @@ public class Volunteer : SoftDeletableEntity<VolunteerId>
         PhoneNumber = phoneNumber;
         Description = description;
         Experience = experience;
-    }
-
-    public void UpdateSocialNetwork(
-        SocialNetworkDetails socialNetworkDetails)
-    {
-        SocialNetworkDetails = socialNetworkDetails;
     }
 
     public Result<Pet, Error> GetPetById(PetId petId)

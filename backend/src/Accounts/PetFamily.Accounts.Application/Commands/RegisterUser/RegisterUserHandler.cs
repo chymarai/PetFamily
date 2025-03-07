@@ -15,10 +15,9 @@ namespace PetFamily.Accounts.Application.Commands.RegisterUser;
 public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
 {
     private readonly UserManager<User> _userManager;
-    private readonly ILogger _logger;
+    private readonly ILogger<RegisterUserHandler> _logger;
 
-    public RegisterUserHandler(UserManager<User> userManager,
-        ILogger<RegisterUserCommand> logger)
+    public RegisterUserHandler(UserManager<User> userManager, ILogger<RegisterUserHandler> logger)
     {
         _userManager = userManager;
         _logger = logger;
@@ -32,6 +31,9 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
         };
 
         var result = await _userManager.CreateAsync(user, command.Password);
+
+        var roles = await _userManager.AddToRoleAsync(user, "User");
+
         if (result.Succeeded)
         {
             _logger.LogInformation("User {userName} created", command.UserName);

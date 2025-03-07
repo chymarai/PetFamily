@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Application;
 using Microsoft.OpenApi.Models;
+using PetFamily.Accounts.Infrastructure.Seeding;
+using PetFamily.Accounts.Presentation;
+
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
-//Add services to the container.
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -31,32 +33,33 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(setup =>
+
+builder.Services.AddSwaggerGen(c =>
 {
-    // Include 'SecurityScheme' to use JWT Authentication
-    var jwtSecurityScheme = new OpenApiSecurityScheme
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        BearerFormat = "JWT",
-        Name = "JWT Authentication",
-        In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
-        Scheme = JwtBearerDefaults.AuthenticationScheme,
-        Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
-
-        Reference = new OpenApiReference
-        {
-            Id = JwtBearerDefaults.AuthenticationScheme,
-            Type = ReferenceType.SecurityScheme
-        }
-    };
-
-    setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-
-    setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        { jwtSecurityScheme, Array.Empty<string>() }
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Scheme = "bearer",
+        Name = "Authorization",
+        Description = "Please insert JWT token into field (no bearer prefix)",
     });
-
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            
+            Array.Empty<string>()
+        }
+    });
 });
 
 builder.Services.AddSerilog();
@@ -68,16 +71,17 @@ builder.Services
     .AddSpeciesApplication()
     .AddSpeciesInfrastructure(builder.Configuration)
 
+    .AddAccountsApplication()
     .AddAccountsInfractructue(builder.Configuration)
-    .AddAccountsApplication();
-
-builder.Services.AddAuthorization();
+    .AddAccountsPresentation();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
 
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
+
+await accountsSeeder.SeedAsync();
 
 app.UseExceptionMiddleware();
 
@@ -87,21 +91,19 @@ app.UseStaticFiles();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI
-        (c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI");
-        c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
-    });
+    app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI");
+            c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
+        });
 }
-
 
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

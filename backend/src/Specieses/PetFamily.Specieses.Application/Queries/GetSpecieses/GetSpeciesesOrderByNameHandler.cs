@@ -28,3 +28,5 @@ public class GetSpeciesesOrderByNameHandler : IQueriesHandler<OnePageList<Specie
         };
     }
 }
+
+

@@ -13,22 +13,16 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace PetFamily.Accounts.Application.Commands.LoginUser;
-public class LoginUserHandler : ICommandHandler<string, LoginUserCommand>
+public class LoginUserHandler(
+    UserManager<User> userManager,
+    ITokenProvider tokenProvider,
+    ILogger<LoginUserHandler> logger) : ICommandHandler<JwtTokenResult, LoginUserCommand>
 {
-    private readonly UserManager<User> _userManager;
-    private readonly ITokenProvider _tokenProvider;
-    private readonly ILogger<LoginUserHandler> _logger;
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly ITokenProvider _tokenProvider = tokenProvider;
+    private readonly ILogger<LoginUserHandler> _logger = logger;
 
-    public LoginUserHandler(
-        UserManager<User> userManager,
-        ITokenProvider tokenProvider,
-        ILogger<LoginUserHandler> logger)
-    {
-        _userManager = userManager;
-        _tokenProvider = tokenProvider;
-        _logger = logger;
-    }
-    public async Task<Result<string, ErrorList>> Handle(LoginUserCommand command, CancellationToken token = default)
+    public async Task<Result<JwtTokenResult, ErrorList>> Handle(LoginUserCommand command, CancellationToken token = default)
     {
         var user = await _userManager.FindByEmailAsync(command.Email);
         if (user == null)
@@ -38,7 +32,7 @@ public class LoginUserHandler : ICommandHandler<string, LoginUserCommand>
         if (!passwordVerification)
             return Errors.User.InvalidIdentity().ToErrorList();
 
-        var jwtToken = _tokenProvider.GenerateAccessToken(user);
+        var jwtToken = await _tokenProvider.GenerateAccessToken(user, token);
 
         _logger.LogInformation("User {email} is logged in", command.Email);
 
