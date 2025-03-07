@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PetFamily.Accounts.Application;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.IdentityManagers;
 using PetFamily.Accounts.Infrastructure.Options;
@@ -9,6 +10,7 @@ using PetFamily.Volunteers.Domain.VolunteersValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -21,7 +23,8 @@ public class AccountsSeederService(
     RolePermissionManager rolePermissionManager,
     AdminAccountManager adminAccountManager,
     IOptions<AdminOptions> adminOptions,
-    ILogger<AccountsSeederService> logger)
+    ILogger<AccountsSeederService> logger, 
+    IUnitOfWork unitOfWork)
 {
     private readonly AdminOptions _adminOptions = adminOptions.Value;
 
@@ -43,18 +46,28 @@ public class AccountsSeederService(
 
     private async Task SeedAdmin()
     {
-        var adminRole = await roleManager.FindByNameAsync(AdminAccount.ADMIN)
-                        ?? throw new ApplicationException("Could not find admin role.");
+        using (var transaction = await unitOfWork.BeginTransaction())
+        {
+            var adminResult = await adminAccountManager.SearchAdminAccount();
+                if (adminResult)
+                    return;
 
-        var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
-        await userManager.CreateAsync(adminUser, _adminOptions.Password);
-        
-        var fullName = FullName.Create(_adminOptions.UserName, _adminOptions.UserName, _adminOptions.UserName).Value;
-        var email = Email.Create(_adminOptions.Email).Value;
+            var adminRole = await roleManager.FindByNameAsync(AdminAccount.ADMIN)
+                            ?? throw new ApplicationException("Could not find admin role.");
 
-        var adminAccount = AdminAccount.Create(adminUser, fullName, email);
+            var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
 
-        await adminAccountManager.CreateAdminAccount(adminAccount);
+            var fullName = FullName.Create(_adminOptions.UserName, _adminOptions.UserName, _adminOptions.UserName).Value;
+            var email = Email.Create(_adminOptions.Email).Value;
+
+            var adminAccount = AdminAccount.Create(adminUser, fullName, email);
+
+            await userManager.CreateAsync(adminUser, _adminOptions.Password);
+            
+            await adminAccountManager.CreateAdminAccount(adminAccount);
+
+            transaction.Commit();
+        }
 
         logger.LogInformation("Admin account added to database.");
     }
