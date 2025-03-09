@@ -18,7 +18,7 @@ public class AdminAccount
             Id = Guid.NewGuid(),
             User = user,
             FullName = fullName,
-            Email = email
+            Email = email,
         };
     }
 

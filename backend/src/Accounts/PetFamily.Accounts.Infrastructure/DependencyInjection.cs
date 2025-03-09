@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PetFamily.Accounts.Application;
 using PetFamily.Accounts.Application.DataModels;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.IdentityManagers;
@@ -67,6 +68,7 @@ public static class DependencyInjection
 
         services.AddAuthorization();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

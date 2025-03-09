@@ -482,3 +482,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+.env
+
+src/Accounts/PetFamily.Accounts.Infrastructure/Migrations
+src/Specieses/PetFamily.Specieses.Infrastructure/Migrations
+src/Volunteers/PetFamily.Volunteers.Infrastructure/Migrations
