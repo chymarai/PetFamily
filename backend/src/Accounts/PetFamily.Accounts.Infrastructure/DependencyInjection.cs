@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application;
-using PetFamily.Accounts.Application.DataModels;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.IdentityManagers;
 using PetFamily.Accounts.Infrastructure.Options;
@@ -27,15 +26,19 @@ public static class DependencyInjection
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
+        services.Configure<RefreshTokenOptions>(configuration.GetSection(RefreshTokenOptions.RefreshSession));
         services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
 
         services.AddOptions<JwtOptions>();
+        //services.AddOptions<RefreshTokenOptions>();
 
         services.RegisterIdentity();
 
         services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
 
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+        //services.AddScoped<IRefreshSessionManager, RefreshSessionManager>();
 
         services
             .AddAuthentication(options =>
@@ -61,8 +64,6 @@ public static class DependencyInjection
                     ClockSkew = TimeSpan.Zero,
                 };
             });
-
-        services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
 
         services.AddDbContexts();
 

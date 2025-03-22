@@ -13,6 +13,7 @@ public class AccountsDbContext(IConfiguration configuration)
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<Permission> Permissions => Set<Permission>();
     public DbSet<AdminAccount> AdminAccounts => Set<AdminAccount>();
+    public DbSet<RefreshSession> RefreshSessions => Set<RefreshSession>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -41,6 +42,14 @@ public class AccountsDbContext(IConfiguration configuration)
 
         modelBuilder.Entity<Role>()
             .ToTable("roles");
+
+        modelBuilder.Entity<RefreshSession>()
+            .ToTable("refresh_sessions");
+
+        modelBuilder.Entity<RefreshSession>()
+            .HasOne(u => u.User)
+            .WithMany()
+            .HasForeignKey(u => u.UserId);
 
         modelBuilder.Entity<AdminAccount>()
             .ComplexProperty(a => a.FullName, tb =>

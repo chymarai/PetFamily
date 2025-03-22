@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.Accounts.Application.Commands.LoginUser;
+using PetFamily.Accounts.Application.Commands.RefreshToken;
 using PetFamily.Accounts.Application.Commands.RegisterUser;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Presentation.Requests;
@@ -48,4 +49,17 @@ public class AccountsController : ApplicationController
 
         return Ok(result.Value);
     }
+
+    //[HttpPost("refresh-token")]
+    //public async Task<ActionResult> RefreshToken(
+    //[FromBody] RefreshTokenRequest request,
+    //[FromServices] RefreshTokenHandler handler,
+    //CancellationToken token)
+    //{
+    //    var result = await handler.Handle(request.ToCommand(), token);
+    //    if (result.IsFailure)
+    //        return result.Error.ToResponse();
+
+    //    return Ok(result.Value);
+    //}
 }

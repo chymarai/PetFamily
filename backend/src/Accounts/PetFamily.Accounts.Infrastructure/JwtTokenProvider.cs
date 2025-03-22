@@ -1,18 +1,13 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application;
-using PetFamily.Accounts.Application.DataModels;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.IdentityManagers;
-using PetFamily.Framework.Authorization;
-using System;
-using System.Collections.Generic;
+using PetFamily.Accounts.Infrastructure.Options;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PetFamily.Accounts.Infrastructure;
 public class JwtTokenProvider : ITokenProvider
@@ -20,15 +15,18 @@ public class JwtTokenProvider : ITokenProvider
     private readonly JwtOptions _jwtOptions;
     private readonly PermissionManager _permissionManager;
     private readonly AccountsDbContext _accountsDbContext;
+    private readonly RefreshTokenOptions _refreshTokenOptions;
 
     public JwtTokenProvider(
         IOptions<JwtOptions> options,
         PermissionManager permissionManager,
-        AccountsDbContext accountsDbContext)
+        AccountsDbContext accountsDbContext,
+        RefreshTokenOptions refreshTokenOptions)
     {
         _jwtOptions = options.Value;
         _permissionManager = permissionManager;
         _accountsDbContext = accountsDbContext;
+        _refreshTokenOptions = refreshTokenOptions;
     }
     public async Task<JwtTokenResult> GenerateAccessToken(
         User user,
@@ -42,9 +40,12 @@ public class JwtTokenProvider : ITokenProvider
         var permissions = await _permissionManager.GetUserPermissionCodes(user.Id, cancellationToken);
         var permissionsClaims = permissions.Select(r => new Claim(CustomClaims.Permission, r ?? string.Empty));
 
+        var jti = Guid.NewGuid();
+
         Claim[] claims =
         [
             new(CustomClaims.Id, user.Id.ToString()),
+            new(CustomClaims.Jti, jti.ToString()),
             new(CustomClaims.Email, user.Email!)
         ];
 
@@ -61,5 +62,22 @@ public class JwtTokenProvider : ITokenProvider
         var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
 
         return new JwtTokenResult(token);
+    }
+
+    public async Task<Guid> GenerateRefreshToken(User user, CancellationToken cancellationToken)
+    {
+        var refreshSession = new RefreshSession
+        {
+            User = user,
+            CreateAt = DateTime.UtcNow,
+            ExpiresIn = DateTime.UtcNow.AddDays(int.Parse(_refreshTokenOptions.ExpiredDaysTime)),
+            RefreshToken = Guid.NewGuid()
+        };
+
+        _accountsDbContext.Add(refreshSession);
+
+        await _accountsDbContext.SaveChangesAsync(cancellationToken);
+
+        return refreshSession.RefreshToken;
     }
 }
